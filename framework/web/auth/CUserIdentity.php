@@ -26,6 +26,8 @@
  */
 class CUserIdentity extends CBaseUserIdentity
 {
+    const ROLE_USER = 1;
+    const ROLE_RESELLER = 2;
 	/**
 	 * @var string username
 	 */

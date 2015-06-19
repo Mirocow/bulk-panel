@@ -2,7 +2,7 @@
 
 class SiteController extends Controller
 {
-	public $layout='column1';
+	public $layout='site';
 
 	/**
 	 * Declares class-based actions.
@@ -40,33 +40,12 @@ class SiteController extends Controller
 	        	$this->render('error', $error);
 	    }
 	}
-
-	/**
-	 * Displays the contact page
-	 */
-	public function actionContact()
-	{
-		$model=new ContactForm;
-		if(isset($_POST['ContactForm']))
-		{
-			$model->attributes=$_POST['ContactForm'];
-			if($model->validate())
-			{
-				$headers="From: {$model->email}\r\nReply-To: {$model->email}";
-				mail(Yii::app()->params['adminEmail'],$model->subject,$model->body,$headers);
-				Yii::app()->user->setFlash('contact','Thank you for contacting us. We will respond to you as soon as possible.');
-				$this->refresh();
-			}
-		}
-		$this->render('contact',array('model'=>$model));
-	}
-
 	/**
 	 * Displays the login page
 	 */
 	public function actionLogin()
 	{
-		$model=new LoginForm;
+		$model=new LoginForm(CUserIdentity::ROLE_RESELLER);
 
 		// if it is ajax validation request
 		if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
@@ -80,12 +59,35 @@ class SiteController extends Controller
 		{
 			$model->attributes=$_POST['LoginForm'];
 			// validate user input and redirect to the previous page if valid
-			if($model->validate() && $model->login())
+			if($model->validate() && $model->login(CUserIdentity::ROLE_RESELLER))
 				$this->redirect(Yii::app()->user->returnUrl);
 		}
 		// display the login form
 		$this->render('login',array('model'=>$model));
 	}
+
+    public function actionRegister()
+    {
+        $model = new Reseller();
+
+        if(isset($_POST['Reseller']))
+        {
+            $model->attributes = $_POST['Reseller'];
+            $model->created = new CDbExpression('NOW()');
+
+            if($model->validate() && $model->save())
+            {
+                Yii::app()->user->setFlash('SUCCESS', 'Вы успешно зарегистрированы');
+                $this->redirect(['/site/login']);
+            }
+            else
+            {
+                Yii::app()->user->setFlash('ERROR', 'Ошибка регистрации');
+            }
+        }
+
+        $this->render('register', ['model' => $model]);
+    }
 
 	/**
 	 * Logs out the current user and redirect to homepage.

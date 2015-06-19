@@ -3,35 +3,20 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="language" content="ru" />
+    <link rel="stylesheet" href="<?=Yii::app()->request->baseUrl?>/plugins/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="<?=Yii::app()->request->baseUrl?>/plugins/fa/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="<?=Yii::app()->request->baseUrl?>/plugins/bower_components/bootstrap-sweetalert/lib/sweet-alert.css"/>
+    <link rel="stylesheet" href="<?=Yii::app()->request->baseUrl?>/plugins/bower_components/bootstrap-sweetalert/lib/sweet-alert-animations.css"/>
+    <link rel="stylesheet" href="<?=Yii::app()->request->baseUrl?>/css/style.css"/>
+
+    <script type="application/javascript" src="<?=Yii::app()->request->baseUrl?>/plugins/jquery.js"></script>
+    <script type="application/javascript" src="<?=Yii::app()->request->baseUrl?>/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script type="application/javascript" src="<?=Yii::app()->request->baseUrl?>/plugins/bower_components/bootstrap-sweetalert/lib/sweet-alert.min.js"></script>
+    <script type="application/javascript" src="<?=Yii::app()->request->baseUrl?>/js/common.js"></script>
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
 
 <body>
-
-<div class="container" id="page">
-
-	<div id="header">
-		<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
-	</div><!-- header -->
-
-	<div id="mainmenu">
-		<?php $this->widget('zii.widgets.CMenu',array(
-			'items'=>array(
-				array('label'=>'Home', 'url'=>array('post/index')),
-				array('label'=>'About', 'url'=>array('site/page', 'view'=>'about')),
-				array('label'=>'Contact', 'url'=>array('site/contact')),
-				array('label'=>'Login', 'url'=>array('site/login'), 'visible'=>Yii::app()->user->isGuest),
-				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('site/logout'), 'visible'=>!Yii::app()->user->isGuest)
-			),
-		)); ?>
-	</div><!-- mainmenu -->
-
-	<?php $this->widget('zii.widgets.CBreadcrumbs', array(
-		'links'=>$this->breadcrumbs,
-	)); ?><!-- breadcrumbs -->
-
 	<?php echo $content; ?>
-</div><!-- page -->
-
 </body>
 </html>

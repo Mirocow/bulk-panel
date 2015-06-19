@@ -288,6 +288,25 @@ class CWebUser extends CApplicationComponent implements IWebUser
 		return $this->getState('__id')===null;
 	}
 
+
+    /**
+     * Returns a value indicating whether the user is a reseller
+     * @return boolean whether the current application user is a guest.
+     */
+    public function isReseller()
+    {
+        return $this->getState('__id')!==null && $this->getState('role') === 'RESELLER';
+    }
+
+    /**
+     * Returns a value indicating whether the user is a user
+     * @return boolean whether the current application user is a guest.
+     */
+    public function isUser()
+    {
+        return $this->getState('__id')!==null && $this->getState('role') === 'USER';
+    }
+
 	/**
 	 * Returns a value that uniquely represents the user.
 	 * @return mixed the unique identifier for the user. If null, it means the user is a guest.

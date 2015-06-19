@@ -7,7 +7,8 @@
 // CWebApplication properties can be configured here.
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'Yii Blog Demo',
+	'name'=>'Bulk Message Cabinet',
+    'language' => 'ru',
 
 	// preloading 'log' component
 	'preload'=>array('log','EJSUrlManager'),
@@ -24,6 +25,10 @@ return array(
             'password'=>'123',
             'ipFilters'=>array('127.0.0.1','::1'),
         ),
+        'reseller' => [
+            'defaultController' => 'users'
+        ],
+        'user',
     ),
 	'defaultController'=>'site',
 	// application components
@@ -41,6 +46,8 @@ return array(
 			'username' => 'root',
 			'password' => '884088',
 			'charset' => 'utf8',
+            'enableParamLogging' => true,
+            'enableProfiling' => true,
 		),
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
@@ -61,6 +68,10 @@ return array(
 					'class'=>'CFileLogRoute',
 					'levels'=>'error, warning',
 				),
+                array(
+                    'class'=>'ext.yii-debug-toolbar.YiiDebugToolbarRoute',
+                    'ipFilters'=>array('::1','46.39.54.4'),
+                ),
 				// uncomment the following to show log messages on web pages
 				/*
 				array(
