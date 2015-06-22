@@ -22,6 +22,7 @@
  * The followings are the available model relations:
  * @property Reseller $reseller
  * @property Style $style
+ * @property Service[] $services
  * @property User[] $users
  */
 class Site extends CActiveRecord
@@ -61,6 +62,7 @@ class Site extends CActiveRecord
 		return array(
 			'reseller' => array(self::BELONGS_TO, 'Reseller', 'reseller_id'),
 			'style' => array(self::BELONGS_TO, 'Style', 'style_id'),
+			'services' => array(self::MANY_MANY, 'Service', 'site_has_service(site_id, service_id)'),
 			'users' => array(self::HAS_MANY, 'User', 'site_id'),
 		);
 	}

@@ -3,8 +3,13 @@
 /* @var $model Site */
 /* @var $form CActiveForm */
 /* @var $styles string[] */
+/* @var $services string */
+/* @var $activeServices string */
 ?>
-
+<script>
+    var services = JSON.parse('<?=$services?>');
+    var activeServices = JSON.parse('<?=$activeServices?>');
+</script>
 <?php $this->showMessages($model);?>
 <div class="row">
     <?php $form=$this->beginWidget('CActiveForm', array(
@@ -46,6 +51,10 @@
                             <?php echo $form->textField($model, 'title', ['class' => 'form-control', 'placeholder' => 'Заголовок']); ?>
                         </div>
                         <div class="form-group">
+                            <label for="services-dropdown">Сервисы</label>
+                            <select multiple="multiple" id="services-dropdown" name="Services[]" style="width: 100%;"></select>
+                        </div>
+                        <div class="form-group">
                             <?=$form->label($model, 'style_id')?>
                             <?php echo $form->dropDownList($model, 'style_id', $styles, ['class' => 'form-control']); ?>
                         </div>
@@ -83,3 +92,27 @@
         </div>
     <?php $this->endWidget(); ?>
 </div>
+
+<script>
+    $(document).ready(function(){
+        var dropdown = $('#services-dropdown');
+        $(dropdown).select2({
+                placeholder: "Выберите минимум один сервис",
+                escapeMarkup: function (markup) { return markup; },
+                templateResult: formatState,
+                allowClear: false,
+                data: services
+            }
+        );
+        var values = [];
+        $(activeServices).each(function(){
+            values.push(this.id);
+        });
+        dropdown.val(values).trigger('change');
+    });
+
+    function formatState (service) {
+        if (service.loading) return service.text;
+        return '<span class="service-option"><i class="' + service.icon + '" style="color: #' + service.color + ';"></i><span class="service-name"> ' + service.text + '</span></span>';
+    }
+</script>

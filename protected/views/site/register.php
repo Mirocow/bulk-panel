@@ -6,7 +6,7 @@
 
 <div class="container">
     <div class="row">
-        <?=$this->showMessages($model)?>
+        <?php $this->showMessages($model) ?>
         <div class="col-xs-12 col-sm-12 col-md-4 col-md-offset-4 well well-sm">
             <?php $form=$this->beginWidget('CActiveForm', array(
                 'id'=>'login-form',

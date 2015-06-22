@@ -1,3 +1,4 @@
+<?php $this->showMessages(); ?>
 <h2 class="page-title">
     Ваши сайты
 </h2>

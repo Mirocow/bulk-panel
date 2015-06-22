@@ -21,8 +21,6 @@ class Controller extends CController
 	 */
 	public $breadcrumbs=array();
 
-
-
     public function showMessages($model = null)
     {
         if($model === null)
@@ -52,19 +50,5 @@ class Controller extends CController
             echo '<div class="alert alert-danger alert-dismissible col-lg-12 col-md-12 col-sm-12 col-xs-12" role="alert">'.Yii::app()->user->getFlash('ERROR').'</div>';
             echo '</div>';
         }
-    }
-
-
-    public function filterIsSubDomain()
-    {
-        $host = $_SERVER['SERVER_NAME'];
-
-        if(Site::model()->countByAttributes(['domain' => $host]))
-        {
-            $this->redirect(['/user/default/login']);
-            return true;
-        }
-        else
-            return false;
     }
 }

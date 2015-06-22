@@ -15,7 +15,14 @@ class UserIdentity extends CUserIdentity
 	 */
 	public function authenticate()
 	{
-		$user=User::model()->find('LOWER(login)=?',array(strtolower($this->username)));
+        if(!$siteId = Domain::getCurrentSiteId())
+        {
+            $this->errorCode = self::ERROR_UNKNOWN_IDENTITY;
+            return false;
+        }
+
+		$user=User::model()->find('LOWER(login) = :login AND site_id = :siteId', [':login' => strtolower($this->username), ':siteId' => $siteId]);
+
 		if($user===null)
 			$this->errorCode=self::ERROR_USERNAME_INVALID;
 		else if($user->password != $this->password)
@@ -26,6 +33,9 @@ class UserIdentity extends CUserIdentity
 			$this->username=$user->login;
             $this->setState('role', 'USER');
 			$this->errorCode=self::ERROR_NONE;
+
+            $user->last_login = new CDbExpression('NOW()');
+            $user->save();
 		}
 		return $this->errorCode==self::ERROR_NONE;
 	}

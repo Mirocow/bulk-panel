@@ -13,8 +13,32 @@ class Html
     {
         return CHtml::link('<i class="fa fa-folder-open"></i>', ['/reseller/style/view', 'id' => $id], ['class' => 'btn btn-sm btn-info pull-right']);
     }
+    public static function GetSenderButton($id)
+    {
+        return CHtml::link('<i class="fa fa-folder-open"></i>', ['/user/senders/view', 'id' => $id], ['class' => 'btn btn-sm btn-info pull-right']);
+    }
+    public static function GetTemplateButton($id)
+    {
+        return CHtml::link('<i class="fa fa-folder-open"></i>', ['/user/template/view', 'id' => $id], ['class' => 'btn btn-sm btn-info pull-right']);
+    }
+    public static function GetReceiversDeleteButton($id)
+    {
+        return CHtml::link('<i class="fa fa-close"></i>', ['/user/receivers/delete', 'id' => $id], ['class' => 'btn btn-sm btn-danger pull-right']);
+    }
+    public static function GetTemplateType($type, $class)
+    {
+        return '<i class="'.$class.'"></i> '.$type;
+    }
+    public static function NVL($data, $value = 'Обрабатывается...')
+    {
+        if($data)
+            return $data;
+        else
+            return $value;
+    }
     public static function SQLDateFormat($date)
     {
         return date('H:i:s Y.m.d', strtotime($date));
     }
+
 }

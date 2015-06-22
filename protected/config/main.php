@@ -28,7 +28,10 @@ return array(
         'reseller' => [
             'defaultController' => 'users'
         ],
-        'user',
+        'user' => [
+            'defaultController' => 'defaultUser'
+        ],
+        'transaction',
     ),
 	'defaultController'=>'site',
 	// application components
@@ -50,7 +53,6 @@ return array(
             'enableProfiling' => true,
 		),
 		'errorHandler'=>array(
-			// use 'site/error' action to display errors
 			'errorAction'=>'site/error',
 		),
 		'urlManager'=>array(

@@ -18,9 +18,10 @@ class UserModule extends CWebModule
 	{
 		if(parent::beforeControllerAction($controller, $action))
 		{
-			// this method is called before any module controller action is performed
-			// you may place customized code here
-			return true;
+            if(!Yii::app()->user->isUser() && !Yii::app()->user->isGuest)
+                Yii::app()->user->logout();
+
+            return Domain::isSubDomain() || true; //@todo
 		}
 		else
 			return false;

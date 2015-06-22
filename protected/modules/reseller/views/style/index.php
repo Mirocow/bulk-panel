@@ -5,7 +5,7 @@
 <h2 class="page-title">
     Ваши стили
 </h2>
-<?php $this->showMessages() ?>
+<?php $this->showMessages(); ?>
 <div class="row">
     <div class="col-md-12 form-group">
         <a href="<?=$this->createUrl('/reseller/style/create')?>" class="btn btn-sm btn-warning"><i class="fa fa-plus"></i> Создать новый стиль</a>
