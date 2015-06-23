@@ -57,6 +57,8 @@ class SitesController extends Controller
         $styles = CHtml::listData(Reseller::model()->findByPk(Yii::app()->user->getId())->styles, 'id', 'title');
         array_unshift($styles, '--');
 
+        $tariffs = TariffHelper::getPackage($id);
+
         if(isset($_POST['Site']))
         {
             if(isset($_POST['Services']))
@@ -87,7 +89,7 @@ class SitesController extends Controller
                     Yii::app()->user->setFlash('ERROR', 'Выберите хотя бы один сервис');
             }
         }
-        $this->render('view', compact('model', 'styles','services','activeServices'));
+        $this->render('view', compact('model', 'styles','services','activeServices', 'tariffs'));
     }
 
     public function actionDelete($id)
@@ -104,7 +106,9 @@ class SitesController extends Controller
         $styles = CHtml::listData(Reseller::model()->findByPk(Yii::app()->user->getId())->styles, 'id', 'title');
         array_unshift($styles, '--');
 
-        if(isset($_POST['Site']))
+        $tariffs = TariffHelper::getPackage();
+
+        if(isset($_POST['Site']) && false)
         {
             if(isset($_POST['Services']))
             {
@@ -131,6 +135,6 @@ class SitesController extends Controller
             }
         }
 
-        $this->render('create', compact('model', 'styles', 'services'));
+        $this->render('create', compact('model', 'styles', 'services', 'tariffs'));
     }
 }

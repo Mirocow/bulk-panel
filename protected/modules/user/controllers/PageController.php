@@ -20,4 +20,10 @@ class PageController extends UserBaseController
 
         $this->render('invoiceDetails', compact('invoiceDetails'));
     }
+    public function actionTariffs()
+    {
+        $tariffs = TariffHelper::getPackage(Domain::getCurrentSiteId());
+
+        $this->render('tariffs', compact('tariffs'));
+    }
 }

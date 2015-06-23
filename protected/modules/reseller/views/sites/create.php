@@ -4,6 +4,7 @@
 /* @var $form CActiveForm */
 /* @var $styles string[] */
 /* @var $services string */
+/* @var $tariffs string[] */
 ?>
 <script>
     var services = JSON.parse('<?=$services?>');
@@ -26,6 +27,7 @@
                         <li><a href="#tab2" data-toggle="tab">Контакты</a></li>
                         <li><a href="#tab3" data-toggle="tab">Реквизиты</a></li>
                         <li><a href="#tab4" data-toggle="tab">Платежные системы</a></li>
+                        <li><a href="#tab5" data-toggle="tab">Тарифы</a></li>
                     </ul>
                 </span>
             </div>
@@ -78,6 +80,9 @@
                             <?=$form->label($model, 'yandex_money')?>
                             <?php echo $form->textArea($model, 'yandex_money', ['class' => 'form-control', 'placeholder' => '']); ?>
                         </div>
+                    </div>
+                    <div class="tab-pane" id="tab5">
+                        <?=$this->renderPartial('_tariffs', compact('tariffs'))?>
                     </div>
                 </div>
             </div>

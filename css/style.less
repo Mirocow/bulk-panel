@@ -9,6 +9,45 @@
   }
 }
 
+.tariff-table {
+  thead {
+    th {
+      text-align: center;
+    }
+  }
+  tr {
+    td,
+    th {
+      &.service-name {
+        font-size: 16px;
+      }
+      &.country-name {
+        text-align: center;
+        font-size: 14px;
+      }
+      &.operator-name {
+        padding-top: 15px;
+        text-align: right;
+        font-size: 12px;
+        font-weight: normal;
+        &.display-operator {
+          padding-top: 10px;
+        }
+      }
+      &.price {
+        text-align: center;
+        input {
+          text-align: center;
+        }
+        .base-price {
+          font-size: 10px;
+          color: darkgray;
+        }
+      }
+    }
+  }
+}
+
 .login-form {
   margin-top: 50px;
 }

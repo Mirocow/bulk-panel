@@ -1,32 +1,23 @@
 <?php
 
 /**
- * This is the model class for table "reseller".
+ * This is the model class for table "operator".
  *
- * The followings are the available columns in table 'reseller':
+ * The followings are the available columns in table 'operator':
  * @property integer $id
- * @property string $login
- * @property string $password
  * @property string $name
- * @property integer $status
- * @property double $balance
- * @property string $email
- * @property string $created
- * @property integer $tariff_package_id
  *
  * The followings are the available model relations:
- * @property TariffPackage $tariffPackage
- * @property Site[] $sites
- * @property Style[] $styles
+ * @property Tariff[] $tariffs
  */
-class Reseller extends CActiveRecord
+class Operator extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'reseller';
+		return 'operator';
 	}
 
 	/**
@@ -37,12 +28,11 @@ class Reseller extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('login, password, name, status, balance, email, created, tariff_package_id', 'required'),
-			array('status, tariff_package_id', 'numerical', 'integerOnly'=>true),
-			array('balance', 'numerical'),
+			array('name', 'required'),
+			array('name', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, login, password, name, status, balance, email, created, tariff_package_id', 'safe', 'on'=>'search'),
+			array('id, name', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -54,9 +44,7 @@ class Reseller extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'tariffPackage' => array(self::BELONGS_TO, 'TariffPackage', 'tariff_package_id'),
-			'sites' => array(self::HAS_MANY, 'Site', 'reseller_id'),
-			'styles' => array(self::HAS_MANY, 'Style', 'reseller_id'),
+			'tariffs' => array(self::HAS_MANY, 'Tariff', 'operator_id'),
 		);
 	}
 
@@ -67,14 +55,7 @@ class Reseller extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'login' => 'Login',
-			'password' => 'Password',
 			'name' => 'Name',
-			'status' => 'Status',
-			'balance' => 'Balance',
-			'email' => 'Email',
-			'created' => 'Created',
-			'tariff_package_id' => 'Tariff Package',
 		);
 	}
 
@@ -97,14 +78,7 @@ class Reseller extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('login',$this->login,true);
-		$criteria->compare('password',$this->password,true);
 		$criteria->compare('name',$this->name,true);
-		$criteria->compare('status',$this->status);
-		$criteria->compare('balance',$this->balance);
-		$criteria->compare('email',$this->email,true);
-		$criteria->compare('created',$this->created,true);
-		$criteria->compare('tariff_package_id',$this->tariff_package_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -115,7 +89,7 @@ class Reseller extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Reseller the static model class
+	 * @return Operator the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

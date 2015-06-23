@@ -62,7 +62,7 @@ class SiteController extends Controller
 			$model->attributes=$_POST['LoginForm'];
 			// validate user input and redirect to the previous page if valid
 			if($model->validate() && $model->login(CUserIdentity::ROLE_RESELLER))
-				$this->redirect(Yii::app()->user->returnUrl);
+				$this->redirect(['/reseller/status/index']);
 		}
 		// display the login form
 		$this->render('login',array('model'=>$model));

@@ -1,32 +1,24 @@
 <?php
 
 /**
- * This is the model class for table "reseller".
+ * This is the model class for table "threshold".
  *
- * The followings are the available columns in table 'reseller':
+ * The followings are the available columns in table 'threshold':
  * @property integer $id
- * @property string $login
- * @property string $password
- * @property string $name
- * @property integer $status
- * @property double $balance
- * @property string $email
- * @property string $created
- * @property integer $tariff_package_id
+ * @property double $amount
+ * @property integer $tariff_id
  *
  * The followings are the available model relations:
- * @property TariffPackage $tariffPackage
- * @property Site[] $sites
- * @property Style[] $styles
+ * @property Tariff $tariff
  */
-class Reseller extends CActiveRecord
+class Threshold extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'reseller';
+		return 'threshold';
 	}
 
 	/**
@@ -37,12 +29,12 @@ class Reseller extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('login, password, name, status, balance, email, created, tariff_package_id', 'required'),
-			array('status, tariff_package_id', 'numerical', 'integerOnly'=>true),
-			array('balance', 'numerical'),
+			array('id, amount, tariff_id', 'required'),
+			array('id, tariff_id', 'numerical', 'integerOnly'=>true),
+			array('amount', 'numerical'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, login, password, name, status, balance, email, created, tariff_package_id', 'safe', 'on'=>'search'),
+			array('id, amount, tariff_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -54,9 +46,7 @@ class Reseller extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'tariffPackage' => array(self::BELONGS_TO, 'TariffPackage', 'tariff_package_id'),
-			'sites' => array(self::HAS_MANY, 'Site', 'reseller_id'),
-			'styles' => array(self::HAS_MANY, 'Style', 'reseller_id'),
+			'tariff' => array(self::BELONGS_TO, 'Tariff', 'tariff_id'),
 		);
 	}
 
@@ -67,14 +57,8 @@ class Reseller extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'login' => 'Login',
-			'password' => 'Password',
-			'name' => 'Name',
-			'status' => 'Status',
-			'balance' => 'Balance',
-			'email' => 'Email',
-			'created' => 'Created',
-			'tariff_package_id' => 'Tariff Package',
+			'amount' => 'Amount',
+			'tariff_id' => 'Tariff',
 		);
 	}
 
@@ -97,14 +81,8 @@ class Reseller extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('login',$this->login,true);
-		$criteria->compare('password',$this->password,true);
-		$criteria->compare('name',$this->name,true);
-		$criteria->compare('status',$this->status);
-		$criteria->compare('balance',$this->balance);
-		$criteria->compare('email',$this->email,true);
-		$criteria->compare('created',$this->created,true);
-		$criteria->compare('tariff_package_id',$this->tariff_package_id);
+		$criteria->compare('amount',$this->amount);
+		$criteria->compare('tariff_id',$this->tariff_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -115,7 +93,7 @@ class Reseller extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Reseller the static model class
+	 * @return Threshold the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

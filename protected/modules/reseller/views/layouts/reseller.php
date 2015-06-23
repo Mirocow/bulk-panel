@@ -14,6 +14,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <?php $this->widget('zii.widgets.CMenu',array(
                     'items'=>array(
+                        array('label'=>'Статус', 'url'=>array('/reseller/status/index')),
                         array('label'=>'Клиенты', 'url'=>array('/reseller/users/index')),
                         array('label'=>'Сайты', 'url'=>array('/reseller/sites/index'), 'visible' => Yii::app()->user->isReseller()),
                         array('label'=>'Стили', 'url'=>array('/reseller/style/index'), 'visible' => Yii::app()->user->isReseller()),

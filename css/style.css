@@ -2,6 +2,42 @@
   top: 1px;
   position: relative;
 }
+.tariff-table thead th {
+  text-align: center;
+}
+.tariff-table tr td.service-name,
+.tariff-table tr th.service-name {
+  font-size: 16px;
+}
+.tariff-table tr td.country-name,
+.tariff-table tr th.country-name {
+  text-align: center;
+  font-size: 14px;
+}
+.tariff-table tr td.operator-name,
+.tariff-table tr th.operator-name {
+  padding-top: 15px;
+  text-align: right;
+  font-size: 12px;
+  font-weight: normal;
+}
+.tariff-table tr td.operator-name.display-operator,
+.tariff-table tr th.operator-name.display-operator {
+  padding-top: 10px;
+}
+.tariff-table tr td.price,
+.tariff-table tr th.price {
+  text-align: center;
+}
+.tariff-table tr td.price input,
+.tariff-table tr th.price input {
+  text-align: center;
+}
+.tariff-table tr td.price .base-price,
+.tariff-table tr th.price .base-price {
+  font-size: 10px;
+  color: darkgray;
+}
 .login-form {
   margin-top: 50px;
 }

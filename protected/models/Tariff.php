@@ -1,32 +1,30 @@
 <?php
 
 /**
- * This is the model class for table "reseller".
+ * This is the model class for table "tariff".
  *
- * The followings are the available columns in table 'reseller':
+ * The followings are the available columns in table 'tariff':
  * @property integer $id
- * @property string $login
- * @property string $password
- * @property string $name
- * @property integer $status
- * @property double $balance
- * @property string $email
- * @property string $created
+ * @property double $price
+ * @property integer $operator_id
+ * @property integer $country_id
+ * @property integer $service_id
  * @property integer $tariff_package_id
  *
  * The followings are the available model relations:
+ * @property Service $service
+ * @property Operator $operator
+ * @property Country $country
  * @property TariffPackage $tariffPackage
- * @property Site[] $sites
- * @property Style[] $styles
  */
-class Reseller extends CActiveRecord
+class Tariff extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'reseller';
+		return 'tariff';
 	}
 
 	/**
@@ -37,12 +35,12 @@ class Reseller extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('login, password, name, status, balance, email, created, tariff_package_id', 'required'),
-			array('status, tariff_package_id', 'numerical', 'integerOnly'=>true),
-			array('balance', 'numerical'),
+			array('price, service_id, tariff_package_id', 'required'),
+			array('operator_id, country_id, service_id, tariff_package_id', 'numerical', 'integerOnly'=>true),
+			array('price', 'numerical'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, login, password, name, status, balance, email, created, tariff_package_id', 'safe', 'on'=>'search'),
+			array('id, price, operator_id, country_id, service_id, tariff_package_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -54,9 +52,10 @@ class Reseller extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'service' => array(self::BELONGS_TO, 'Service', 'service_id'),
+			'operator' => array(self::BELONGS_TO, 'Operator', 'operator_id'),
+			'country' => array(self::BELONGS_TO, 'Country', 'country_id'),
 			'tariffPackage' => array(self::BELONGS_TO, 'TariffPackage', 'tariff_package_id'),
-			'sites' => array(self::HAS_MANY, 'Site', 'reseller_id'),
-			'styles' => array(self::HAS_MANY, 'Style', 'reseller_id'),
 		);
 	}
 
@@ -67,13 +66,10 @@ class Reseller extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'login' => 'Login',
-			'password' => 'Password',
-			'name' => 'Name',
-			'status' => 'Status',
-			'balance' => 'Balance',
-			'email' => 'Email',
-			'created' => 'Created',
+			'price' => 'Price',
+			'operator_id' => 'Operator',
+			'country_id' => 'Country',
+			'service_id' => 'Service',
 			'tariff_package_id' => 'Tariff Package',
 		);
 	}
@@ -97,13 +93,10 @@ class Reseller extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('login',$this->login,true);
-		$criteria->compare('password',$this->password,true);
-		$criteria->compare('name',$this->name,true);
-		$criteria->compare('status',$this->status);
-		$criteria->compare('balance',$this->balance);
-		$criteria->compare('email',$this->email,true);
-		$criteria->compare('created',$this->created,true);
+		$criteria->compare('price',$this->price);
+		$criteria->compare('operator_id',$this->operator_id);
+		$criteria->compare('country_id',$this->country_id);
+		$criteria->compare('service_id',$this->service_id);
 		$criteria->compare('tariff_package_id',$this->tariff_package_id);
 
 		return new CActiveDataProvider($this, array(
@@ -115,7 +108,7 @@ class Reseller extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Reseller the static model class
+	 * @return Tariff the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

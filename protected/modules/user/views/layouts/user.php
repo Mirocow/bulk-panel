@@ -29,6 +29,7 @@
                     'items' => [
                         array('label' => 'Контакты', 'url' => ['/user/page/contact']),
                         array('label' => 'Реквизиты', 'url' => ['/user/page/invoiceDetails']),
+                        array('label' => 'Тарифы', 'url' => ['/user/page/tariffs']),
                         array('label' => 'Баланс: '.$this->user->getBalance().' <i class="fa fa-rub"></i>', 'url' => ['/user/payment/index'], 'itemOptions' => ['class' => 'total-balance']),
                         array('label'=>'Выход ('.Yii::app()->user->name.')', 'url'=>array('/user/defaultUser/logout'), 'htmlOptions' => ['class' => 'pull-right'], 'visible'=>!Yii::app()->user->isGuest)
                     ],
