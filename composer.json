@@ -1,0 +1,9 @@
+{
+    "require": {
+        "php": ">=5.3.0",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "yiisoft/yii": "dev-master",
+        "paypal/rest-api-sdk-php" : "0.5.*"
+    }
+}
