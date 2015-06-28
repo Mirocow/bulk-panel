@@ -17,8 +17,8 @@
                     'items'=>array(
                         array('label'=>'Статус', 'url'=>array('/reseller/status/index')),
                         array('label'=>'Клиенты', 'url'=>array('/reseller/users/index')),
-                        array('label'=>'Сайты', 'url'=>array('/reseller/sites/index'), 'visible' => Yii::app()->user->isReseller()),
-                        array('label'=>'Стили', 'url'=>array('/reseller/style/index'), 'visible' => Yii::app()->user->isReseller()),
+                        array('label'=>'Сайты', 'url'=>array('/reseller/sites/index'), 'visible' => AuthHelper::isReseller()),
+                        array('label'=>'Стили', 'url'=>array('/reseller/style/index'), 'visible' => AuthHelper::isReseller()),
                     ),
                     'htmlOptions' => ['class' => 'nav navbar-nav'],
                 )); ?>

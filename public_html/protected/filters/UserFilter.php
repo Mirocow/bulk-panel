@@ -2,7 +2,7 @@
 class UserFilter extends CFilter
 {
     public function preFilter($filterChain) {
-        if(Yii::app()->user->isUser())
+        if(AuthHelper::isUser())
             return true;
         else
         {

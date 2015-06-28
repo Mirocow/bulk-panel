@@ -2,7 +2,7 @@
 class ResellerFilter extends CFilter
 {
     public function preFilter($filterChain) {
-        if(Yii::app()->user->isReseller())
+        if(AuthHelper::isReseller())
             return true;
         else
         {

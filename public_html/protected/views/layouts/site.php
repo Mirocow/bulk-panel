@@ -41,7 +41,7 @@
                         [
                             'label'=>'Кабинет реселлера',
                             'url' => ['reseller/sites/index'],
-                            'visible' => Yii::app()->user->isReseller()
+                            'visible' => AuthHelper::isReseller(),
                         ],
                     ],
                     'submenuHtmlOptions' => ['class' => 'dropdown-menu'],

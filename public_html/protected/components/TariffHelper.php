@@ -125,7 +125,7 @@ class TariffHelper
                 $data[] = $service;
             }
         }
-        elseif(Yii::app()->user->isReseller())
+        elseif(AuthHelper::isReseller())
         {
             $reseller = Reseller::model()->findByPk(Yii::app()->user->getId());
             if($reseller)
