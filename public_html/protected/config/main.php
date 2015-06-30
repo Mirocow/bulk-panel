@@ -72,10 +72,10 @@ return array(
 					'class'=>'CFileLogRoute',
 					'levels'=>'error, warning',
 				),
-                array(
+                /*array(
                     'class'=>'ext.yii-debug-toolbar.YiiDebugToolbarRoute',
                     'ipFilters'=>array('::1'),
-                ),
+                ),*/
 				// uncomment the following to show log messages on web pages
 				/*
 				array(
