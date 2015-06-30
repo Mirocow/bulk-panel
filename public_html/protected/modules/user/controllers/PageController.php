@@ -22,7 +22,7 @@ class PageController extends UserBaseController
     }
     public function actionTariffs()
     {
-        $tariffs = TariffHelper::getPackage(Domain::getCurrentSiteId());
+        $tariffs = TariffHelper::getTariffs(Domain::getCurrentSiteId());
 
         $this->render('tariffs', compact('tariffs'));
     }

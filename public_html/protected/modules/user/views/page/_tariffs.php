@@ -1,17 +1,11 @@
 <?php
 /* @var $this Controller */
-/* @var $mode string */
 /* @var $tariffs string[] */
-
-if($mode == 'create')
-    $viewName = '_subtariff_create';
-else
-    $viewName = '_subtariff_view';
 ?>
 <?php foreach($tariffs as $service): ?>
     <h3 class="page-title"><i class="<?=$service['class']?>" style="color: #<?=$service['color']?>"></i> <?=$service['name']?></h3>
     <?php if(isset($service['tariff'])): ?>
-        <?php $this->renderPartial($viewName, ['tariffs' => $service['tariff']]); ?>
+        <?php $this->renderPartial('_subtariff', ['tariffs' => $service['tariff']]); ?>
     <?php endif; ?>
     <?php if(isset($service['countries'])): ?>
         <?php foreach($service['countries'] as $country): ?>
@@ -21,7 +15,7 @@ else
                 </div>
             </div>
             <?php if(isset($country['tariff'])): ?>
-                    <?php $this->renderPartial($viewName, ['tariffs' => $country['tariff']]); ?>
+                    <?php $this->renderPartial('_subtariff', ['tariffs' => $country['tariff']]); ?>
             <?php endif; ?>
             <?php if(isset($country['operators'])): ?>
                 <?php foreach($country['operators'] as $operator): ?>
@@ -31,7 +25,7 @@ else
                         </div>
                     </div>
                     <?php if(isset($operator['tariff'])): ?>
-                        <?php $this->renderPartial($viewName, ['tariffs' => $operator['tariff']]); ?>
+                        <?php $this->renderPartial('_subtariff', ['tariffs' => $operator['tariff']]); ?>
                     <?php endif; ?>
                 <?php endforeach; ?>
             <?php endif; ?>

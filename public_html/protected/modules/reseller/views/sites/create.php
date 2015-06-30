@@ -39,6 +39,10 @@
                             <?php echo $form->textField($model, 'name', ['class' => 'form-control', 'id' => 'new-name', 'placeholder' => 'Название сайта']); ?>
                         </div>
                         <div class="form-group">
+                            <?=$form->label($model, 'url')?>
+                            <?php echo $form->textField($model, 'url', ['class' => 'form-control', 'placeholder' => 'Адрес сайта']); ?>
+                        </div>
+                        <div class="form-group">
                             <?=$form->label($model, 'domain')?>
                             <?php echo $form->textField($model, 'domain', ['class' => 'form-control', 'placeholder' => 'Ваш поддомен: sub.mysite.ru']); ?>
                         </div>
@@ -110,7 +114,7 @@
                         </div>
                     </div>
                     <div class="tab-pane" id="tab5">
-                        <?php $this->renderPartial('_tariffs', compact('tariffs')) ?>
+                        <?php $this->renderPartial('_tariffs', ['tariffs' => $tariffs, 'mode' => 'create']) ?>
                     </div>
                 </div>
             </div>

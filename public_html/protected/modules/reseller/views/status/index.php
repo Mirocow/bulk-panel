@@ -17,10 +17,6 @@
                     <td><?=$reseller->name?></td>
                 </tr>
                 <tr>
-                    <th>Активный пакет:</th>
-                    <td><?=$reseller->tariffPackage->name?></td>
-                </tr>
-                <tr>
                     <th>Баланс:</th>
                     <td><?=$reseller->balance?> <i class="fa fa-rub"></i></td>
                 </tr>

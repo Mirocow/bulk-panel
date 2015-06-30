@@ -9,231 +9,243 @@
 
 class TariffHelper
 {
-    public static function getPackage($siteId = null)
+    public static function getTariffs($siteId = null)
     {
         $data = [];
         if($siteId)
         {
-            $tariffPackage = TariffPackage::model()->findByAttributes(['site_id' => $siteId]);
-            if($tariffPackage)
+            $tariffModels = Tariff::model()->findAll([
+                'condition' => 'site_id = :siteId AND root = 0',
+                'params' => [':siteId' => $siteId],
+                'order' => 'service_id, country_id, operator_id, tariff_threshold_id',
+            ]);
+
+            $serviceId = null;
+            $countryId = null;
+            $operatorId = null;
+
+            $service = [];
+            $operator = [];
+            $country = [];
+
+            $first = true;
+            $tariff = null;
+
+            foreach($tariffModels as $index => $tariffModel)
             {
-                $tariffModels = Tariff::model()->findAll([
-                    'condition' => 'tariff_package_id = :tariffPackageId',
-                    'params' => [':tariffPackageId' => $tariffPackage->getPrimaryKey()],
-                    'order' => 'service_id, country_id, operator_id',
-                ]);
-
-                $baseTariffModels = Tariff::model()->findAll([
-                    'condition' => 'tariff_package_id = :tariffPackageId',
-                    'params' => [':tariffPackageId' => $tariffPackage->parent_id],
-                    'order' => 'service_id, country_id, operator_id',
-                ]);
-
-                $serviceId = null;
-                $countryId = null;
-                $operatorId = null;
-
-                $service = [];
-                $operator = [];
-                $country = [];
-
-                $first = true;
-                $tariff = null;
-
-                foreach($tariffModels as $index => $tariffModel)
+                if($tariffModel->service_id != $serviceId)
                 {
-                    if($tariffModel->service_id != $serviceId)
+                    if(!$first)
                     {
-                        if(!$first)
+                        if(!$country && !$operator)
+                            $service['tariff'][] = $tariff;
+                        elseif($country && !$operator)
                         {
-                            if(!$country && !$operator)
-                                $service['tariff'] = $tariff;
-                            elseif($country && !$operator)
-                            {
-                                $country['tariff'] = $tariff;
-                                $service['countries'][] = $country;
-                            }
-                            else
-                            {
-                                $operator['tariff'] = $tariff;
-                                $country['operators'][] = $operator;
-                                $service['countries'][] = $country;
-                            }
-                            $data[] = $service;
+                            $country['tariff'][] = $tariff;
+                            $service['countries'][] = $country;
                         }
-
-                        $service = ['name' => $tariffModel->service->name];
-                        $country = self::getCountry($tariffModel);
-                        $operator = self::getOperator($tariffModel);
-                    }
-                    elseif($tariffModel->country_id != $countryId)
-                    {
-                        if(!$first)
+                        else
                         {
-                            if($country && !$operator)
-                            {
-                                $country['tariff'] = $tariff;
-                                $service['countries'][] = $country;
-                            }
-                            else
-                            {
-                                $operator['tariff'] = $tariff;
-                                $country['operators'][] = $operator;
-                                $service['countries'][] = $country;
-                            }
-                        }
-
-                        $country = self::getCountry($tariffModel);
-                        $operator = self::getOperator($tariffModel);
-                    }
-                    elseif($tariffModel->operator_id != $operatorId)
-                    {
-                        if(!$first)
-                        {
-                            $operator['tariff'] = $tariff;
+                            $operator['tariff'][] = $tariff;
                             $country['operators'][] = $operator;
+                            $service['countries'][] = $country;
                         }
-                        $operator = self::getOperator($tariffModel);
+                        $data[] = $service;
                     }
 
-                    $serviceId = $tariffModel->service_id;
-                    $countryId = $tariffModel->country_id;
-                    $operatorId = $tariffModel->operator_id;
-
-                    $tariff = [
-                        'price' => $tariffModel->price,
-                        'basePrice' => $baseTariffModels[$index]->price,
-                        'id' => $tariffModel->getPrimaryKey(),
-                        'baseId' => $baseTariffModels[$index]->getPrimaryKey(),
-                    ];
-
-                    $first = false;
+                    $service = ['name' => $tariffModel->service->name, 'class' => $tariffModel->service->icon, 'color' => $tariffModel->service->color];
+                    $country = self::getCountry($tariffModel);
+                    $operator = self::getOperator($tariffModel);
                 }
-                if(!$country && !$operator)
-                    $service['tariff'] = $tariff;
-                elseif($country && !$operator)
+                elseif($tariffModel->country_id != $countryId)
                 {
-                    $country['tariff'] = $tariff;
-                    $service['countries'][] = $country;
-                }
-                else
-                {
-                    $operator['tariff'] = $tariff;
-                    $country['operators'][] = $operator;
-                    $service['countries'][] = $country;
-                }
-                $data[] = $service;
-            }
-        }
-        elseif(AuthHelper::isReseller())
-        {
-            $reseller = Reseller::model()->findByPk(Yii::app()->user->getId());
-            if($reseller)
-            {
-                $tariffPackage = TariffPackage::model()->findByPk($reseller->tariff_package_id);
-
-                if ($tariffPackage)
-                {
-                    $tariffModels = Tariff::model()->findAll([
-                        'condition' => 'tariff_package_id = :tariffPackageId',
-                        'params' => [':tariffPackageId' => $tariffPackage->id],
-                        'order' => 'service_id, country_id, operator_id',
-                    ]);
-
-                    $serviceId = null;
-                    $countryId = null;
-                    $operatorId = null;
-
-                    $service = [];
-                    $operator = [];
-                    $country = [];
-
-                    $first = true;
-                    $tariff = null;
-
-                    foreach($tariffModels as $index => $tariffModel)
+                    if(!$first)
                     {
-                        if($tariffModel->service_id != $serviceId)
+                        if($country && !$operator)
                         {
-                            if(!$first)
-                            {
-                                if(!$country && !$operator)
-                                    $service['tariff'] = $tariff;
-                                elseif($country && !$operator)
-                                {
-                                    $country['tariff'] = $tariff;
-                                    $service['countries'][] = $country;
-                                }
-                                else
-                                {
-                                    $operator['tariff'] = $tariff;
-                                    $country['operators'][] = $operator;
-                                    $service['countries'][] = $country;
-                                }
-                                $data[] = $service;
-                            }
-
-                            $service = ['name' => $tariffModel->service->name];
-                            $country = self::getCountry($tariffModel);
-                            $operator = self::getOperator($tariffModel);
+                            $country['tariff'][] = $tariff;
+                            $service['countries'][] = $country;
                         }
-                        elseif($tariffModel->country_id != $countryId)
+                        else
                         {
-                            if(!$first)
-                            {
-                                if($country && !$operator)
-                                {
-                                    $country['tariff'] = $tariff;
-                                    $service['countries'][] = $country;
-                                }
-                                else
-                                {
-                                    $operator['tariff'] = $tariff;
-                                    $country['operators'][] = $operator;
-                                    $service['countries'][] = $country;
-                                }
-                            }
-
-                            $country = self::getCountry($tariffModel);
-                            $operator = self::getOperator($tariffModel);
+                            $operator['tariff'][] = $tariff;
+                            $country['operators'][] = $operator;
+                            $service['countries'][] = $country;
                         }
-                        elseif($tariffModel->operator_id != $operatorId)
-                        {
-                            if(!$first)
-                            {
-                                $operator['tariff'] = $tariff;
-                                $country['operators'][] = $operator;
-                            }
-                            $operator = self::getOperator($tariffModel);
-                        }
-
-                        $serviceId = $tariffModel->service_id;
-                        $countryId = $tariffModel->country_id;
-                        $operatorId = $tariffModel->operator_id;
-
-                        $tariff = [
-                            'price' => $tariffModel->price,
-                            'id' => $tariffModel->getPrimaryKey(),
-                        ];
-
-                        $first = false;
                     }
+
+                    $country = self::getCountry($tariffModel);
+                    $operator = self::getOperator($tariffModel);
+                }
+                elseif($tariffModel->operator_id != $operatorId)
+                {
+                    if(!$first)
+                    {
+                        $operator['tariff'][] = $tariff;
+                        $country['operators'][] = $operator;
+                    }
+                    $operator = self::getOperator($tariffModel);
+                }
+                else {
                     if(!$country && !$operator)
-                        $service['tariff'] = $tariff;
+                        $service['tariff'][] = $tariff;
                     elseif($country && !$operator)
                     {
-                        $country['tariff'] = $tariff;
-                        $service['countries'][] = $country;
+                        $country['tariff'][] = $tariff;
                     }
                     else
                     {
-                        $operator['tariff'] = $tariff;
-                        $country['operators'][] = $operator;
-                        $service['countries'][] = $country;
+                        $operator['tariff'][] = $tariff;
                     }
-                    $data[] = $service;
                 }
+
+                $serviceId = $tariffModel->service_id;
+                $countryId = $tariffModel->country_id;
+                $operatorId = $tariffModel->operator_id;
+
+                $tariff = [
+                    'price' => $tariffModel->price,
+                    'basePrice' => $tariffModel->parent->price,
+                    'id' => $tariffModel->getPrimaryKey(),
+                    'baseId' => $tariffModel->parent_id,
+                    'threshold' => [
+                        'name' => $tariffModel->tariffThreshold->name,
+                        'amount' => $tariffModel->tariffThreshold->amount,
+                    ],
+                ];
+
+                $first = false;
             }
+            if(!$country && !$operator)
+                $service['tariff'][] = $tariff;
+            elseif($country && !$operator)
+            {
+                $country['tariff'][] = $tariff;
+                $service['countries'][] = $country;
+            }
+            else
+            {
+                $operator['tariff'][] = $tariff;
+                $country['operators'][] = $operator;
+                $service['countries'][] = $country;
+            }
+            $data[] = $service;
+        }
+        elseif(AuthHelper::isReseller())
+        {
+            $tariffModels = Tariff::model()->findAll([
+                'condition' => 'site_id IS NULL AND root = 1',
+                'order' => 'service_id, country_id, operator_id, tariff_threshold_id',
+            ]);
+
+            $serviceId = null;
+            $countryId = null;
+            $operatorId = null;
+
+            $service = [];
+            $operator = [];
+            $country = [];
+
+            $first = true;
+            $tariff = null;
+
+            foreach($tariffModels as $index => $tariffModel)
+            {
+                if($tariffModel->service_id != $serviceId)
+                {
+                    if(!$first)
+                    {
+                        if(!$country && !$operator)
+                            $service['tariff'][] = $tariff;
+                        elseif($country && !$operator)
+                        {
+                            $country['tariff'][] = $tariff;
+                            $service['countries'][] = $country;
+                        }
+                        else
+                        {
+                            $operator['tariff'][] = $tariff;
+                            $country['operators'][] = $operator;
+                            $service['countries'][] = $country;
+                        }
+                        $data[] = $service;
+                    }
+
+                    $service = ['name' => $tariffModel->service->name, 'class' => $tariffModel->service->icon, 'color' => $tariffModel->service->color];
+                    $country = self::getCountry($tariffModel);
+                    $operator = self::getOperator($tariffModel);
+                }
+                elseif($tariffModel->country_id != $countryId)
+                {
+                    if(!$first)
+                    {
+                        if($country && !$operator)
+                        {
+                            $country['tariff'][] = $tariff;
+                            $service['countries'][] = $country;
+                        }
+                        else
+                        {
+                            $operator['tariff'][] = $tariff;
+                            $country['operators'][] = $operator;
+                            $service['countries'][] = $country;
+                        }
+                    }
+
+                    $country = self::getCountry($tariffModel);
+                    $operator = self::getOperator($tariffModel);
+                }
+                elseif($tariffModel->operator_id != $operatorId)
+                {
+                    if(!$first)
+                    {
+                        $operator['tariff'][] = $tariff;
+                        $country['operators'][] = $operator;
+                    }
+                    $operator = self::getOperator($tariffModel);
+                }
+                else {
+                    if(!$country && !$operator)
+                        $service['tariff'][] = $tariff;
+                    elseif($country && !$operator)
+                    {
+                        $country['tariff'][] = $tariff;
+                    }
+                    else
+                    {
+                        $operator['tariff'][] = $tariff;
+                    }
+                }
+
+                $serviceId = $tariffModel->service_id;
+                $countryId = $tariffModel->country_id;
+                $operatorId = $tariffModel->operator_id;
+
+                $tariff = [
+                    'price' => $tariffModel->price,
+                    'id' => $tariffModel->getPrimaryKey(),
+                    'threshold' => [
+                        'name' => $tariffModel->tariffThreshold->name,
+                        'amount' => $tariffModel->tariffThreshold->amount,
+                    ],
+                ];
+
+                $first = false;
+            }
+            if(!$country && !$operator)
+                $service['tariff'][] = $tariff;
+            elseif($country && !$operator)
+            {
+                $country['tariff'][] = $tariff;
+                $service['countries'][] = $country;
+            }
+            else
+            {
+                $operator['tariff'][] = $tariff;
+                $country['operators'][] = $operator;
+                $service['countries'][] = $country;
+            }
+            $data[] = $service;
         }
         return $data;
     }

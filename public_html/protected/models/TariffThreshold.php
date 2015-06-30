@@ -1,32 +1,24 @@
 <?php
 
 /**
- * This is the model class for table "reseller".
+ * This is the model class for table "tariff_threshold".
  *
- * The followings are the available columns in table 'reseller':
+ * The followings are the available columns in table 'tariff_threshold':
  * @property integer $id
- * @property string $login
- * @property string $password
  * @property string $name
- * @property string $organization_name
- * @property integer $status
- * @property double $balance
- * @property string $phone
- * @property string $email
- * @property string $created
+ * @property integer $amount
  *
  * The followings are the available model relations:
- * @property Site[] $sites
- * @property Style[] $styles
+ * @property Tariff[] $tariffs
  */
-class Reseller extends CActiveRecord
+class TariffThreshold extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'reseller';
+		return 'tariff_threshold';
 	}
 
 	/**
@@ -37,13 +29,12 @@ class Reseller extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('login, password, name, organization_name, status, balance, phone, email, created', 'required'),
-			array('status', 'numerical', 'integerOnly'=>true),
-			array('balance', 'numerical'),
-			array('organization_name, phone', 'length', 'max'=>45),
+			array('name, amount', 'required'),
+			array('amount', 'numerical', 'integerOnly'=>true),
+			array('name', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, login, password, name, organization_name, status, balance, phone, email, created', 'safe', 'on'=>'search'),
+			array('id, name, amount', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -55,8 +46,7 @@ class Reseller extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'sites' => array(self::HAS_MANY, 'Site', 'reseller_id'),
-			'styles' => array(self::HAS_MANY, 'Style', 'reseller_id'),
+			'tariffs' => array(self::HAS_MANY, 'Tariff', 'tariff_threshold_id'),
 		);
 	}
 
@@ -67,15 +57,8 @@ class Reseller extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'login' => 'Login',
-			'password' => 'Password',
 			'name' => 'Name',
-			'organization_name' => 'Organization Name',
-			'status' => 'Status',
-			'balance' => 'Balance',
-			'phone' => 'Phone',
-			'email' => 'Email',
-			'created' => 'Created',
+			'amount' => 'Amount',
 		);
 	}
 
@@ -98,15 +81,8 @@ class Reseller extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('login',$this->login,true);
-		$criteria->compare('password',$this->password,true);
 		$criteria->compare('name',$this->name,true);
-		$criteria->compare('organization_name',$this->organization_name,true);
-		$criteria->compare('status',$this->status);
-		$criteria->compare('balance',$this->balance);
-		$criteria->compare('phone',$this->phone,true);
-		$criteria->compare('email',$this->email,true);
-		$criteria->compare('created',$this->created,true);
+		$criteria->compare('amount',$this->amount);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -117,26 +93,10 @@ class Reseller extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Reseller the static model class
+	 * @return TariffThreshold the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
 	}
-
-    public function countUsers()
-    {
-        $usersCount = 0;
-        foreach($this->sites as $site)
-        {
-            $usersCount += count($site->users);
-        }
-
-        return $usersCount;
-    }
-
-    public function getBalance()
-    {
-        return $this->balance;
-    }
 }

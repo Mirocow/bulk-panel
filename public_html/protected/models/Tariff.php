@@ -6,16 +6,24 @@
  * The followings are the available columns in table 'tariff':
  * @property integer $id
  * @property double $price
+ * @property integer $root
+ * @property integer $package
+ * @property string $type
  * @property integer $operator_id
  * @property integer $country_id
+ * @property integer $site_id
+ * @property integer $parent_id
  * @property integer $service_id
- * @property integer $tariff_package_id
+ * @property integer $tariff_threshold_id
  *
  * The followings are the available model relations:
  * @property Service $service
  * @property Operator $operator
  * @property Country $country
- * @property TariffPackage $tariffPackage
+ * @property TariffThreshold $tariffThreshold
+ * @property Tariff $parent
+ * @property Tariff[] $tariffs
+ * @property Site $site
  */
 class Tariff extends CActiveRecord
 {
@@ -35,12 +43,13 @@ class Tariff extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('price, service_id, tariff_package_id', 'required'),
-			array('operator_id, country_id, service_id, tariff_package_id', 'numerical', 'integerOnly'=>true),
+			array('price, service_id, tariff_threshold_id', 'required'),
+			array('root, package, operator_id, country_id, site_id, parent_id, service_id, tariff_threshold_id', 'numerical', 'integerOnly'=>true),
 			array('price', 'numerical'),
+			array('type', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, price, operator_id, country_id, service_id, tariff_package_id', 'safe', 'on'=>'search'),
+			array('id, price, root, package, type, operator_id, country_id, site_id, parent_id, service_id, tariff_threshold_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -55,7 +64,10 @@ class Tariff extends CActiveRecord
 			'service' => array(self::BELONGS_TO, 'Service', 'service_id'),
 			'operator' => array(self::BELONGS_TO, 'Operator', 'operator_id'),
 			'country' => array(self::BELONGS_TO, 'Country', 'country_id'),
-			'tariffPackage' => array(self::BELONGS_TO, 'TariffPackage', 'tariff_package_id'),
+			'tariffThreshold' => array(self::BELONGS_TO, 'TariffThreshold', 'tariff_threshold_id'),
+			'parent' => array(self::BELONGS_TO, 'Tariff', 'parent_id'),
+			'tariffs' => array(self::HAS_MANY, 'Tariff', 'parent_id'),
+			'site' => array(self::BELONGS_TO, 'Site', 'site_id'),
 		);
 	}
 
@@ -67,10 +79,15 @@ class Tariff extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'price' => 'Price',
+			'root' => 'Root',
+			'package' => 'Package',
+			'type' => 'Type',
 			'operator_id' => 'Operator',
 			'country_id' => 'Country',
+			'site_id' => 'Site',
+			'parent_id' => 'Parent',
 			'service_id' => 'Service',
-			'tariff_package_id' => 'Tariff Package',
+			'tariff_threshold_id' => 'Tariff Threshold',
 		);
 	}
 
@@ -94,10 +111,15 @@ class Tariff extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('price',$this->price);
+		$criteria->compare('root',$this->root);
+		$criteria->compare('package',$this->package);
+		$criteria->compare('type',$this->type,true);
 		$criteria->compare('operator_id',$this->operator_id);
 		$criteria->compare('country_id',$this->country_id);
+		$criteria->compare('site_id',$this->site_id);
+		$criteria->compare('parent_id',$this->parent_id);
 		$criteria->compare('service_id',$this->service_id);
-		$criteria->compare('tariff_package_id',$this->tariff_package_id);
+		$criteria->compare('tariff_threshold_id',$this->tariff_threshold_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

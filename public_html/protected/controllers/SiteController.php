@@ -1,5 +1,8 @@
 <?php
-
+use \PayPal\Api\Payer;
+use \PayPal\Api\Amount;
+use \PayPal\Api\Payment;
+use \PayPal\Api\ItemList;
 class SiteController extends Controller
 {
 	public $layout='site';
@@ -122,12 +125,6 @@ class SiteController extends Controller
 
     public function actionLol()
     {
-        $apiContext = new \PayPal\Rest\ApiContext(
-            new \PayPal\Auth\OAuthTokenCredential(
-                'AYSq3RDGsmBLJE-otTkBtM-jBRd1TCQwFf9RGfwddNXWz0uFU9ztymylOhRS',     // ClientID
-                'EGnHDxD_qRPdaLdZz8iCr8N7_MzF-YHPTkjs6NKYQvQSBngp4PTTVWkPZRbL'      // ClientSecret
-            )
-        );
-
+        CVarDumper::dump(TariffHelper::getTariffs(1), 100, true);
     }
 }

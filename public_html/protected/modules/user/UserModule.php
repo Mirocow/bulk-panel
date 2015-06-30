@@ -18,8 +18,8 @@ class UserModule extends CWebModule
 	{
 		if(parent::beforeControllerAction($controller, $action))
 		{
-            if(AuthHelper::isUser() && !Yii::app()->user->isGuest)
-                Yii::app()->user->logout();
+            /*if(AuthHelper::isUser() && !Yii::app()->user->isGuest)
+                Yii::app()->user->logout();*/
 
             return Domain::isSubDomain() || true; //@todo
 		}

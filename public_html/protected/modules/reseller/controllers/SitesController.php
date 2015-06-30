@@ -57,7 +57,7 @@ class SitesController extends ResellerBaseController
         $styles = CHtml::listData(Reseller::model()->findByPk(Yii::app()->user->getId())->styles, 'id', 'title');
         array_unshift($styles, '--');
 
-        $tariffs = TariffHelper::getPackage($id);
+        $tariffs = TariffHelper::getTariffs($id);
 
         if(isset($_POST['Site']))
         {
@@ -76,19 +76,33 @@ class SitesController extends ResellerBaseController
                         $link->save();
                     }
 
+                    if(isset($_POST['Price']))
+                    {
+                        foreach($_POST['Price'] as $id=>$price)
+                        {
+                            $tariff = Tariff::model()->findByAttributes(['site_id' => Domain::getCurrentSiteId(), 'id' => $id]);
+                            if($tariff)
+                            {
+                                $tariff->price = $price;
+                                $tariff->save();
+                            }
+                        }
+                    }
+
                     if(!$model->style_id)
                         $model->style_id = null;
 
                     if($model->validate() && $model->save())
                     {
                         Yii::app()->user->setFlash('SUCCESS', 'Сайт сохранен');
-                        $this->redirect(['/reseller/sites/view/', 'id' => $id]);
+                        $this->redirect(['/reseller/sites/view/', 'id' => $model->getPrimaryKey()]);
                     }
                 }
                 else
                     Yii::app()->user->setFlash('ERROR', 'Выберите хотя бы один сервис');
             }
         }
+
         $this->render('view', compact('model', 'styles','services','activeServices', 'tariffs'));
     }
 
@@ -106,9 +120,9 @@ class SitesController extends ResellerBaseController
         $styles = CHtml::listData(Reseller::model()->findByPk(Yii::app()->user->getId())->styles, 'id', 'title');
         array_unshift($styles, '--');
 
-        $tariffs = TariffHelper::getPackage();
+        $tariffs = TariffHelper::getTariffs();
 
-        if(isset($_POST['Site']) && false)
+        if(isset($_POST['Site']))
         {
             if(isset($_POST['Services']))
             {
@@ -116,6 +130,7 @@ class SitesController extends ResellerBaseController
                 {
                     $model->attributes = $_POST['Site'];
                     $model->created = new CDbExpression('NOW()');
+                    $model->reseller_id = Yii::app()->user->getId();
 
                     if($model->validate() && $model->save())
                     {
@@ -126,6 +141,23 @@ class SitesController extends ResellerBaseController
                             $link->service_id = intval($service);
                             $link->save();
                         }
+
+                        //Добавляем тарифы сайту
+                        foreach(Tariff::model()->findAllByAttributes(['root' => 1]) as $rootTariff)
+                        {
+                            $newTariff = new Tariff();
+                            $newTariff->attributes = $rootTariff->attributes;
+                            $newTariff->root = 0;
+                            $newTariff->parent_id = $rootTariff->getPrimaryKey();
+                            $newTariff->site_id = $model->getPrimaryKey();
+                            $newTariff->type = 'SECONDARY_CLIENT';
+
+                            if(isset($_POST['Price'][$rootTariff->getPrimaryKey()]))
+                                $newTariff->price = $_POST['Price'][$rootTariff->getPrimaryKey()];
+
+                            $newTariff->save();
+                        }
+
                         Yii::app()->user->setFlash('SUCCESS', 'Новый сайт создан!');
                         $this->redirect(['/reseller/sites/index']);
                     }
@@ -133,6 +165,7 @@ class SitesController extends ResellerBaseController
                 else
                     Yii::app()->user->setFlash('ERROR', 'Выберите хотя бы один сервис');
             }
+
         }
 
         $this->render('create', compact('model', 'styles', 'services', 'tariffs'));
