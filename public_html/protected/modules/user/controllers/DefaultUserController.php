@@ -12,7 +12,7 @@ class DefaultUserController extends UserBaseController
 
 	public function actionIndex()
 	{
-        $model=new LoginForm(CUserIdentity::ROLE_USER);
+        $model=new LoginForm(AuthHelper::ROLE_USER);
 
         if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
         {
@@ -23,7 +23,7 @@ class DefaultUserController extends UserBaseController
         if(isset($_POST['LoginForm']))
         {
             $model->attributes=$_POST['LoginForm'];
-            if($model->validate() && $model->login(CUserIdentity::ROLE_USER))
+            if($model->validate() && $model->login(AuthHelper::ROLE_USER))
                 $this->redirect(['/user/campaign/index']);
         }
 

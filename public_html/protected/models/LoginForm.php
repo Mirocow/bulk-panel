@@ -46,7 +46,7 @@ class LoginForm extends CFormModel
 	 */
 	public function authenticate($attribute,$params)
 	{
-		$this->_identity = $this->getScenario() == CUserIdentity::ROLE_RESELLER ? new ResellerIdentity($this->username, $this->password) : new UserIdentity($this->username,$this->password);
+		$this->_identity = $this->getScenario() == AuthHelper::ROLE_RESELLER ? new ResellerIdentity($this->username, $this->password) : new UserIdentity($this->username,$this->password);
 		if(!$this->_identity->authenticate())
 			$this->addError('password','Неверный логин или пароль');
 	}
@@ -55,11 +55,11 @@ class LoginForm extends CFormModel
 	 * Logs in the user using the given username and password in the model.
 	 * @return boolean whether login is successful
 	 */
-	public function login($role = CUserIdentity::ROLE_RESELLER)
+	public function login($role = AuthHelper::ROLE_RESELLER)
 	{
 		if($this->_identity===null)
 		{
-			$this->_identity = $role === CUserIdentity::ROLE_RESELLER ? new ResellerIdentity($this->username, $this->password) : new UserIdentity($this->username,$this->password);
+			$this->_identity = $role === AuthHelper::ROLE_RESELLER ? new ResellerIdentity($this->username, $this->password) : new UserIdentity($this->username,$this->password);
 			$this->_identity->authenticate();
 		}
 		if($this->_identity->errorCode===UserIdentity::ERROR_NONE)

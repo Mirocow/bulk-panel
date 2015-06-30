@@ -50,7 +50,7 @@ class SiteController extends Controller
 	 */
 	public function actionLogin()
 	{
-		$model=new LoginForm(CUserIdentity::ROLE_RESELLER);
+		$model=new LoginForm(AuthHelper::ROLE_RESELLER);
 
 		// if it is ajax validation request
 		if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
@@ -64,7 +64,7 @@ class SiteController extends Controller
 		{
 			$model->attributes=$_POST['LoginForm'];
 			// validate user input and redirect to the previous page if valid
-			if($model->validate() && $model->login(CUserIdentity::ROLE_RESELLER))
+			if($model->validate() && $model->login(AuthHelper::ROLE_RESELLER))
 				$this->redirect(['/reseller/status/index']);
 		}
 		// display the login form
