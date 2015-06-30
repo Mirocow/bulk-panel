@@ -9,6 +9,6 @@ $this->breadcrumbs=array(
 
 <div class="error">
 <?php echo CHtml::encode($message); ?>
-    Line: <?php echo $line; ?> <br/>
+<?php CVarDumper::dump($error, 1000, true); ?>
 
 </div>
