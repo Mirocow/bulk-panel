@@ -26,6 +26,10 @@
                 <?php echo $form->textField($model,'name', ['class' => 'form-control', 'placeholder' => 'Иванов Иван']); ?>
             </div>
             <div class="form-group">
+                <?=$form->label($model, 'organization_name')?>
+                <?php echo $form->textField($model,'organization_name', ['class' => 'form-control', 'placeholder' => 'ООО Рога и копыта']); ?>
+            </div>
+            <div class="form-group">
                 <?=$form->label($model, 'email')?>
                 <?php echo $form->textField($model,'email', ['class' => 'form-control', 'placeholder' => 'admin@ultrasms.ru']); ?>
             </div>
