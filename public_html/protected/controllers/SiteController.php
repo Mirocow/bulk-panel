@@ -114,6 +114,11 @@ class SiteController extends Controller
         $this->render('resellerClaim', ['model' => $model]);
     }
 
+    public function actionClaimSent()
+    {
+        $this->render('claimSent');
+    }
+
 	/**
 	 * Logs out the current user and redirect to homepage.
 	 */
