@@ -18,6 +18,14 @@
                     <table class="table has-buttons">
                         <tbody>
                             <tr>
+                                <th class="text-td">Пользователь:</th>
+                                <td>
+                                    <a href="<?=$this->createUrl('/admin/users/view', ['id' => $model->user_id])?>">
+                                        <?=$model->user->name?> (ID <?=$model->id?>)
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
                                 <th class="text-td">Служба:</th>
                                 <td><?=$model->template->service->name?></td>
                             </tr>

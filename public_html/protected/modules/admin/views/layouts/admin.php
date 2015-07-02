@@ -19,6 +19,7 @@
                     'items'=>array(
                         array('label'=>'Реселлеры', 'url'=>array('/admin/reseller/index')),
                         array('label'=>'Кампании', 'url'=>array('/admin/campaign/index')),
+                        array('label'=>'Пользователи', 'url'=>array('/admin/users/index')),
                     ),
                     'htmlOptions' => ['class' => 'nav navbar-nav'],
                 )); ?>

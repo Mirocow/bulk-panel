@@ -9,6 +9,10 @@ class Html
     {
         return CHtml::link('<i class="fa fa-info"></i>', ['/reseller/users/view', 'id' => $id], ['class' => 'btn btn-xs btn-info pull-right']);
     }
+    public static function AdminGetUserButton($id)
+    {
+        return CHtml::link('<i class="fa fa-info"></i>', ['/admin/users/view', 'id' => $id], ['class' => 'btn btn-xs btn-info pull-right']);
+    }
     public static function GetResellerButton($id)
     {
         return CHtml::link('<i class="fa fa-info"></i>', ['/admin/reseller/view', 'id' => $id], ['class' => 'btn btn-xs btn-info pull-right']);
