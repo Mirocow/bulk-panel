@@ -139,4 +139,18 @@ class User extends CActiveRecord
 
         return $result;
     }
+
+    public function getSentCount()
+    {
+        /* @var $campaign Campaign */
+        $total = 0;
+        $campaigns = Campaign::model()->findAllByAttributes(['user_id' => $this->getPrimaryKey(), 'status' => Campaign::STATUS_SENT]);
+
+        foreach($campaigns as $campaign)
+        {
+            $total += $campaign->sent;
+        }
+
+        return $total;
+    }
 }

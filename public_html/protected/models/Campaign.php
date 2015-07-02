@@ -125,4 +125,5 @@ class Campaign extends CActiveRecord
 
     const STATUS_PENDING = 1;
     const STATUS_SENDING = 2;
+    const STATUS_SENT = 3;
 }

@@ -69,6 +69,41 @@ class UsersController extends ResellerBaseController
             ]
         ])->findByAttributes(['id' => $id]);
 
+        $paymentsDataProvider = new CActiveDataProvider('Transaction',[
+            'criteria'=>array(
+                'condition'=>'t.user_id = :userId',
+                'params' => [':userId' => $id]
+            ),
+            'countCriteria'=>array(
+                'condition'=>'user_id = :userId',
+                'params' => [':userId' => $id]
+            ),
+            'sort' => [
+                'defaultOrder' => 't.occurred DESC',
+                'attributes' => [
+                    'status' => [
+                        'asc' => 'status ASC',
+                        'desc' => 'status DESC',
+                    ],
+                    'in' => [
+                        'asc' => 'in ASC',
+                        'desc' => 'in DESC',
+                    ],
+                    'occurred' => [
+                        'asc' => 'occurred ASC',
+                        'desc' => 'occurred DESC',
+                    ],
+                    'method' => [
+                        'asc' => 'method ASC',
+                        'desc' => 'method DESC',
+                    ],
+                ]
+            ],
+            'pagination'=>array(
+                'pageSize'=>20,
+            ),
+        ]);
+
         if(isset($_POST['User']))
         {
             $model->attributes = $_POST['User'];
@@ -80,6 +115,6 @@ class UsersController extends ResellerBaseController
             }
         }
 
-        $this->render('view', compact('model'));
+        $this->render('view', compact('model', 'paymentsDataProvider'));
     }
 }

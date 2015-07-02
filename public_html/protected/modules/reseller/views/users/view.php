@@ -39,10 +39,65 @@
                         </div>
                     </div>
                     <div class="tab-pane" id="tab2">
-                        Статистика
+                        <div class="row">
+                            <div class="col-md-4">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <th>Баланс:</th>
+                                            <td><?=$model->getBalance()?> <i class="fa fa-rub"></i></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Сайт:</th>
+                                            <td><?=$model->site->name?></i></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Отправленных сообщений:</th>
+                                            <td><?=$model->getSentCount()?></i></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                     <div class="tab-pane" id="tab3">
-                        Баланс: <?=$model->balance;?>
+                        <h2 class="page-title">
+                            Баланс
+                            <span class="label label-success">
+                                <?=$model->getBalance()?>
+                                <i class="fa fa-rub"></i>
+                            </span>
+                        </h2>
+                        <h3>История платежей:</h3>
+
+                        <?php
+                        $this->widget('zii.widgets.grid.CGridView', array(
+                            'dataProvider' => $paymentsDataProvider,
+                            'columns'=>array(
+                                [
+                                    'header' => '',
+                                    'name' => 'in',
+                                    'value' => '$data->getType()',
+                                ],
+                                [
+                                    'header' => 'Время совершения',
+                                    'name' => 'occurred',
+                                    'value' => 'Html::SQLDateFormat($data->occurred)',
+                                ],
+                                'method',
+                                [
+                                    'name' => 'status',
+                                    'value' => '$data->getStatus()',
+                                ],
+                            ),
+                            'itemsCssClass' => 'table table-striped',
+                            'htmlOptions' => ['class' => 'items table table-striped'],
+                            'pager' => [
+                                'htmlOptions' => ['class' => 'pagination'],
+                                'selectedPageCssClass' => 'active',
+                            ]
+                        ));
+                        ?>
                     </div>
                 </div>
             </div>
