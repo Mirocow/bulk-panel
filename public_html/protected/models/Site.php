@@ -158,4 +158,12 @@ class Site extends CActiveRecord
 
         return $methods;
     }
+
+    public function getStyleContents()
+    {
+        if($this->style)
+            return $this->style->content;
+        else
+            return '';
+    }
 }

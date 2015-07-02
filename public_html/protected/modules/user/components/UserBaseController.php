@@ -1,4 +1,8 @@
 <?php
+/**
+ * @property Site $site
+ * @property User $user
+ */
 
 class UserBaseController extends Controller
 {
