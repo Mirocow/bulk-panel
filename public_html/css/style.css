@@ -2,6 +2,15 @@
   top: 1px;
   position: relative;
 }
+table.has-buttons tbody tr th.text-td,
+table.has-buttons tbody tr td.text-td {
+  text-align: right;
+}
+table.has-buttons tbody tr th.button-td,
+table.has-buttons tbody tr td.button-td {
+  padding-top: 14px;
+  text-align: right;
+}
 .qtip {
   max-width: 500px;
 }

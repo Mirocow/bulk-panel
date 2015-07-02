@@ -12,7 +12,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'dataProvider' => $dataProvider,
     'columns'=>array(
         'service.name',
-        'name',
+        'name',/*
         [
             'name' => 'total_entries',
             'value' => 'Html::NVL($data->total_entries)',
@@ -20,7 +20,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         [
             'name' => 'total_valid',
             'value' => 'Html::NVL($data->total_valid)',
-        ],
+        ],*/
         [
             'name' => 'created',
             'value' => 'Html::SQLDateFormat($data->created)',

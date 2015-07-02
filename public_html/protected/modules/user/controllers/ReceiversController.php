@@ -64,12 +64,14 @@ class ReceiversController extends UserBaseController
             $model->created = new CDbExpression('NOW()');
             $model->user_id = Yii::app()->user->getId();
 
-
             if($model->validate() && $model->save())
             {
                 $model->file = CUploadedFile::getInstance($model,'file');
                 $path = Yii::getPathOfAlias('webroot').'/files/receivers/'.$model->getPrimaryKey().'.'.$model->file->extensionName;
                 $model->file->saveAs($path);
+                $model->file_name = $model->getPrimaryKey().'.'.$model->file->extensionName;
+                $model->save(); //@todo avoid several queries
+
 
                 Yii::app()->user->setFlash('SUCCESS', 'Отправитель создан!');
                 $this->redirect(['/user/receivers/index']);

@@ -9,6 +9,10 @@ class Html
     {
         return CHtml::link('<i class="fa fa-info"></i>', ['/reseller/users/view', 'id' => $id], ['class' => 'btn btn-xs btn-info pull-right']);
     }
+    public static function GetResellerButton($id)
+    {
+        return CHtml::link('<i class="fa fa-info"></i>', ['/admin/reseller/view', 'id' => $id], ['class' => 'btn btn-xs btn-info pull-right']);
+    }
     public static function GetStyleButton($id)
     {
         return CHtml::link('<i class="fa fa-folder-open"></i>', ['/reseller/style/view', 'id' => $id], ['class' => 'btn btn-xs btn-info pull-right']);
@@ -31,6 +35,22 @@ class Html
             return '';
 
         return CHtml::link('<i class="fa fa-close"></i>', ['/user/campaign/delete', 'id' => $id], ['class' => 'btn btn-xs btn-danger pull-right']);
+    }
+    public static function GetCampaignAdminViewButton($id)
+    {
+        return CHtml::link('<i class="fa fa-info"></i>', ['/admin/campaign/view', 'id' => $id], ['class' => 'btn btn-xs btn-info pull-right']);
+    }
+    public static function GetCampaignAdminDeleteButton($id)
+    {
+        return CHtml::link('<i class="fa fa-close"></i>', ['/admin/campaign/delete', 'id' => $id], ['class' => 'btn btn-xs btn-danger pull-right delete-submit']);
+    }
+    public static function GetClaimDeclineButton($id)
+    {
+        return CHtml::link('<i class="fa fa-close"></i>', ['/admin/reseller/deleteClaim', 'id' => $id], ['class' => 'btn btn-xs btn-danger pull-right delete-submit']);
+    }
+    public static function GetClaimApproveButton($id)
+    {
+        return CHtml::link('<i class="fa fa-check"></i>', ['/admin/reseller/approveClaim', 'id' => $id], ['class' => 'btn btn-xs btn-success pull-right']);
     }
     public static function GetTemplateType($type, $class)
     {

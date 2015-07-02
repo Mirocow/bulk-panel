@@ -37,10 +37,11 @@ class Reseller extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('login, password, name, organization_name, status, balance, phone, email, created', 'required'),
+			array('login, password, name, organization_name, status, phone, email, created', 'required'),
+            array('login', 'unique'),
 			array('status', 'numerical', 'integerOnly'=>true),
 			array('balance', 'numerical'),
-			array('organization_name, phone', 'length', 'max'=>45),
+			array('login, organization_name, phone', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, login, password, name, organization_name, status, balance, phone, email, created', 'safe', 'on'=>'search'),
@@ -123,6 +124,9 @@ class Reseller extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+
+    // array('login', 'unique'),
 
     public function countUsers()
     {

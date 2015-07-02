@@ -8,6 +8,7 @@
  * @property string $name
  * @property integer $total_entries
  * @property integer $total_valid
+ * @property string $file_name
  * @property string $created
  * @property integer $user_id
  * @property integer $service_id
@@ -19,6 +20,7 @@
  */
 class Receiver extends CActiveRecord
 {
+    public $file;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -35,12 +37,13 @@ class Receiver extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, created, user_id, service_id', 'required'),
+			array('name, file_name, created, user_id, service_id', 'required'),
 			array('total_entries, total_valid, user_id, service_id', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>45),
+            array('file', 'file'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, total_entries, total_valid, created, user_id, service_id', 'safe', 'on'=>'search'),
+			array('id, name, total_entries, total_valid, file_name, created, user_id, service_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -68,6 +71,7 @@ class Receiver extends CActiveRecord
 			'name' => 'Name',
 			'total_entries' => 'Total Entries',
 			'total_valid' => 'Total Valid',
+			'file_name' => 'File Name',
 			'created' => 'Created',
 			'user_id' => 'User',
 			'service_id' => 'Service',
@@ -96,6 +100,7 @@ class Receiver extends CActiveRecord
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('total_entries',$this->total_entries);
 		$criteria->compare('total_valid',$this->total_valid);
+		$criteria->compare('file_name',$this->file_name,true);
 		$criteria->compare('created',$this->created,true);
 		$criteria->compare('user_id',$this->user_id);
 		$criteria->compare('service_id',$this->service_id);

@@ -126,4 +126,7 @@ class Campaign extends CActiveRecord
     const STATUS_PENDING = 1;
     const STATUS_SENDING = 2;
     const STATUS_SENT = 3;
+    const STATUS_DECLINED = 4;
+    const STATUS_CANCELED = 5;
+
 }

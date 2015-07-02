@@ -8,18 +8,32 @@
 
 class CampaignStatus
 {
-    const PENDING = 1;
-    const CANCELED = 2;
-    const FINISHED = 3;
+    const STATUS_PENDING = 1;
+    const STATUS_SENDING = 2;
+    const STATUS_SENT = 3;
+    const STATUS_DECLINED = 4;
+    const STATUS_CANCELED = 5;
 
     public static function getStatus($status)
     {
         switch($status)
         {
-            case self::PENDING: return 'В обработке';
-            case self::CANCELED: return 'Отменен';
-            case self::FINISHED: return 'Завершен';
+            case self::STATUS_PENDING: return 'В обработке';
+            case self::STATUS_SENDING: return 'Отправляется';
+            case self::STATUS_SENT: return 'Отправлена';
+            case self::STATUS_DECLINED: return 'Отклонена';
+            case self::STATUS_CANCELED: return 'Отменена';
             default: return 'Свяжитесь с нами';
         }
+    }
+    public static function getStatuses()
+    {
+        return [
+            self::STATUS_PENDING => 'В обработке',
+            self::STATUS_SENDING => 'Отправляется',
+            self::STATUS_SENT => 'Отправлена',
+            self::STATUS_DECLINED => 'Отклонена',
+            self::STATUS_CANCELED => 'Отменена',
+        ];
     }
 }

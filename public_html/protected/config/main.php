@@ -33,7 +33,9 @@ return array(
             'defaultController' => 'defaultUser'
         ],
         'transaction',
-        'admin',
+        'admin' => [
+            'defaultController' => 'adminDefault',
+        ],
     ),
 	'defaultController'=>'site',
 	// application components
