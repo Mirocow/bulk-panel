@@ -28,10 +28,10 @@
                             'url' => ['#'],
                             'visible' => Yii::app()->user->isGuest,
                             'items' => [
-                                [
+                                /*[
                                     'label' => 'Как клиент',
                                     'url' => ['site/register'],
-                                ],
+                                ],*/
                                 [
                                     'label' => 'Как реселлер',
                                     'url' => ['site/resellerClaim'],
