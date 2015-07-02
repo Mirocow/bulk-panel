@@ -66,6 +66,8 @@ class SitesController extends ResellerBaseController
                 if(count($_POST['Services']) > 0)
                 {
                     $model->attributes = $_POST['Site'];
+                    if(intval($model->style_id) === 0)
+                        $model->style_id = null;
                     SiteHasService::model()->deleteAllByAttributes(['site_id' => $id]);
 
                     foreach($_POST['Services'] as $service)
@@ -131,6 +133,8 @@ class SitesController extends ResellerBaseController
                     $model->attributes = $_POST['Site'];
                     $model->created = new CDbExpression('NOW()');
                     $model->reseller_id = Yii::app()->user->getId();
+                    if(intval($model->style_id) === 0)
+                        $model->style_id = null;
 
                     if($model->validate() && $model->save())
                     {
