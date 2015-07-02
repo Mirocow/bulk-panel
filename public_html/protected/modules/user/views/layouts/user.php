@@ -1,7 +1,7 @@
 <?php
 /* @var $this UserBaseController */
 
-Yii::app()->clientScript->registerCass('resellerCss', $this->site->getStyleContents());
+Yii::app()->clientScript->registerCss('resellerCss', $this->site->getStyleContents());
 ?>
 <?php $this->beginContent('//layouts/main'); ?>
     <nav class="navbar navbar-default">
