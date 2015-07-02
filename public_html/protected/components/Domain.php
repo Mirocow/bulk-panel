@@ -27,7 +27,7 @@ class Domain
     {
         $host = Domain::getDomain();
 
-        if(in_array($_SERVER['REMOTE_ADDR'], Domain::remoteAddrs()) || in_array('*', Domain::remoteAddrs()))
+        if(in_array($_SERVER['REMOTE_ADDR'], Domain::remoteAddrs()))
             return Site::model()->findByPk(1);
         else
             return Site::model()->findByAttributes(['domain' => $host]);
@@ -46,6 +46,6 @@ class Domain
     }
     public static function remoteAddrs()
     {
-        return ['127.0.0.1', '::1', '*'];
+        return ['127.0.0.1'];
     }
 }

@@ -26,6 +26,12 @@ class SiteController extends Controller
 		);
 	}
 
+    public function filters() {
+        return [
+            ['application.filters.SiteFilter -logout,error'],
+        ];
+    }
+
     public function actionIndex()
     {
         $this->render('index');

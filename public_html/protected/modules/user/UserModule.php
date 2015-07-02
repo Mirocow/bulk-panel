@@ -21,7 +21,7 @@ class UserModule extends CWebModule
             /*if(AuthHelper::isUser() && !Yii::app()->user->isGuest)
                 Yii::app()->user->logout();*/
 
-            return Domain::isSubDomain() || true; //@todo
+            return Domain::isSubDomain(); //@todo
 		}
 		else
 			return false;
