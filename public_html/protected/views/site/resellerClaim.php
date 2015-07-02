@@ -38,7 +38,7 @@
                 <?php echo $form->textField($model,'phone', ['class' => 'form-control', 'placeholder' => '+79031234500']); ?>
             </div>
             <div class="form-group text-center">
-                <button class="btn btn-lg btn-success" type="submit"><i class="fa fa-check"></i> Зарегистрироваться</button>
+                <button class="btn btn-lg btn-success" type="submit"><i class="fa fa-check"></i> Отправить заявку</button>
             </div>
             <?php $this->endWidget(); ?>
         </div>
