@@ -8,15 +8,15 @@ class AuthHelper
 
     public static function isReseller()
     {
-        return Yii::app()->user->getState('role') === 'RESELLER';
+        return Yii::app()->user->getState('role') === self::ROLE_RESELLER;
     }
     public static function isUser()
     {
-        return Yii::app()->user->getState('role') === 'USER';
+        return Yii::app()->user->getState('role') === self::ROLE_USER;
     }
     public static function isAdmin()
     {
-        return Yii::app()->user->getState('role') === 'ADMIN';
+        return Yii::app()->user->getState('role') === self::ROLE_ADMIN;
     }
 
     public static function getIdentity($role, $username, $password)

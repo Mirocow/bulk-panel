@@ -19,7 +19,7 @@ class ResellerIdentity extends CUserIdentity
         {
             $this->_id=$user->id;
             $this->username=$user->login;
-            $this->setState('role', 'RESELLER');
+            $this->setState('role', AuthHelper::ROLE_RESELLER);
             $this->errorCode=self::ERROR_NONE;
         }
         return $this->errorCode==self::ERROR_NONE;

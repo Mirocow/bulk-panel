@@ -31,7 +31,7 @@ class UserIdentity extends CUserIdentity
 		{
 			$this->_id=$user->id;
 			$this->username=$user->login;
-            $this->setState('role', 'USER');
+            $this->setState('role', AuthHelper::ROLE_USER);
 			$this->errorCode=self::ERROR_NONE;
 
             $user->last_login = new CDbExpression('NOW()');
