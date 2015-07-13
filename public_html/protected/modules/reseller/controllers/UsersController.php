@@ -58,6 +58,8 @@ class UsersController extends ResellerBaseController
     }
     public function actionView($id)
     {
+        $transaction = new Transaction();
+
         $model = User::model()->with([
             'site' => [
                 'with' => [
@@ -68,6 +70,9 @@ class UsersController extends ResellerBaseController
                 ]
             ]
         ])->findByAttributes(['id' => $id]);
+
+        if(!$model)
+            throw new CHttpException(404);
 
         $paymentsDataProvider = new CActiveDataProvider('Transaction',[
             'criteria'=>array(
@@ -84,6 +89,10 @@ class UsersController extends ResellerBaseController
                     'status' => [
                         'asc' => 'status ASC',
                         'desc' => 'status DESC',
+                    ],
+                    'amount' => [
+                        'asc' => 'amount ASC',
+                        'desc' => 'amount DESC',
                     ],
                     'in' => [
                         'asc' => 'in ASC',
@@ -115,6 +124,20 @@ class UsersController extends ResellerBaseController
             }
         }
 
-        $this->render('view', compact('model', 'paymentsDataProvider'));
+        if(isset($_POST['Transaction']))
+        {
+            $transaction->attributes = $_POST['Transaction'];
+            $transaction->method = '';
+            $transaction->occurred = new CDbExpression('NOW()');
+            $transaction->status = Transaction::STATUS_COMPLETE;
+            $transaction->user_id = $id;
+            if($transaction->validate() && $transaction->save())
+            {
+                Yii::app()->user->setFlash('SUCCESS', 'Сохранено');
+                $this->redirect(['/reseller/users/view', 'id' => $id]);
+            }
+        }
+
+        $this->render('view', compact('model', 'paymentsDataProvider', 'transaction'));
     }
 }
