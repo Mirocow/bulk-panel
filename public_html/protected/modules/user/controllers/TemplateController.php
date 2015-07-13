@@ -110,7 +110,7 @@ class TemplateController extends UserBaseController
     {
         Template::model()->deleteAllByAttributes(['id' => $id, 'user_id' => Yii::app()->user->getId()]);
         Yii::app()->user->setFlash('SUCCESS', 'Шаблон удален!');
-        $this->redirect(['/user/templates/index/']);
+        $this->redirect(['/user/template/index/']);
     }
 
     public function actionCreate()
