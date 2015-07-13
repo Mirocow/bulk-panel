@@ -66,7 +66,8 @@ class TemplateController extends UserBaseController
         $types = CHtml::listData($serviceModels[0]->templateTypes,'id','name');
         $typesListData = json_encode(ModelHelper::getTypeListData());
 
-        $senders = CHtml::listData(User::model()->findByPk(Yii::app()->user->getId())->senders,'id','name');
+        $senderModels = Sender::model()->findByAttributes(['service_id' => $serviceModels[0]->id, 'user_id' => Yii::app()->user->getId()]);
+        $sendersListData = json_encode(ModelHelper::getSenderListData($serviceModels[0]->id));
 
         if(isset($_POST['Template']))
         {
@@ -102,7 +103,7 @@ class TemplateController extends UserBaseController
 
         $mainForm = $this->actionGetView($model->id, $model->service_id, $model->template_type_id, false);
 
-        $this->render('view', compact('model','services', 'servicesArray', 'types', 'typesListData', 'senders', 'mainForm'));
+        $this->render('view', compact('model','services', 'servicesArray', 'types', 'typesListData', 'sendersListData', 'mainForm'));
     }
 
     public function actionDelete($id)

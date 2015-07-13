@@ -6,7 +6,7 @@
 /* @var $mainForm string */
 /* @var $typesListData string */
 /* @var $types string[] */
-/* @var $senders string[] */
+/* @var $sendersListData string */
 ?>
 <script>
     var services = JSON.parse('<?=$services?>');
@@ -14,6 +14,8 @@
     var modelId = <?=$model->id?>;
     var serviceId = <?=$model->service_id?>;
     var typeId = <?=$model->template_type_id?>;
+    var senderId = <?=$model->sender_id?>;
+    var sendersListData = JSON.parse('<?=$sendersListData?>');
 </script>
 <?php $this->showMessages($model); ?>
 <div class="row">
@@ -45,7 +47,7 @@
             </div>
             <div class="form-group">
                 <?=$form->label($model, 'sender_id')?>
-                <?php echo $form->dropDownList($model, 'sender_id', $senders, ['class' => 'form-control']); ?>
+                <?php echo $form->dropDownList($model, 'sender_id', [], ['class' => 'form-control', 'id' => 'sender-select']); ?>
             </div>
             <div class="main-form">
                 <?=$mainForm?>
@@ -53,7 +55,7 @@
         </div>
         <div class="panel-footer">
             <button type="submit" class="btn btn-success"><i class="fa fa-save"></i></button>
-            <a href="<?=$this->createUrl('/user/sender/delete', ['id' => $model->id])?>" class="btn btn-danger pull-right delete-submit"><i class="fa fa-close"></i></a>
+            <a href="<?=$this->createUrl('/user/template/delete', ['id' => $model->id])?>" class="btn btn-danger pull-right delete-submit"><i class="fa fa-close"></i></a>
         </div>
     </div>
     <?php $this->endWidget(); ?>
@@ -78,6 +80,14 @@
             data: typesListData
         }).val(typeId).trigger('change');
 
+        $('#sender-select').select2({
+            escapeMarkup: function (markup) { return markup; },
+            templateResult: formatSender,
+            templateSelection: formatSender,
+            allowClear: false,
+            data: sendersListData
+        }).val(senderId).trigger('change');
+
 
         $('#type-select, #service-select').change(function(e){
             var currentType = $('#type-select').val();
@@ -87,6 +97,21 @@
                 Yii.app.createUrl('/user/template/getView', {id: modelId, type: currentType, service: currentService})
             ).done(function(form){
                 $('.main-form').html(form);
+            });
+
+            $.get(
+                Yii.app.createUrl('user/senders/getJson', {service_id: currentService})
+            ).done(function(senders){
+                $("#sender-select").select2("destroy");
+                $("#sender-select").html("");
+
+                $('#sender-select').select2({
+                    escapeMarkup: function (markup) { return markup; },
+                    templateResult: formatSender,
+                    templateSelection: formatSender,
+                    allowClear: false,
+                    data: JSON.parse(senders)
+                });
             });
         });
     });
