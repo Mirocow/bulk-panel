@@ -6,6 +6,7 @@
 /* @var $service string */
 /* @var $mainForm string */
 /* @var $typesListData string */
+/* @var $sendersListData string */
 /* @var $types string[] */
 /* @var $type string */
 /* @var $senders string[] */
@@ -13,6 +14,7 @@
 <script>
     var services = JSON.parse('<?=$services?>');
     var typesListData = JSON.parse('<?=$typesListData?>');
+    var sendersListData = JSON.parse('<?=$sendersListData?>');
     var modelId = null;
     var serviceId = <?=$service?>;
     var typeId = <?=$type?>;
@@ -47,7 +49,7 @@
             </div>
             <div class="form-group">
                 <?=$form->label($model, 'sender_id')?>
-                <?php echo $form->dropDownList($model, 'sender_id', $senders, ['class' => 'form-control']); ?>
+                <?php echo $form->dropDownList($model, 'sender_id', [], ['class' => 'form-control', 'id' => 'sender-select']); ?>
             </div>
             <div class="main-form">
                 <?=$mainForm?>
@@ -80,6 +82,14 @@
             data: typesListData
         }).val(typeId).trigger('change');
 
+        $('#sender-select').select2({
+            escapeMarkup: function (markup) { return markup; },
+            templateResult: formatSender,
+            templateSelection: formatSender,
+            allowClear: false,
+            data: sendersListData
+        });
+
 
         $('#type-select, #service-select').change(function(e){
             var currentType = $('#type-select').val();
@@ -100,5 +110,9 @@
     function formatType (type) {
         if (type.loading) return type.text;
         return '<span class="type-option"><i class="' + type.class + '"></i><span class="type-name"> ' + type.text + '</span></span>';
+    }
+    function formatSender (sender) {
+        if (sender.loading) return sender.text;
+        return '<span class="type-name"> ' + sender.text + '</span>';
     }
 </script>

@@ -105,4 +105,9 @@ class SendersController extends UserBaseController
 
         $this->render('create', compact('model','services'));
     }
+
+    public function getJson($service_id)
+    {
+        return json_encode(ModelHelper::getServiceListData($service_id));
+    }
 }

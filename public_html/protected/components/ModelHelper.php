@@ -30,6 +30,16 @@ class ModelHelper
 
         return $listData;
     }
+    public static function getSenderListData($service_id)
+    {
+        $senders = Sender::model()->findByAttributes(['service_id' => $service_id, 'user_id' => Yii::app()->user->getId()]);
+
+        $listData = [];
+        foreach($senders as $sender)
+            $listData[] = ['id' => $sender->id, 'text' => $sender->name];
+
+        return $listData;
+    }
     public static function getReceiverListData($serviceId = null)
     {
         $params = ['user_id' => Yii::app()->user->getId()];
