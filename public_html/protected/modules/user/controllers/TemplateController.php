@@ -126,6 +126,12 @@ class TemplateController extends UserBaseController
         $service = $serviceModels[0]->getPrimaryKey();
         $type = $serviceModels[0]->templateTypes[0]->getPrimaryKey();
 
+        if(count($senders) == 0)
+        {
+            Yii::app()->user->setFlash('ERROR', 'Добавьте хотя бы одного отправителя');
+            $this->redirect(['/user/senders/index']);
+        }
+
         if(isset($_POST['Template']))
         {
             $model->attributes = $_POST['Template'];
