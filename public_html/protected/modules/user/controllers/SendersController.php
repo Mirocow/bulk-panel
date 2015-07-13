@@ -69,7 +69,23 @@ class SendersController extends UserBaseController
 
     public function actionDelete($id)
     {
-        Sender::model()->deleteAllByAttributes(['id' => $id]); //@todo Проверить на права
+        $sender = Sender::model()->findByAttributes(['id' => $id, 'user_id' => Yii::app()->user->getId()]);
+        if(!$sender)
+            $this->redirect(['/user/senders/index/']);
+
+        foreach($sender->templates as $template)
+        {
+            foreach($template->campaigns as $campaign)
+            {
+                if($campaign->status == Campaign::STATUS_PENDING)
+                {
+                    Yii::app()->user->setFlash('ERROR', 'Данный отправитель используется одной из кампаний');
+                    $this->redirect(['/user/senders/index/']);
+                    die();
+                }
+            }
+        }
+        $sender->delete();
         Yii::app()->user->setFlash('SUCCESS', 'Отправитель удален!');
         $this->redirect(['/user/senders/index/']);
     }

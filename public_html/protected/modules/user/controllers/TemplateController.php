@@ -108,7 +108,22 @@ class TemplateController extends UserBaseController
 
     public function actionDelete($id)
     {
-        Template::model()->deleteAllByAttributes(['id' => $id, 'user_id' => Yii::app()->user->getId()]);
+        $template = Template::model()->findByAttributes(['id' => $id, 'user_id' => Yii::app()->user->getId()]);
+
+        if(!$template)
+            $this->redirect(['/user/template/index/']);
+
+        foreach($template->campaigns as $campaign)
+        {
+            if($campaign->status == Campaign::STATUS_PENDING)
+            {
+                Yii::app()->user->setFlash('ERROR', 'Данный шаблон используется одной из кампаний');
+                $this->redirect(['/user/template/index/']);
+                die();
+            }
+        }
+
+        $template->delete();
         Yii::app()->user->setFlash('SUCCESS', 'Шаблон удален!');
         $this->redirect(['/user/template/index/']);
     }
