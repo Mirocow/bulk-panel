@@ -75,10 +75,10 @@ class CampaignController extends UserBaseController
                 Yii::app()->user->setFlash('SUCCESS', 'Кампания удалена!');
             }
             else {
-                Yii::app()->user->setFlash('ERROR', 'Нельзя удалить компанию, которая в рассылке');
+                Yii::app()->user->setFlash('ERROR', 'В данный момент кампанию удалить нельзя');
             }
         }
-        $this->redirect(['/user/senders/index/']);
+        $this->redirect(['/user/campaign/index/']);
     }
 
     public function actionCreate()
