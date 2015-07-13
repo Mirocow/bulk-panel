@@ -36,7 +36,7 @@ class ModelHelper
 
         $listData = [];
         foreach($senders as $sender)
-            $listData[] = ['id' => $sender->id, 'text' => $sender->name];
+            $listData[] = ['id' => intval($sender->id), 'text' => $sender->name];
 
         return $listData;
     }

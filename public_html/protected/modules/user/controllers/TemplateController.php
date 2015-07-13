@@ -121,13 +121,13 @@ class TemplateController extends UserBaseController
         $types = CHtml::listData($serviceModels[0]->templateTypes,'id','name');
         $typesListData = json_encode(ModelHelper::getTypeListData());
 
-        $senders = CHtml::listData(Sender::model()->findByAttributes(['service_id' => $serviceModels[0]->id, 'user_id' => Yii::app()->user->getId()]),'id','name');
+        $senderModels = Sender::model()->findByAttributes(['service_id' => $serviceModels[0]->id, 'user_id' => Yii::app()->user->getId()]);
         $sendersListData = json_encode(ModelHelper::getSenderListData($serviceModels[0]->id));
 
         $service = $serviceModels[0]->getPrimaryKey();
         $type = $serviceModels[0]->templateTypes[0]->getPrimaryKey();
 
-        if(count($senders) == 0)
+        if(count($senderModels) == 0)
         {
             Yii::app()->user->setFlash('ERROR', 'Добавьте хотя бы одного отправителя');
             $this->redirect(['/user/senders/index']);
@@ -169,7 +169,7 @@ class TemplateController extends UserBaseController
 
         $mainForm = $this->actionGetView($service, $type, null, false, $model);
 
-        $this->render('create', compact('model','services', 'servicesArray', 'types', 'typesListData', 'senders', 'mainForm', 'service', 'type', 'sendersListData'));
+        $this->render('create', compact('model','services', 'servicesArray', 'types', 'typesListData', 'mainForm', 'service', 'type', 'sendersListData'));
     }
 
     public function actionGetView($service, $type, $id = null, $render = true, $currentModel = null)

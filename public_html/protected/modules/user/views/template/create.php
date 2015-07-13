@@ -9,7 +9,6 @@
 /* @var $sendersListData string */
 /* @var $types string[] */
 /* @var $type string */
-/* @var $senders string[] */
 ?>
 <script>
     var services = JSON.parse('<?=$services?>');
@@ -87,7 +86,7 @@
             templateResult: formatSender,
             templateSelection: formatSender,
             allowClear: false,
-            data: function() { return {results: sendersListData}; }
+            data: sendersListData
         });
 
 
@@ -96,15 +95,24 @@
             var currentService = $('#service-select').val();
 
             $.get(
-                Yii.app.createUrl('/user/template/getView', {id: modelId, type: currentType, service: currentService})
+                Yii.app.createUrl('user/template/getView', {id: modelId, type: currentType, service: currentService})
             ).done(function(form){
                 $('.main-form').html(form);
             });
 
             $.get(
-                Yii.app.createUrl('/user/senders/getJson', {service_id: currentService})
+                Yii.app.createUrl('user/senders/getJson', {service_id: currentService})
             ).done(function(senders){
-                sendersListData = JSON.parse(senders);
+                $("#sender-select").select2("destroy");
+                $("#sender-select").html("");
+
+                $('#sender-select').select2({
+                    escapeMarkup: function (markup) { return markup; },
+                    templateResult: formatSender,
+                    templateSelection: formatSender,
+                    allowClear: false,
+                    data: JSON.parse(senders)
+                });
             });
         });
     });
