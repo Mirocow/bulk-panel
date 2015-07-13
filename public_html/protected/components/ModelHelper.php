@@ -32,7 +32,7 @@ class ModelHelper
     }
     public static function getSenderListData($service_id)
     {
-        $senders = Sender::model()->findByAttributes(['service_id' => $service_id, 'user_id' => Yii::app()->user->getId()]);
+        $senders = Sender::model()->findAllByAttributes(['service_id' => $service_id, 'user_id' => Yii::app()->user->getId()]);
 
         $listData = [];
         foreach($senders as $sender)
