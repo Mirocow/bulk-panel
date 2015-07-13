@@ -63,6 +63,7 @@ class ReceiversController extends UserBaseController
             $model->attributes = $_POST['Receiver'];
             $model->created = new CDbExpression('NOW()');
             $model->user_id = Yii::app()->user->getId();
+            $model->file_name = 'none';
 
             if($model->validate() && $model->save())
             {
