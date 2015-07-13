@@ -138,6 +138,7 @@ class TemplateController extends UserBaseController
             $model->attributes = $_POST['Template'];
             $model->created = new CDbExpression('NOW()');
             $model->status = TemplateStatus::PENDING;
+            $model->user_id = Yii::app()->user->getId();
 
             if(empty($_FILES['Template']['name']['file']) && $model->templateType->attachment == 1)
             {
