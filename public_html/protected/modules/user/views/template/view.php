@@ -124,4 +124,8 @@
         if (type.loading) return type.text;
         return '<span class="type-option"><i class="' + type.class + '"></i><span class="type-name"> ' + type.text + '</span></span>';
     }
+    function formatSender (sender) {
+        if (sender.loading) return sender.text;
+        return '<span class="type-name"> ' + sender.text + '</span>';
+    }
 </script>
