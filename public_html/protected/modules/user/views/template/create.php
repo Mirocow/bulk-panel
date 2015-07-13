@@ -87,7 +87,7 @@
             templateResult: formatSender,
             templateSelection: formatSender,
             allowClear: false,
-            data: sendersListData
+            data: function() { return {results: sendersListData}; }
         });
 
 
@@ -99,6 +99,12 @@
                 Yii.app.createUrl('/user/template/getView', {id: modelId, type: currentType, service: currentService})
             ).done(function(form){
                 $('.main-form').html(form);
+            });
+
+            $.get(
+                Yii.app.createUrl('/user/senders/getJson', {service_id: currentService})
+            ).done(function(senders){
+                sendersListData = JSON.parse(senders);
             });
         });
     });
