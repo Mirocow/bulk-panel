@@ -4,7 +4,6 @@
 /* @var $form CActiveForm */
 ?>
 <h2>Оставьте заявку</h2>
-<?php $this->showMessages($model); ?>
 <div class="container">
     <div class="row">
         <?php $this->showMessages($model) ?>
