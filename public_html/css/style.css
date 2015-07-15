@@ -148,3 +148,18 @@ table.has-buttons tbody tr td.button-td {
 .pager .pagination .next > a {
   float: left;
 }
+/** FOOTER **/
+body {
+  margin-bottom: 60px;
+}
+body .footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+  background-color: #f5f5f5;
+}
+body .footer .container .copyright {
+  margin: 20px 0;
+  text-align: center;
+}

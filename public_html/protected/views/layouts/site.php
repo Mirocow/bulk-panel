@@ -87,4 +87,11 @@
     <div class="container">
         <?=$content;?>
     </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="copyright">
+                <p>&copy; 2015 BULKRESELLER.RU</p>
+            </div>
+        </div>
+    </footer>
 <?php $this->endContent(); ?>
