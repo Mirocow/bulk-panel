@@ -84,7 +84,7 @@
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
-    <div class="container">
+    <div class="container wrapper">
         <?=$content;?>
     </div>
     <footer class="footer">
