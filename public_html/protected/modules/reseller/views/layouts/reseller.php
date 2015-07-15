@@ -10,7 +10,9 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="<?=$this->createUrl('/reseller/status/index')?>"><i class="fa fa-envelope-o"></i> BulkReseller</a>
+                <a class="navbar-brand" href="<?=$this->createUrl('/site/index')?>">
+                    <img alt="Brand" src="<?=Yii::app()->request->baseUrl?>/images/navlogo.png">
+                </a>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <?php $this->widget('zii.widgets.CMenu',array(

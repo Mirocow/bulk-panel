@@ -23,6 +23,8 @@
 </head>
 
 <body>
-	<?php echo $content; ?>
+    <div class="wrapper">
+        <?php echo $content; ?>
+    </div>
 </body>
 </html>

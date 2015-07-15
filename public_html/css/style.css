@@ -1,6 +1,15 @@
 .no-bullets {
   list-style-type: none;
 }
+.land-image {
+  background-color: #F7F4EF;
+  margin-top: -18px;
+}
+.land-image .text {
+  padding-top: 98px;
+  font-size: 34px;
+  text-align: center;
+}
 .payment-methods li img {
   max-width: 100px;
 }
@@ -15,6 +24,15 @@
 }
 .navbar {
   border-radius: 0;
+}
+.navbar .navbar-header .navbar-brand {
+  padding: 0 15px;
+}
+.navbar .navbar-header .navbar-brand img {
+  width: 145px;
+}
+.navbar.navbar-inverse {
+  background-color: #C32A20;
 }
 .navbar .navbar-nav .total-balance i {
   top: 1px;
