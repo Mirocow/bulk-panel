@@ -4,17 +4,21 @@ class RobokassaController extends Controller
 {
     public function actionResult()
     {
-        var_dump($_REQUEST);
-        die();
-        $robokassa = new Robokassa();
-        if($robokassa->valid($_REQUEST))
-        {
-            $transaction = Transaction::model()->findByPk($robokassa->transaction);
-            $transaction->status = Transaction::STATUS_COMPLETE;
-            $transaction->in = 1;
-            $transaction->method = 'ROBOKASSA';
+        $transaction = Transaction::model()->findByPk($_REQUEST['Shp_transaction']);
 
-            $transaction->save();
+        if($transaction)
+        {
+            $robokassa = new Robokassa($transaction->user->site_id);
+
+            if($robokassa->valid($_REQUEST))
+            {
+                $transaction = Transaction::model()->findByPk($robokassa->transaction);
+                $transaction->status = Transaction::STATUS_COMPLETE;
+                $transaction->in = 1;
+                $transaction->method = 'ROBOKASSA';
+
+                $transaction->save();
+            }
         }
     }
     public function actionSuccess()
