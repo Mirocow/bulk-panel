@@ -8,6 +8,7 @@ class RobokassaController extends Controller
 
         if($transaction)
         {
+            var_dump($transaction->user->site_id);die();
             $robokassa = new Robokassa($transaction->user->site_id);
 
             if($robokassa->valid($_REQUEST))
