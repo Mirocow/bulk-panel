@@ -46,6 +46,11 @@
                                 'url' => ['reseller/sites/index'],
                                 'visible' => AuthHelper::isReseller(),
                             ],
+                            [
+                                'label'=>'Кабинет клиента',
+                                'url' => ['client/campaign/index'],
+                                'visible' => AuthHelper::isClient(),
+                            ],
                         ],
                         'submenuHtmlOptions' => ['class' => 'dropdown-menu'],
                         'htmlOptions' => ['class' => 'nav navbar-nav'],
