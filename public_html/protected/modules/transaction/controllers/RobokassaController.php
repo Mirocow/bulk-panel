@@ -5,7 +5,7 @@ class RobokassaController extends Controller
     public function actionResult()
     {
         $robokassa = new Robokassa();
-
+        var_dump($_REQUEST);
         if($robokassa->valid($_REQUEST))
         {
             $transaction = Transaction::model()->findByPk($robokassa->transaction);
