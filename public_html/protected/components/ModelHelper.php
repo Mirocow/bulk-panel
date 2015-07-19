@@ -13,16 +13,19 @@ class ModelHelper
         if($id !== null)
             $services = Site::model()->findByPk($id)->services;
         else
-            $services = Service::model()->findAll();
+            $services = Service::getActive();
         $listData = [];
         foreach($services as $service)
             $listData[] = ['id' => $service->id, 'text' => $service->name, 'icon' => 'service-icon '.$service->icon, 'color' => $service->color];
 
         return $listData;
     }
-    public static function getTypeListData()
+    public static function getTypeListData($id = null)
     {
-        $templateTypes = Domain::getCurrentSite()->services[0]->templateTypes; //@todo Optimize
+        if($id)
+            $templateTypes = Site::model()->findByPk($id)->services[0]->templateTypes; //@todo Optimize
+        else
+            $templateTypes = Service::getActive()[0]->templateTypes;
 
         $listData = [];
         foreach($templateTypes as $templateType)

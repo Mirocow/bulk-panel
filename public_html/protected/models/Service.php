@@ -109,4 +109,9 @@ class Service extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+    public static function getActive()
+    {
+        return self::model()->findAllByAttributes(['active' => 1]);
+    }
 }

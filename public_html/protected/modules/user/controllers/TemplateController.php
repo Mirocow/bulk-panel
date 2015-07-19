@@ -64,7 +64,7 @@ class TemplateController extends UserBaseController
         $services = json_encode(ModelHelper::getServiceListData(Domain::getCurrentSiteId()));
 
         $types = CHtml::listData($serviceModels[0]->templateTypes,'id','name');
-        $typesListData = json_encode(ModelHelper::getTypeListData());
+        $typesListData = json_encode(ModelHelper::getTypeListData(Domain::getCurrentSiteId()));
 
         $senderModels = Sender::model()->findByAttributes(['service_id' => $serviceModels[0]->id, 'user_id' => Yii::app()->user->getId()]);
         $sendersListData = json_encode(ModelHelper::getSenderListData($serviceModels[0]->id));
@@ -135,7 +135,7 @@ class TemplateController extends UserBaseController
         $services = json_encode(ModelHelper::getServiceListData(Domain::getCurrentSiteId()));
 
         $types = CHtml::listData($serviceModels[0]->templateTypes,'id','name');
-        $typesListData = json_encode(ModelHelper::getTypeListData());
+        $typesListData = json_encode(ModelHelper::getTypeListData(Domain::getCurrentSiteId()));
 
         $senderModels = Sender::model()->findByAttributes(['service_id' => $serviceModels[0]->id, 'user_id' => Yii::app()->user->getId()]);
         $sendersListData = json_encode(ModelHelper::getSenderListData($serviceModels[0]->id));

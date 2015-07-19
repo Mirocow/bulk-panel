@@ -21,24 +21,28 @@ class Html
     {
         return CHtml::link('<i class="fa fa-folder-open"></i>', ['/reseller/style/view', 'id' => $id], ['class' => 'btn btn-xs btn-info pull-right']);
     }
-    public static function GetSenderButton($id)
+    public static function GetSenderButton($id, $client = false)
     {
-        return CHtml::link('<i class="fa fa-folder-open"></i>', ['/user/senders/view', 'id' => $id], ['class' => 'btn btn-xs btn-info pull-right']);
+        $url = $client ? '/client/senders/view' : '/user/senders/view';
+        return CHtml::link('<i class="fa fa-folder-open"></i>', [$url, 'id' => $id], ['class' => 'btn btn-xs btn-info pull-right']);
     }
-    public static function GetTemplateButton($id)
+    public static function GetTemplateButton($id, $client = false)
     {
-        return CHtml::link('<i class="fa fa-folder-open"></i>', ['/user/template/view', 'id' => $id], ['class' => 'btn btn-xs btn-info pull-right']);
+        $url = $client ? '/client/template/view' : '/user/template/view';
+        return CHtml::link('<i class="fa fa-folder-open"></i>', [$url, 'id' => $id], ['class' => 'btn btn-xs btn-info pull-right']);
     }
-    public static function GetReceiversDeleteButton($id)
+    public static function GetReceiversDeleteButton($id, $client = false)
     {
-        return CHtml::link('<i class="fa fa-close"></i>', ['/user/receivers/delete', 'id' => $id], ['class' => 'btn btn-xs btn-danger pull-right']);
+        $url = $client ? '/client/receivers/delete' : '/user/receivers/delete';
+        return CHtml::link('<i class="fa fa-close"></i>', [$url, 'id' => $id], ['class' => 'btn btn-xs btn-danger pull-right']);
     }
-    public static function GetCampaignDeleteButton($id, $status)
+    public static function GetCampaignDeleteButton($id, $status, $client = false)
     {
+        $url = $client ? '/client/campaign/delete' : '/user/campaign/delete';
         if($status == Campaign::STATUS_SENDING)
             return '';
 
-        return CHtml::link('<i class="fa fa-close"></i>', ['/user/campaign/delete', 'id' => $id], ['class' => 'btn btn-xs btn-danger pull-right']);
+        return CHtml::link('<i class="fa fa-close"></i>', [$url, 'id' => $id], ['class' => 'btn btn-xs btn-danger pull-right']);
     }
     public static function GetCampaignAdminViewButton($id)
     {

@@ -19,11 +19,31 @@ class RobokassaController extends Controller
     public function actionSuccess()
     {
         Yii::app()->user->setFlash('SUCCESS', 'Платеж успешно произведен');
-        $this->redirect(['/user/payment/index']);
+
+        $url = '/';
+
+        switch(AuthHelper::getRole())
+        {
+            case AuthHelper::ROLE_USER: $url = '/user/payment/index'; break;
+            case AuthHelper::ROLE_CLIENT: $url = '/client/payment/index'; break;
+            default: $url = '/';
+        }
+
+        $this->redirect([$url]);
     }
     public function actionFail()
     {
         Yii::app()->user->setFlash('ERROR', 'Ошибка при совершении платежа');
-        $this->redirect(['/user/payment/index']);
+
+        $url = '/';
+
+        switch(AuthHelper::getRole())
+        {
+            case AuthHelper::ROLE_USER: $url = '/user/payment/index'; break;
+            case AuthHelper::ROLE_CLIENT: $url = '/client/payment/index'; break;
+            default: $url = '/';
+        }
+
+        $this->redirect([$url]);
     }
 }

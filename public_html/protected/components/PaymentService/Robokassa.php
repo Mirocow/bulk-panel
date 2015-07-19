@@ -18,9 +18,13 @@ class Robokassa
 //    private $actionUrl = 'https://auth.robokassa.ru/Merchant/Index.aspx';
 
 
-    public function __construct()
+    public function __construct($client = false)
     {
-        $params = explode(PHP_EOL,Domain::getCurrentSite()->robokassa);
+        if(!$client)
+            $params = explode(PHP_EOL,Domain::getCurrentSite()->robokassa);
+        else
+            $params = ['bulkresellerru','JokE5001031','JokE5001032'];
+
         $this->mrh_login = trim($params[0],"\r\n");
         $this->mrh_pass1 = trim($params[1],"\r\n");
         $this->mrh_pass2 = trim($params[2],"\r\n");

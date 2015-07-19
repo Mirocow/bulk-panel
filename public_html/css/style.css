@@ -1,3 +1,6 @@
+.template-file-view {
+  padding: 30px;
+}
 .no-bullets {
   list-style-type: none;
 }
@@ -25,14 +28,12 @@
 .navbar {
   border-radius: 0;
 }
-.navbar .navbar-header .navbar-brand {
-  padding: 0 15px;
-}
 .navbar .navbar-header .navbar-brand img {
+  margin-top: -12px;
   width: 145px;
 }
 .navbar.navbar-inverse {
-  background-color: #C32A20;
+  background-color: #C50E1F;
 }
 .navbar .navbar-nav .total-balance i {
   top: 1px;

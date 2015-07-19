@@ -131,10 +131,13 @@ class User extends CActiveRecord
         $result = 0;
         foreach($this->transactions as $transaction)
         {
-            if($transaction->in)
-                $result += $transaction->amount;
-            else
-                $result -= $transaction->amount;
+            if(intval($transaction->status) !== Transaction::STATUS_PROCESS)
+            {
+                if($transaction->in)
+                    $result += $transaction->amount;
+                else
+                    $result -= $transaction->amount;
+            }
         }
 
         return $result;

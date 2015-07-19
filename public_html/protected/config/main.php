@@ -32,6 +32,9 @@ return array(
         'user' => [
             'defaultController' => 'defaultUser'
         ],
+        'client' => [
+            'defaultController' => 'defaultClient'
+        ],
         'transaction',
         'admin' => [
             'defaultController' => 'adminDefault',

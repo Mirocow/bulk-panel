@@ -89,20 +89,34 @@
             data: sendersListData
         });
 
+        $('#service-select').change(function(e){
+            updateView();
+            updateSenders();
+        });
+        $('#type-select').change(function(e){
+            updateView();
+        });
+    });
 
-        $('#type-select, #service-select').change(function(e){
-            var currentType = $('#type-select').val();
-            var currentService = $('#service-select').val();
+    function updateView()
+    {
+        var currentType = $('#type-select').val();
+        var currentService = $('#service-select').val();
 
-            $.get(
-                Yii.app.createUrl('user/template/getView', {id: modelId, type: currentType, service: currentService})
-            ).done(function(form){
+        $.get(
+            Yii.app.createUrl('user/template/getView', {id: modelId, type: currentType, service: currentService})
+        ).done(function(form){
                 $('.main-form').html(form);
             });
 
-            $.get(
-                Yii.app.createUrl('user/senders/getJson', {service_id: currentService})
-            ).done(function(senders){
+    }
+    function updateSenders()
+    {
+        var currentType = $('#type-select').val();
+        var currentService = $('#service-select').val();
+        $.get(
+            Yii.app.createUrl('user/senders/getJson', {service_id: currentService})
+        ).done(function(senders){
                 $("#sender-select").select2("destroy");
                 $("#sender-select").html("");
 
@@ -114,8 +128,7 @@
                     data: JSON.parse(senders)
                 });
             });
-        });
-    });
+    }
 
     function formatService (service) {
         if (service.loading) return service.text;

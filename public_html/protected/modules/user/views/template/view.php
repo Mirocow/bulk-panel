@@ -88,33 +88,46 @@
             data: sendersListData
         }).val(senderId).trigger('change');
 
-
-        $('#type-select, #service-select').change(function(e){
-            var currentType = $('#type-select').val();
-            var currentService = $('#service-select').val();
-
-            $.get(
-                Yii.app.createUrl('/user/template/getView', {id: modelId, type: currentType, service: currentService})
-            ).done(function(form){
-                $('.main-form').html(form);
-            });
-
-            $.get(
-                Yii.app.createUrl('user/senders/getJson', {service_id: currentService})
-            ).done(function(senders){
-                $("#sender-select").select2("destroy");
-                $("#sender-select").html("");
-
-                $('#sender-select').select2({
-                    escapeMarkup: function (markup) { return markup; },
-                    templateResult: formatSender,
-                    templateSelection: formatSender,
-                    allowClear: false,
-                    data: JSON.parse(senders)
-                });
-            });
+        $('#service-select').change(function(e){
+            updateView();
+            updateSenders();
+        });
+        $('#type-select').change(function(e){
+            updateView();
         });
     });
+
+    function updateView()
+    {
+        var currentType = $('#type-select').val();
+        var currentService = $('#service-select').val();
+
+        $.get(
+            Yii.app.createUrl('user/template/getView', {id: modelId, type: currentType, service: currentService})
+        ).done(function(form){
+            $('.main-form').html(form);
+        });
+
+    }
+    function updateSenders()
+    {
+        var currentType = $('#type-select').val();
+        var currentService = $('#service-select').val();
+        $.get(
+            Yii.app.createUrl('user/senders/getJson', {service_id: currentService})
+        ).done(function(senders){
+            $("#sender-select").select2("destroy");
+            $("#sender-select").html("");
+
+            $('#sender-select').select2({
+                escapeMarkup: function (markup) { return markup; },
+                templateResult: formatSender,
+                templateSelection: formatSender,
+                allowClear: false,
+                data: JSON.parse(senders)
+            });
+        });
+    }
 
     function formatService (service) {
         if (service.loading) return service.text;
