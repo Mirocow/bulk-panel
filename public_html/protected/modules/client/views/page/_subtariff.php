@@ -14,7 +14,7 @@
         <tr>
             <?php foreach($tariffs as $tariff): ?>
                 <td class="price">
-                    <span class="display-price"><?=$tariff['basePrice']?> <i class="fa fa-rub"></i></span>
+                    <span class="display-price"><?=$tariff['price']?> <i class="fa fa-rub"></i></span>
                 </td>
             <?php endforeach; ?>
         </tr>

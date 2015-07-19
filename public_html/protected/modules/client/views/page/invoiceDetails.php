@@ -5,5 +5,3 @@
 <h2 class="page-title">
     Реквизиты
 </h2>
-
-<?=$invoiceDetails?>

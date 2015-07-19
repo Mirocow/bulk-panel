@@ -10,19 +10,15 @@ class PageController extends ClientBaseController
 {
     public function actionContact()
     {
-        $contact = Domain::getCurrentSite()->contacts;
-
-        $this->render('contact', compact('contact'));
+        $this->render('contact');
     }
     public function actionInvoiceDetails()
     {
-        $invoiceDetails = Domain::getCurrentSite()->invoice_details;
-
-        $this->render('invoiceDetails', compact('invoiceDetails'));
+        $this->render('invoiceDetails');
     }
     public function actionTariffs()
     {
-        $tariffs = TariffHelper::getTariffs(Domain::getCurrentSiteId());
+        $tariffs = TariffHelper::getTariffs();
 
         $this->render('tariffs', compact('tariffs'));
     }
