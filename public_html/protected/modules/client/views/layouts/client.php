@@ -59,7 +59,7 @@
                         ],
                         [
                             'label' => 'Выход ('.Yii::app()->user->name.')',
-                            'url' => ['/client/defaultUser/logout'],
+                            'url' => ['/client/defaultClient/logout'],
                             'htmlOptions' => ['class' => 'pull-right'],
                             'visible' => !Yii::app()->user->isGuest,
                         ]

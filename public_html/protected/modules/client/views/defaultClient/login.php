@@ -29,7 +29,7 @@
                             </label>
                         </div>
                         <input class="btn btn-sm btn-success" type="submit" value="Войти">
-                        <a href="<?=$this->createUrl('/client/defaultUser/register');?>" class="btn btn-xs btn-secondary btn-link pull-right">Зарегистрироваться</a>
+                        <a href="<?=$this->createUrl('/client/defaultClient/register');?>" class="btn btn-xs btn-secondary btn-link pull-right">Зарегистрироваться</a>
                     </fieldset>
                 <?php $this->endWidget(); ?>
             </div>
