@@ -1,0 +1,192 @@
+.template-file-view {
+  padding: 30px;
+}
+.no-bullets {
+  list-style-type: none;
+}
+.land-image {
+  background-color: #F7F4EF;
+  margin-top: -18px;
+}
+.land-image .text {
+  padding-top: 98px;
+  font-size: 34px;
+  text-align: center;
+}
+.payment-methods li img {
+  max-width: 100px;
+}
+.support-methods li {
+  margin-bottom: 5px;
+}
+.service-logo {
+  width: 32px;
+}
+.contact-logo {
+  width: 20px;
+}
+.navbar {
+  border-radius: 0;
+}
+.navbar .navbar-header .navbar-brand img {
+  margin-top: -12px;
+  width: 145px;
+}
+.navbar.navbar-inverse {
+  background-color: #C50E1F;
+}
+.navbar .navbar-nav .total-balance i {
+  top: 1px;
+  position: relative;
+}
+table.has-buttons tbody tr th.text-td,
+table.has-buttons tbody tr td.text-td {
+  text-align: right;
+}
+table.has-buttons tbody tr th.button-td,
+table.has-buttons tbody tr td.button-td {
+  padding-top: 14px;
+  text-align: right;
+}
+.qtip {
+  max-width: 500px;
+}
+.tooltiptext {
+  display: none;
+}
+.tariff-table thead th {
+  text-align: center;
+}
+.tariff-table tr td.service-name,
+.tariff-table tr th.service-name {
+  font-size: 16px;
+}
+.tariff-table tr td.country-name,
+.tariff-table tr th.country-name {
+  text-align: center;
+  font-size: 14px;
+}
+.tariff-table tr td.operator-name,
+.tariff-table tr th.operator-name {
+  padding-top: 15px;
+  text-align: right;
+  font-size: 12px;
+  font-weight: normal;
+}
+.tariff-table tr td.operator-name.display-operator,
+.tariff-table tr th.operator-name.display-operator {
+  padding-top: 10px;
+}
+.tariff-table tr td.price,
+.tariff-table tr th.price {
+  text-align: center;
+}
+.tariff-table tr td.price input,
+.tariff-table tr th.price input {
+  text-align: center;
+}
+.tariff-table tr td.price .base-price,
+.tariff-table tr th.price .base-price {
+  font-size: 10px;
+  color: darkgray;
+}
+.login-form {
+  margin-top: 50px;
+}
+.avatar-container {
+  text-align: center;
+}
+.avatar-container img {
+  margin: 0 auto;
+}
+.service-option .service-icon {
+  font-size: 20px;
+}
+.service-option .service-name {
+  position: relative;
+  bottom: 1px;
+}
+.panel .panel-body .btn-secondary {
+  margin-top: 6px;
+}
+.panel .panel-body textarea {
+  min-height: 150px;
+}
+.panel.with-tabs.panel-default .panel-heading .panel-tabs > li > a,
+.panel.with-tabs.panel-default .panel-heading .panel-tabs > li.active > a {
+  color: #000000;
+}
+.panel.with-tabs.panel-default .panel-heading .panel-tabs > li > a:hover,
+.panel.with-tabs.panel-default .panel-heading .panel-tabs > li.active > a:hover {
+  color: #000000;
+  background-color: #e2e2e2;
+}
+.panel.with-tabs.panel-default .panel-heading .panel-tabs > li.active {
+  background-color: #e2e2e2;
+}
+.panel.with-tabs .panel-heading {
+  height: 36px;
+}
+.panel.with-tabs .panel-heading .panel-tabs {
+  position: relative;
+  bottom: 30px;
+  clear: both;
+  border-bottom: 1px solid transparent;
+}
+.panel.with-tabs .panel-heading .panel-tabs > li {
+  float: left;
+  margin-bottom: -1px;
+}
+.panel.with-tabs .panel-heading .panel-tabs > li > a {
+  margin-right: 2px;
+  margin-top: 4px;
+  line-height: .85;
+  border: 1px solid transparent;
+  border-radius: 4px 4px 0 0;
+  color: #ffffff;
+}
+.panel.with-tabs .panel-heading .panel-tabs > li > a:hover {
+  border-color: transparent;
+  color: #ffffff;
+  background-color: transparent;
+}
+.panel.with-tabs .panel-heading .panel-tabs > li.active > a,
+.panel.with-tabs .panel-heading .panel-tabs > li.active > a:hover,
+.panel.with-tabs .panel-heading .panel-tabs > li.active > a:focus {
+  color: #fff;
+  cursor: default;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  background-color: rgba(255, 255, 255, 0.23);
+  border-bottom-color: transparent;
+}
+.pager .pagination {
+  margin: 0;
+}
+.pager .pagination .next > a {
+  float: left;
+}
+/** FOOTER **/
+html,
+body {
+  height: 100%;
+}
+body {
+  margin-bottom: 60px;
+}
+body .wrapper {
+  min-height: 100%;
+  height: auto !important;
+  /* This line and the next line are not necessary unless you need IE6 support */
+  height: 100%;
+}
+body .footer {
+  width: 100%;
+  height: 60px;
+  background-color: #f5f5f5;
+}
+body .footer .container .copyright {
+  margin: 20px 0;
+  text-align: center;
+}
