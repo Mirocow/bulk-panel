@@ -5,9 +5,6 @@ class UsersController extends AdminBaseController
     public function actionIndex($clients = null)
     {
         $dataProvider = new CActiveDataProvider('User',[
-            'criteria' => [
-                'condition' => 'site_id',
-            ],
             'sort' => [
                 'defaultOrder' => 't.created DESC',
                 'attributes' => [
