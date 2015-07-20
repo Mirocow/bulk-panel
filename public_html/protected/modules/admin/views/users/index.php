@@ -12,6 +12,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'columns'=>array(
         [
             'header' => 'Сайт',
+            'name' => 'site_id',
             'value' => 'Html::GetSiteName($data)',
             'type' => 'raw',
         ],
