@@ -27,7 +27,7 @@
         </div>
         <div class="panel-footer">
             <button type="submit" class="btn btn-success"><i class="fa fa-save"></i></button>
-            <a href="<?=$this->createUrl('/admin/reseller/delete', ['id' => $model->id])?>" class="btn btn-danger pull-right delete-submit">
+            <a href="<?=$this->createUrl('/admin/users/delete', ['id' => $model->id])?>" class="btn btn-danger pull-right delete-submit">
                 <i class="fa fa-close"></i>
             </a>
         </div>
