@@ -5,6 +5,9 @@ class UsersController extends AdminBaseController
     public function actionIndex()
     {
         $dataProvider = new CActiveDataProvider('User',[
+            'criteria' => [
+                'condition' => 'site_id IS NOT NULL',
+            ],
             'sort' => [
                 'defaultOrder' => 't.created DESC',
                 'attributes' => [
@@ -34,7 +37,7 @@ class UsersController extends AdminBaseController
                 'pageSize'=>20,
             ],
         ]);
-
+        //@todo VIEW CLIENTS
         $this->render('index', compact('dataProvider'));
     }
     public function actionView($id)
@@ -61,5 +64,12 @@ class UsersController extends AdminBaseController
         }
 
         $this->render('view', compact('model', 'transaction'));
+    }
+
+    public function actionDelete($id)
+    {
+        User::model()->deleteByPk($id);
+        Yii::app()->user->setFlash('SUCCESS', 'Пользователь удален');
+        $this->redirect(['/admin/users/index']);
     }
 }

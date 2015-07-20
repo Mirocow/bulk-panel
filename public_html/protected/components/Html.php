@@ -54,7 +54,7 @@ class Html
     }
     public static function GetClaimDeclineButton($id)
     {
-        return CHtml::link('<i class="fa fa-close"></i>', ['/admin/reseller/deleteClaim', 'id' => $id], ['class' => 'btn btn-xs btn-danger pull-right delete-submit']);
+        return CHtml::link('<i class="fa fa-close"></i>', ['/admin/reseller/declineClaim', 'id' => $id], ['class' => 'btn btn-xs btn-danger pull-right delete-submit']);
     }
     public static function GetClaimApproveButton($id)
     {

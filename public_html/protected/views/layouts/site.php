@@ -19,7 +19,7 @@
                         'items' => [
                             [
                                 'label' => 'Главная',
-                                'url' => ['site/index']
+                                'url' => ['/site/index']
                             ],
                             [
                                 'label' => 'Регистрация',
@@ -37,18 +37,18 @@
                                     ],
                                     [
                                         'label' => 'Как реселлер',
-                                        'url' => ['site/resellerClaim'],
+                                        'url' => ['/site/resellerClaim'],
                                     ],
                                 ],
                             ],
                             [
                                 'label'=>'Кабинет реселлера',
-                                'url' => ['reseller/sites/index'],
+                                'url' => ['/reseller/sites/index'],
                                 'visible' => AuthHelper::isReseller(),
                             ],
                             [
                                 'label'=>'Кабинет клиента',
-                                'url' => ['client/campaign/index'],
+                                'url' => ['/client/campaign/index'],
                                 'visible' => AuthHelper::isClient(),
                             ],
                         ],
@@ -67,17 +67,15 @@
                                     'data-toggle' => 'dropdown',
                                 ],
                                 'url' => ['#'],
+                                'visible' => Yii::app()->user->isGuest,
                                 'items' => [
                                     [
                                         'label' => 'Как клиент',
                                         'url' => ['/client/defaultClient/index'],
-                                        'visible' => Yii::app()->user->isGuest,
-                                        'linkOptions' => ['disabled' => 'disabled'],
                                     ],
                                     [
                                         'label' => 'Как реселлер',
                                         'url'=> ['site/login'],
-                                        'visible' => Yii::app()->user->isGuest,
                                     ],
                                 ],
                             ],
