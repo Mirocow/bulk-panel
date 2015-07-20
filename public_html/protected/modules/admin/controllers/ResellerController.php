@@ -114,13 +114,13 @@ class ResellerController extends AdminBaseController
     {
         ResellerClaim::model()->deleteByPk($id);
         Yii::app()->user->setFlash('SUCCESS', 'Заявка удалена');
-        $this->redirect(['/admin/resellers/index']);
+        $this->redirect(['/admin/reseller/index']);
     }
 
     public function actionDelete($id)
     {
         Reseller::model()->deleteByPk($id);
         Yii::app()->user->setFlash('SUCCESS', 'Реселлер удален');
-        $this->redirect(['/admin/resellers/index']);
+        $this->redirect(['/admin/reseller/index']);
     }
 }
