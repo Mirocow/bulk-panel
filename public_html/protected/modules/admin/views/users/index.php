@@ -10,6 +10,11 @@
 $this->widget('zii.widgets.grid.CGridView', array(
     'dataProvider' => $dataProvider,
     'columns'=>array(
+        [
+            'header' => 'Сайт',
+            'value' => 'Html::GetSiteName($data)',
+            'type' => 'raw',
+        ],
         'login',
         'name',
         'balance',

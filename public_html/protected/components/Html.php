@@ -64,6 +64,12 @@ class Html
     {
         return '<i class="'.$class.'"></i> '.$type;
     }
+    public static function GetSiteName($user)
+    {
+        if($user->site_id)
+            return $user->site->name;
+        return '';
+    }
     public static function NVL($data, $value = 'Обрабатывается...')
     {
         if($data)

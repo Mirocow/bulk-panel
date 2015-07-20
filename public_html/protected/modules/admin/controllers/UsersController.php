@@ -2,11 +2,11 @@
 
 class UsersController extends AdminBaseController
 {
-    public function actionIndex()
+    public function actionIndex($clients = null)
     {
         $dataProvider = new CActiveDataProvider('User',[
             'criteria' => [
-                'condition' => 'site_id IS NOT NULL',
+                'condition' => 'site_id',
             ],
             'sort' => [
                 'defaultOrder' => 't.created DESC',
@@ -30,6 +30,10 @@ class UsersController extends AdminBaseController
                     'created' => [
                         'asc' => 't.created asc',
                         'desc' => 't.created desc',
+                    ],
+                    'site_id' => [
+                        'asc' => 't.site_id asc',
+                        'desc' => 't.site_id desc',
                     ],
                 ]
             ],
