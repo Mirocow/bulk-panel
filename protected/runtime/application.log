@@ -1,0 +1,14 @@
+2015/06/24 17:32:17 [error] [exception.CException] exception 'CException' with message 'Путь CAssetManager.basePath "/var/www/bulk-panel/assets" задан неверно. Удостоверьтесь, что директория существует и доступна для записи пользователю, под которым запущен веб-сервер.' in /var/www/bulk-panel/framework/web/CAssetManager.php:138
+Stack trace:
+#0 /var/www/bulk-panel/framework/web/CAssetManager.php(123): CAssetManager->setBasePath('/var/www/bulk-p...')
+#1 /var/www/bulk-panel/framework/web/CAssetManager.php(217): CAssetManager->getBasePath()
+#2 /var/www/bulk-panel/protected/extensions/JSUrlManager/src/EJSUrlManager.php(26): CAssetManager->publish('/var/www/bulk-p...', true, -1, true)
+#3 /var/www/bulk-panel/framework/base/CModule.php(394): EJSUrlManager->init()
+#4 /var/www/bulk-panel/framework/base/CModule.php(530): CModule->getComponent('EJSUrlManager')
+#5 /var/www/bulk-panel/framework/base/CApplication.php(167): CModule->preloadComponents()
+#6 /var/www/bulk-panel/framework/YiiBase.php(125): CApplication->__construct('/var/www/bulk-p...')
+#7 /var/www/bulk-panel/framework/YiiBase.php(98): YiiBase::createApplication('CWebApplication', '/var/www/bulk-p...')
+#8 /var/www/bulk-panel/index.php(11): YiiBase::createWebApplication('/var/www/bulk-p...')
+#9 {main}
+REQUEST_URI=/
+---
