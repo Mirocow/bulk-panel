@@ -3,7 +3,7 @@
 </head>
 <body>
 <script>
-    VK.init({apiId: 4716867});
+    VK.init({apiId: 5005271});
 </script>
 <div id="vk_auth"></div>
 <script type="text/javascript">
