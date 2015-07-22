@@ -1,5 +1,5 @@
 <head>
-    <script type="text/javascript" src="http://userapi.com/js/api/openapi.js?34"></script>
+    <script type="text/javascript" src="//vk.com/js/api/openapi.js"></script>
 </head>
 <body>
 <script>
