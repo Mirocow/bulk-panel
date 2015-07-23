@@ -2,8 +2,8 @@
 
 class Robokassa
 {
-    public   $mrh_login = "oblacam_test";
-    public $mrh_pass1 = "JokE5001031";
+    public   $mrh_login = "resellerbulk";
+    public   $mrh_pass1 = "JokE5001031";
     public   $mrh_pass2 = "JokE5001032";
     public   $inv_id    = 0;
     public   $inv_desc  = "Описание";
@@ -23,7 +23,7 @@ class Robokassa
         if(!$client)
             $params = explode(PHP_EOL,Domain::getCurrentSite()->robokassa);
         else
-            $params = ['bulkresellerru','JokE5001031','JokE5001032'];
+            $params = ['resellerbulk','JokE5001031','JokE5001032'];
 
         $this->mrh_login = trim($params[0],"\r\n");
         $this->mrh_pass1 = trim($params[1],"\r\n");
