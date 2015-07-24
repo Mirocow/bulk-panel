@@ -23,7 +23,7 @@ class RobokassaController extends Controller
     }
     public function actionSuccess()
     {
-        Yii::app()->user->setFlash('SUCCESS', 'Платеж успешно произведен');
+        Yii::app()->user->setFlash('SUCCESS', 'Платеж успешно произведен! В течение 2-3 минут средства поступят на ваш баланс');
 
         $url = '/';
 
