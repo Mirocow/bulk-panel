@@ -75,7 +75,7 @@
                                     ],
                                     [
                                         'label' => 'Как реселлер',
-                                        'url'=> ['site/login'],
+                                        'url'=> ['/site/login'],
                                     ],
                                 ],
                             ],

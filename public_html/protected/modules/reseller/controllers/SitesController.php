@@ -174,4 +174,9 @@ class SitesController extends ResellerBaseController
 
         $this->render('create', compact('model', 'styles', 'services', 'tariffs'));
     }
+
+    public function actionManual()
+    {
+        $this->render('manual');
+    }
 }

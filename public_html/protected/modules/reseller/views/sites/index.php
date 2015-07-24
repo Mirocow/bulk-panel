@@ -5,6 +5,7 @@
 <div class="row">
     <div class="col-md-12 form-group">
         <a href="<?=$this->createUrl('/reseller/sites/create')?>" class="btn btn-xs btn-success"><i class="fa fa-plus"></i> Создать новый сайт</a>
+        <a href="<?=$this->createUrl('/reseller/sites/manual')?>" class="btn btn-xs btn-warning pull-right">Инструкция по настройке <i class="fa fa-question"></i></a>
     </div>
 </div>
 <?php
