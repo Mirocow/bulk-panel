@@ -14,8 +14,8 @@ class Robokassa
     public   $encoding  = "utf-8";
     public   $transaction = null;
 
-    private $actionUrl = 'http://test.robokassa.ru/Index.aspx';
-//    private $actionUrl = 'https://auth.robokassa.ru/Merchant/Index.aspx';
+//    private $actionUrl = 'http://test.robokassa.ru/Index.aspx';
+    private $actionUrl = 'https://auth.robokassa.ru/Merchant/Index.aspx';
 
 
     public function __construct($client = false)
