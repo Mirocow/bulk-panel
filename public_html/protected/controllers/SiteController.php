@@ -134,8 +134,8 @@ class SiteController extends Controller
 		$this->redirect(['/site']);
 	}
 
-    public function actionLol()
+    public function actionConstruction()
     {
-        CVarDumper::dump(TariffHelper::getTariffs(1), 100, true);
+        $this->render('construction');
     }
 }

@@ -11,7 +11,7 @@ return array(
     'language' => 'ru',
 
 	// preloading 'log' component
-	'preload'=>array('log','EJSUrlManager'),
+	'preload'=>array('log','EJSUrlManager','UnderConstruction'),
 
 	// autoloading model and component classes
 	'import'=>array(
@@ -59,6 +59,12 @@ return array(
             'enableParamLogging' => true,
             'enableProfiling' => true,
 		),
+        'UnderConstruction' => array(
+            'class' => 'application.components.System.UnderConstruction',
+            'allowedIPs'=>array(''), //whatever IPs you want to allow
+            'locked'=>false,//this is the on off switch
+            'redirectURL'=>'/site/construction',//put in your desired redirect page.
+        ),
 		'errorHandler'=>array(
 			'errorAction'=>'site/error',
 		),
