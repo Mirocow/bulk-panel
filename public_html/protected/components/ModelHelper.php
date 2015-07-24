@@ -15,8 +15,10 @@ class ModelHelper
         else
             $services = Service::getActive();
         $listData = [];
-        foreach($services as $service)
-            $listData[] = ['id' => $service->id, 'text' => $service->name, 'icon' => 'service-icon '.$service->icon, 'color' => $service->color];
+        foreach($services as $service) {
+            if(intval($service->active))
+                $listData[] = ['id' => $service->id, 'text' => $service->name, 'icon' => 'service-icon ' . $service->icon, 'color' => $service->color];
+        }
 
         return $listData;
     }

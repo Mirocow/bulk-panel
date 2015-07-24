@@ -60,7 +60,9 @@ class CampaignController extends UserBaseController
             ),
         ]);
 
-        $this->render('index', compact('dataProvider'));
+        $services = Service::getActive($this->site);
+
+        $this->render('index', compact('dataProvider','services'));
     }
 
     public function actionDelete($id)

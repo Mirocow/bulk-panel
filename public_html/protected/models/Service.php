@@ -8,6 +8,7 @@
  * @property string $name
  * @property string $icon
  * @property string $color
+ * @property int $active
  *
  * The followings are the available model relations:
  * @property Receiver[] $receivers
@@ -34,7 +35,7 @@ class Service extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, icon', 'required'),
+			array('name, icon, active', 'required'),
 			array('name, icon, color', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -110,8 +111,22 @@ class Service extends CActiveRecord
 		return parent::model($className);
 	}
 
-    public static function getActive()
+    /**
+     * @param Site $site
+     * @return static[]
+     */
+    public static function getActive($site = null)
     {
-        return self::model()->findAllByAttributes(['active' => 1]);
+        if(!$site)
+            return self::model()->findAllByAttributes(['active' => 1]);
+
+        $services = [];
+        foreach($site->services as $service)
+        {
+            if(intval($service->active))
+                $services[] = $service;
+        }
+
+        return $services;
     }
 }

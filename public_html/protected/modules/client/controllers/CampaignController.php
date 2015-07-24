@@ -60,7 +60,9 @@ class CampaignController extends ClientBaseController
             ),
         ]);
 
-        $this->render('index', compact('dataProvider'));
+        $services = Service::getActive();
+
+        $this->render('index', compact('dataProvider','services'));
     }
 
     public function actionDelete($id)
