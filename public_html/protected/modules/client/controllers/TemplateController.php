@@ -12,7 +12,7 @@ class TemplateController extends ClientBaseController
     {
         $dataProvider = new CActiveDataProvider('Template',[
             'criteria'=>array(
-                'with' => ['templateType','sender','service'],
+                'with' => ['service'],
                 'condition'=>'t.user_id = :userId',
                 'params' => [':userId' => Yii::app()->user->getId()]
             ),
@@ -35,14 +35,6 @@ class TemplateController extends ClientBaseController
                         'asc' => 'service.name ASC',
                         'desc' => 'service.name DESC',
                     ],
-                    'sender.name' => [
-                        'asc' => 'sender.name ASC',
-                        'desc' => 'sender.name DESC',
-                    ],
-                    'templateType.name' => [
-                        'asc' => 'templateType.name ASC',
-                        'desc' => 'templateType.name DESC',
-                    ],
                     'name' => [
                         'asc' => 't.name ASC',
                         'desc' => 't.name DESC',
@@ -54,162 +46,140 @@ class TemplateController extends ClientBaseController
             ),
         ]);
 
-        $this->render('index', compact('dataProvider'));
+        $services = Service::getActive(Service::ACTION_TEMPLATE);
+
+        $this->render('index', compact('dataProvider','services'));
     }
 
     public function actionView($id)
     {
         $model = Template::model()->findByAttributes(['id' => $id, 'user_id' => Yii::app()->user->getId(), 'status' => TemplateStatus::PENDING]);
-        $serviceModels =Service::getActive();
-        $services = json_encode(ModelHelper::getServiceListData());
+        if(!$model)
+            throw new CHttpException(404);
 
-        $types = CHtml::listData($serviceModels[0]->templateTypes,'id','name');
-        $typesListData = json_encode(ModelHelper::getTypeListData());
+        $serviceId = intval($model->service_id);
 
-        $senderModels = Sender::model()->findByAttributes(['service_id' => $serviceModels[0]->id, 'user_id' => Yii::app()->user->getId()]);
-        $sendersListData = json_encode(ModelHelper::getSenderListData($serviceModels[0]->id));
-
-        if(isset($_POST['Template']))
+        if($serviceId === 1) //WHATSAPP
         {
-            $model->attributes = $_POST['Template'];
+            $template = WhatsappTemplate::model()->findByPk($model->getPrimaryKey());
+            $sendersListData = CHtml::listData(Sender::model()->findAllByAttributes(['service_id' => $serviceId, 'user_id' => Yii::app()->user->getId()]), 'id', 'name');
 
-            if(empty($_FILES['Template']['name']['file']) && $model->templateType->attachment == 1)
+            if(isset($_POST['Template']) && isset($_POST['WhatsappTemplate']))
             {
-                Yii::app()->user->setFlash('ERROR', 'Для данного типа шаблона нужно прикрепить файл');
-            }
-            elseif($model->text_content == '' && $model->templateType->text == 1)
-            {
-                Yii::app()->user->setFlash('ERROR', 'Для данного типа шаблона нужно указать текст');
-            }
-            else
-            {
+
+                $model->attributes = $_POST['Template'];
+
+                $template->attributes = $_POST['WhatsappTemplate'];
+
                 if($model->validate() && $model->save())
                 {
-                    if(!empty($_FILES['Template']['name']['file']))
+                    if($template->validate())
                     {
-                        $model->file = CUploadedFile::getInstance($model,'file');
-                        $path = Yii::getPathOfAlias('webroot').'/files/template/'.$model->getPrimaryKey().'.'.$model->file->extensionName;
-                        $model->file->saveAs($path);
+                        if(!empty($_FILES['WhatsappTemplate']['name']['file']))
+                        {
+                            $template->file = CUploadedFile::getInstance($template,'file');
+                            $path = Yii::getPathOfAlias('webroot').'/files/template/'.$model->getPrimaryKey().'.'.$template->file->extensionName;
+                            $template->file->saveAs($path);
 
-                        $model->file_name = $model->getPrimaryKey().'.'.$model->file->extensionName;
-                        $model->save();
+                            $template->file_name = $model->getPrimaryKey().'.'.$template->file->extensionName;
+                        }
+                        if($template->save())
+                        {
+                            Yii::app()->user->setFlash('SUCCESS', 'Шаблон сохранен');
+                            $this->redirect(['/client/template/index/']);
+                        }
                     }
-
-                    Yii::app()->user->setFlash('SUCCESS', 'Шаблон сохранен');
-                    $this->redirect(['/client/template/index/']);
                 }
             }
+
+            $this->render('whatsapp/view', compact('model', 'template','sendersListData'));
         }
-
-        $mainForm = $this->actionGetView( $model->service_id, $model->template_type_id, $model->id, false);
-
-        $this->render('view', compact('model','services', 'servicesArray', 'types', 'typesListData', 'sendersListData', 'mainForm'));
+        else
+            $this->redirect(['/client/template/index']);
     }
 
     public function actionDelete($id)
     {
-        $template = Template::model()->findByAttributes(['id' => $id, 'user_id' => Yii::app()->user->getId()]);
+        $model = Template::model()->findByAttributes(['id' => $id, 'user_id' => Yii::app()->user->getId()]);
 
-        if(!$template)
-            $this->redirect(['/client/template/index/']);
+        if(!$model)
+            throw new CHttpException(404);
 
-        foreach($template->campaigns as $campaign)
+        $serviceId = intval($model->service_id);
+
+        if($serviceId === 1) //WHATSAPP
         {
-            if($campaign->status == Campaign::STATUS_PENDING)
+            $template = WhatsappTemplate::model()->findByPk($model->getPrimaryKey());
+
+
+            foreach($template->whatsappCampaigns as $whatsAppCampaign)
             {
-                Yii::app()->user->setFlash('ERROR', 'Данный шаблон используется одной из кампаний');
-                $this->redirect(['/client/template/index/']);
-                die();
+                if($whatsAppCampaign->campaign->status == Campaign::STATUS_PENDING)
+                {
+                    Yii::app()->user->setFlash('ERROR', 'Данный шаблон используется одной из кампаний');
+                    $this->redirect(['/client/template/index/']);
+                    die();
+                }
             }
+
+            Yii::app()->user->setFlash('SUCCESS', 'Шаблон удален!');
+            $template->delete();
+            $model->delete();
         }
 
-        $template->delete();
-        Yii::app()->user->setFlash('SUCCESS', 'Шаблон удален!');
         $this->redirect(['/client/template/index/']);
     }
 
-    public function actionCreate()
+    public function actionCreate($id)
     {
+        $serviceId = intval($id);
         $model = new Template();
-        $serviceModels = Service::getActive();
-        $services = json_encode(ModelHelper::getServiceListData());
 
-        $types = CHtml::listData($serviceModels[0]->templateTypes,'id','name');
-        $typesListData = json_encode(ModelHelper::getTypeListData());
-
-        $senderModels = Sender::model()->findByAttributes(['service_id' => $serviceModels[0]->id, 'user_id' => Yii::app()->user->getId()]);
-        $sendersListData = json_encode(ModelHelper::getSenderListData($serviceModels[0]->id));
-
-        $service = $serviceModels[0]->getPrimaryKey();
-        $type = $serviceModels[0]->templateTypes[0]->getPrimaryKey();
-
-        if(count($senderModels) == 0)
+        if($serviceId === 1) //WHATSAPP
         {
-            Yii::app()->user->setFlash('ERROR', 'Добавьте хотя бы одного отправителя');
-            $this->redirect(['/client/senders/index']);
-        }
+            $template = new WhatsappTemplate();
+            $sendersListData = CHtml::listData(Sender::model()->findAllByAttributes(['service_id' => $serviceId, 'user_id' => Yii::app()->user->getId()]), 'id', 'name');
 
-        if(isset($_POST['Template']))
-        {
-            $model->attributes = $_POST['Template'];
-            $model->created = new CDbExpression('NOW()');
-            $model->status = TemplateStatus::PENDING;
-            $model->user_id = Yii::app()->user->getId();
+            if(isset($_POST['Template']) && isset($_POST['WhatsappTemplate']))
+            {
 
-            if(empty($_FILES['Template']['name']['file']) && $model->templateType->attachment == 1)
-            {
-                Yii::app()->user->setFlash('ERROR', 'Для данного типа шаблона нужно прикрепить файл');
-            }
-            elseif($model->text_content == '' && $model->templateType->text == 1)
-            {
-                Yii::app()->user->setFlash('ERROR', 'Для данного типа шаблона нужно указать текст');
-            }
-            else
-            {
+                $model->attributes = $_POST['Template'];
+                $model->created = new CDbExpression('NOW()');
+                $model->status = TemplateStatus::PENDING;
+                $model->user_id = Yii::app()->user->getId();
+                $model->service_id = $serviceId;
+
+                $template->attributes = $_POST['WhatsappTemplate'];
+                $template->type = 0;
+
                 if($model->validate() && $model->save())
                 {
-                    if(!empty($_FILES['Template']['name']['file']))
+                    $template->template_id = $model->getPrimaryKey();
+                    if($template->validate())
                     {
-                        $model->file = CUploadedFile::getInstance($model,'file');
-                        $path = Yii::getPathOfAlias('webroot').'/files/template/'.$model->getPrimaryKey().'.'.$model->file->extensionName;
-                        $model->file->saveAs($path);
+                        if(!empty($_FILES['WhatsappTemplate']['name']['file']))
+                        {
+                            $template->file = CUploadedFile::getInstance($template,'file');
+                            $path = Yii::getPathOfAlias('webroot').'/files/template/'.$model->getPrimaryKey().'.'.$template->file->extensionName;
+                            $template->file->saveAs($path);
 
-                        $model->file_name = $model->getPrimaryKey().'.'.$model->file->extensionName;
-                        $model->save();
+                            $template->file_name = $model->getPrimaryKey().'.'.$template->file->extensionName;
+                        }
+                        if($template->save())
+                        {
+                            Yii::app()->user->setFlash('SUCCESS', 'Шаблон сохранен');
+                            $this->redirect(['/client/template/index/']);
+                        }
+                        else
+                            $model->delete();
                     }
-
-                    Yii::app()->user->setFlash('SUCCESS', 'Шаблон сохранен');
-                    $this->redirect(['/client/template/index/']);
+                    else
+                        $model->delete();
                 }
             }
-        }
-
-        $mainForm = $this->actionGetView($service, $type, null, false, $model);
-
-        $this->render('create', compact('model','services', 'servicesArray', 'types', 'typesListData', 'mainForm', 'service', 'type', 'sendersListData'));
-    }
-
-    public function actionGetView($service, $type, $id = null, $render = true, $currentModel = null)
-    {
-        $form = new CActiveForm();
-        if($id == null)
-        {
-            if(!$currentModel)
-                $model = new Template();
-            else
-                $model = $currentModel;
+            $this->render('whatsapp/create', compact('model', 'template','sendersListData'));
         }
         else
-            $model = Template::model()->findByAttributes(['id' => $id, 'user_id' => Yii::app()->user->getId()]);
-
-        $serviceTemplate = ServiceHasTemplateType::model()->findByAttributes(['service_id' => $service, 'template_type_id' => $type]);
-
-        if($serviceTemplate && $model)
-        {
-            if($render)
-                $this->renderPartial('forms/'.$serviceTemplate->file, compact('model', 'form'));
-            else
-                return $this->renderPartial('forms/'.$serviceTemplate->file, compact('model', 'form'), true);
-        }
+            $this->redirect(['/client/template/index']);
     }
 }

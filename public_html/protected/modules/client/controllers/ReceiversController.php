@@ -56,7 +56,7 @@ class ReceiversController extends ClientBaseController
     public function actionCreate()
     {
         $model = new Receiver();
-        $services = CHtml::listData(Service::getActive(), 'id', 'name');
+        $services = CHtml::listData(Service::getActive(Service::ACTION_RECEIVER), 'id', 'name');
 
         if(isset($_POST['Receiver']))
         {

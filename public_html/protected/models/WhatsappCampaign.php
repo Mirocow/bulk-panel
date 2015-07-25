@@ -1,21 +1,27 @@
 <?php
 
 /**
- * This is the model class for table "service_has_template_type".
+ * This is the model class for table "whatsapp_campaign".
  *
- * The followings are the available columns in table 'service_has_template_type':
- * @property integer $service_id
- * @property integer $template_type_id
- * @property string $file
+ * The followings are the available columns in table 'whatsapp_campaign':
+ * @property integer $campaign_id
+ * @property integer $sent
+ * @property integer $receiver_id
+ * @property integer $whatsapp_template_id
+ *
+ * The followings are the available model relations:
+ * @property Receiver $receiver
+ * @property Campaign $campaign
+ * @property WhatsappTemplate $whatsappTemplate
  */
-class ServiceHasTemplateType extends CActiveRecord
+class WhatsappCampaign extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'service_has_template_type';
+		return 'whatsapp_campaign';
 	}
 
 	/**
@@ -26,12 +32,11 @@ class ServiceHasTemplateType extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('service_id, template_type_id, file', 'required'),
-			array('service_id, template_type_id', 'numerical', 'integerOnly'=>true),
-			array('file', 'length', 'max'=>45),
+			array('campaign_id, receiver_id, whatsapp_template_id', 'required'),
+			array('campaign_id, sent, receiver_id, whatsapp_template_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('service_id, template_type_id, file', 'safe', 'on'=>'search'),
+			array('campaign_id, sent, receiver_id, whatsapp_template_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -43,6 +48,9 @@ class ServiceHasTemplateType extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'receiver' => array(self::BELONGS_TO, 'Receiver', 'receiver_id'),
+			'campaign' => array(self::BELONGS_TO, 'Campaign', 'campaign_id'),
+			'whatsappTemplate' => array(self::BELONGS_TO, 'WhatsappTemplate', 'whatsapp_template_id'),
 		);
 	}
 
@@ -52,9 +60,10 @@ class ServiceHasTemplateType extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'service_id' => 'Service',
-			'template_type_id' => 'Template Type',
-			'file' => 'File',
+			'campaign_id' => 'Campaign',
+			'sent' => 'Sent',
+			'receiver_id' => 'Receiver',
+			'whatsapp_template_id' => 'Whatsapp Template',
 		);
 	}
 
@@ -76,9 +85,10 @@ class ServiceHasTemplateType extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('service_id',$this->service_id);
-		$criteria->compare('template_type_id',$this->template_type_id);
-		$criteria->compare('file',$this->file,true);
+		$criteria->compare('campaign_id',$this->campaign_id);
+		$criteria->compare('sent',$this->sent);
+		$criteria->compare('receiver_id',$this->receiver_id);
+		$criteria->compare('whatsapp_template_id',$this->whatsapp_template_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -89,7 +99,7 @@ class ServiceHasTemplateType extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return ServiceHasTemplateType the static model class
+	 * @return WhatsappCampaign the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

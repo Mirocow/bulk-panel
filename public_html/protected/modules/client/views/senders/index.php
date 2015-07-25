@@ -4,7 +4,7 @@
 </h2>
 <div class="row">
     <div class="col-md-12 form-group">
-        <a href="<?=$this->createUrl('/client/senders/create')?>" class="btn btn-xs btn-success"><i class="fa fa-plus"></i> Добавить отправителя</a>
+        <a href="<?=$this->createUrl('/client/senders/create')?>" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> Добавить отправителя</a>
     </div>
 </div>
 <?php

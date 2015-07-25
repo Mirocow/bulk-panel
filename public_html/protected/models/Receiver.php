@@ -14,13 +14,12 @@
  * @property integer $service_id
  *
  * The followings are the available model relations:
- * @property Campaign[] $campaigns
  * @property User $user
  * @property Service $service
+ * @property WhatsappCampaign[] $whatsappCampaigns
  */
 class Receiver extends CActiveRecord
 {
-    public $file;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -40,7 +39,7 @@ class Receiver extends CActiveRecord
 			array('name, file_name, created, user_id, service_id', 'required'),
 			array('total_entries, total_valid, user_id, service_id', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>45),
-            array('file', 'file'),
+            array('file','file'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, name, total_entries, total_valid, file_name, created, user_id, service_id', 'safe', 'on'=>'search'),
@@ -55,9 +54,9 @@ class Receiver extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'campaigns' => array(self::HAS_MANY, 'Campaign', 'receiver_id'),
 			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
 			'service' => array(self::BELONGS_TO, 'Service', 'service_id'),
+			'whatsappCampaigns' => array(self::HAS_MANY, 'WhatsappCampaign', 'receiver_id'),
 		);
 	}
 
@@ -120,4 +119,6 @@ class Receiver extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+    public $file;
 }

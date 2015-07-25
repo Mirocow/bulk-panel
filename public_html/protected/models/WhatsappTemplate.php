@@ -1,27 +1,28 @@
 <?php
 
 /**
- * This is the model class for table "template_type".
+ * This is the model class for table "whatsapp_template".
  *
- * The followings are the available columns in table 'template_type':
- * @property integer $id
- * @property string $name
- * @property string $class
- * @property integer $attachment
- * @property integer $text
+ * The followings are the available columns in table 'whatsapp_template':
+ * @property integer $template_id
+ * @property integer $type
+ * @property string $text_content
+ * @property string $file_name
+ * @property integer $sender_id
  *
  * The followings are the available model relations:
- * @property Service[] $services
- * @property Template[] $templates
+ * @property WhatsappCampaign[] $whatsappCampaigns
+ * @property Sender $sender
+ * @property Template $template
  */
-class TemplateType extends CActiveRecord
+class WhatsappTemplate extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'template_type';
+		return 'whatsapp_template';
 	}
 
 	/**
@@ -32,12 +33,14 @@ class TemplateType extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, class', 'required'),
-			array('attachment, text', 'numerical', 'integerOnly'=>true),
-			array('name, class', 'length', 'max'=>45),
+			array('template_id, type, sender_id', 'required'),
+			array('template_id, type, sender_id', 'numerical', 'integerOnly'=>true),
+			array('file_name', 'length', 'max'=>45),
+			array('text_content', 'safe'),
+            array('file', 'file', 'allowEmpty' => true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, class, attachment, text', 'safe', 'on'=>'search'),
+			array('template_id, type, text_content, file_name, sender_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -49,8 +52,9 @@ class TemplateType extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'services' => array(self::MANY_MANY, 'Service', 'service_has_template_type(template_type_id, service_id)'),
-			'templates' => array(self::HAS_MANY, 'Template', 'template_type_id'),
+			'whatsappCampaigns' => array(self::HAS_MANY, 'WhatsappCampaign', 'whatsapp_template_id'),
+			'sender' => array(self::BELONGS_TO, 'Sender', 'sender_id'),
+			'template' => array(self::BELONGS_TO, 'Template', 'template_id'),
 		);
 	}
 
@@ -60,11 +64,11 @@ class TemplateType extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-			'name' => 'Name',
-			'class' => 'Class',
-			'attachment' => 'Attachment',
-			'text' => 'Text',
+			'template_id' => 'Template',
+			'type' => 'Type',
+			'text_content' => 'Text Content',
+			'file_name' => 'File Name',
+			'sender_id' => 'Sender',
 		);
 	}
 
@@ -86,11 +90,11 @@ class TemplateType extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('name',$this->name,true);
-		$criteria->compare('class',$this->class,true);
-		$criteria->compare('attachment',$this->attachment);
-		$criteria->compare('text',$this->text);
+		$criteria->compare('template_id',$this->template_id);
+		$criteria->compare('type',$this->type);
+		$criteria->compare('text_content',$this->text_content,true);
+		$criteria->compare('file_name',$this->file_name,true);
+		$criteria->compare('sender_id',$this->sender_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -101,10 +105,12 @@ class TemplateType extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return TemplateType the static model class
+	 * @return WhatsappTemplate the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
 	}
+
+    public $file;
 }

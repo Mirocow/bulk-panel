@@ -36,7 +36,7 @@ class SendersController extends UserBaseController
     public function actionView($id)
     {
         $model = Sender::model()->findByAttributes(['id' => $id, 'user_id' => Yii::app()->user->getId()]);
-        $services = CHtml::listData(Domain::getCurrentSite()->services, 'id', 'name');
+        $services = CHtml::listData(Service::getActive(Service::ACTION_SENDER, $this->site), 'id', 'name');
 
         if(isset($_POST['Sender']))
         {
@@ -93,7 +93,7 @@ class SendersController extends UserBaseController
     public function actionCreate()
     {
         $model = new Sender();
-        $services = CHtml::listData(Domain::getCurrentSite()->services, 'id', 'name');
+        $services = CHtml::listData(Service::getActive(Service::ACTION_SENDER, $this->site), 'id', 'name');
 
         if(isset($_POST['Sender']))
         {

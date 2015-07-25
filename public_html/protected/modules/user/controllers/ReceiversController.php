@@ -56,7 +56,7 @@ class ReceiversController extends UserBaseController
     public function actionCreate()
     {
         $model = new Receiver();
-        $services = CHtml::listData(Domain::getCurrentSite()->services, 'id', 'name');
+        $services = CHtml::listData(Service::getActive(Service::ACTION_RECEIVER, $this->site), 'id', 'name');
 
         if(isset($_POST['Receiver']))
         {

@@ -36,7 +36,7 @@ class SendersController extends ClientBaseController
     public function actionView($id)
     {
         $model = Sender::model()->findByAttributes(['id' => $id, 'user_id' => Yii::app()->user->getId()]);
-        $services = CHtml::listData(Service::getActive(), 'id', 'name');
+        $services = CHtml::listData(Service::getActive(Service::ACTION_SENDER), 'id', 'name');
 
         if(isset($_POST['Sender']))
         {
@@ -93,7 +93,7 @@ class SendersController extends ClientBaseController
     public function actionCreate()
     {
         $model = new Sender();
-        $services = CHtml::listData(Service::getActive(), 'id', 'name');
+        $services = CHtml::listData(Service::getActive(Service::ACTION_SENDER), 'id', 'name');
 
         if(isset($_POST['Sender']))
         {

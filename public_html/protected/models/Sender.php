@@ -14,11 +14,10 @@
  * The followings are the available model relations:
  * @property User $user
  * @property Service $service
- * @property Template[] $templates
+ * @property WhatsappTemplate[] $whatsappTemplates
  */
 class Sender extends CActiveRecord
 {
-    public $file;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -38,7 +37,7 @@ class Sender extends CActiveRecord
 			array('name, user_id, service_id', 'required'),
 			array('has_avatar, user_id, service_id', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>30),
-			array('file', 'file', 'allowEmpty'=>true),
+            array('file','file','allowEmpty' => true),
 			array('file_name', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -56,7 +55,7 @@ class Sender extends CActiveRecord
 		return array(
 			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
 			'service' => array(self::BELONGS_TO, 'Service', 'service_id'),
-			'templates' => array(self::HAS_MANY, 'Template', 'sender_id'),
+			'whatsappTemplates' => array(self::HAS_MANY, 'WhatsappTemplate', 'sender_id'),
 		);
 	}
 
@@ -115,4 +114,5 @@ class Sender extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+    public $file;
 }

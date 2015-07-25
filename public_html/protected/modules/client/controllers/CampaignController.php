@@ -5,12 +5,7 @@ class CampaignController extends ClientBaseController
     {
         $dataProvider = new CActiveDataProvider('Campaign',[
             'criteria'=>array(
-                'with' => [
-                    'receiver',
-                    'template' => [
-                        'with' => ['service', 'templateType']
-                    ],
-                ],
+                'with' => ['service'],
                 'condition'=>'t.user_id = :userId',
                 'params' => [':userId' => Yii::app()->user->getId()]
             ),
@@ -33,21 +28,9 @@ class CampaignController extends ClientBaseController
                         'asc' => 'created ASC',
                         'desc' => 'created DESC',
                     ],
-                    'receiver.name' => [
-                        'asc' => 'receiver.name ASC',
-                        'desc' => 'receiver.name DESC',
-                    ],
-                    'template.name' => [
-                        'asc' => 'template.name ASC',
-                        'desc' => 'template.name DESC',
-                    ],
-                    'template.service.name' => [
-                        'asc' => 'template.service.name ASC',
-                        'desc' => 'template.service.name DESC',
-                    ],
-                    'template.templateType.name' => [
-                        'asc' => 'template.templateType.name ASC',
-                        'desc' => 'template.templateType.name DESC',
+                    'service.name' => [
+                        'asc' => 'service.name ASC',
+                        'desc' => 'service.name DESC',
                     ],
                     'name' => [
                         'asc' => 't.name ASC',
@@ -67,51 +50,115 @@ class CampaignController extends ClientBaseController
 
     public function actionDelete($id)
     {
-        $campaign = Campaign::model()->findByAttributes(['id' => $id, 'user_id' => Yii::app()->user->getId()]);
+        $model = Campaign::model()->findByAttributes(['id' => $id, 'user_id' => Yii::app()->user->getId()]);
 
-        if($campaign)
+        if(!$model)
+            throw new CHttpException(404);
+
+        $serviceId = intval($model->service_id);
+
+        if($serviceId === 1) //WHATSAPP
         {
-            if($campaign->status != Campaign::STATUS_SENDING)
+            if($model->status != Campaign::STATUS_SENDING)
             {
-                $campaign->delete();
+                $model->delete();
                 Yii::app()->user->setFlash('SUCCESS', 'Кампания удалена!');
             }
             else {
                 Yii::app()->user->setFlash('ERROR', 'В данный момент кампанию удалить нельзя');
             }
         }
-        $this->redirect(['/client/campaign/index/']);
-    }
-
-    public function actionCreate()
-    {
-        $templateModels = $this->user->templates;
-        $receiverModels = $this->user->receivers;
-
-        if(!count($templateModels) || !count($receiverModels))
+        elseif($serviceId === 4) //Instagram
         {
-            Yii::app()->user->setFlash('ERROR', 'Сначала добавьте хотя бы один шаблон и базу получателей');
-            $this->redirect(['/client/campaign/index']);
-        }
-
-        $model = new Campaign();
-        $templates = CHtml::listData($templateModels, 'id', 'name');
-        $receivers = CHtml::listData(Receiver::model()->findAllByAttributes(['user_id' => Yii::app()->user->getId(), 'service_id' => $templateModels[0]->service_id]), 'id', 'name');
-
-        if(isset($_POST['Campaign']))
-        {
-            $model->attributes = $_POST['Campaign'];
-            $model->user_id = Yii::app()->user->getId();
-            $model->created = new CDbExpression('NOW()');
-            $model->status = Campaign::STATUS_PENDING;
-
-            if($model->validate() && $model->save())
+            if($model->status != Campaign::STATUS_SENDING)
             {
-                Yii::app()->user->setFlash('SUCCESS', 'Кампания создана!');
-                $this->redirect(['/client/campaign/index']);
+                $model->delete();
+                Yii::app()->user->setFlash('SUCCESS', 'Кампания удалена!');
+            }
+            else {
+                Yii::app()->user->setFlash('ERROR', 'В данный момент кампанию удалить нельзя');
             }
         }
 
-        $this->render('create', compact('model','templates', 'receivers'));
+        $this->redirect(['/client/campaign/index/']);
+    }
+    public function actionCreate($id)
+    {
+        $model = new Campaign();
+        $serviceId = intval($id);
+
+        if($serviceId === 1)
+        {
+            $campaign = new WhatsappCampaign();
+
+            $templates = CHtml::listData(Template::model()->findAllByAttributes(['user_id' => Yii::app()->user->getId(), 'service_id' => $serviceId]), 'id', 'name');
+            $receivers = CHtml::listData(Receiver::model()->findAllByAttributes(['user_id' => Yii::app()->user->getId(), 'service_id' => $serviceId]), 'id', 'name');
+
+            if(isset($_POST['Campaign']) && isset($_POST['WhatsappCampaign']))
+            {
+                $model->attributes = $_POST['Campaign'];
+                $model->created = new CDbExpression('NOW()');
+                $model->status = Campaign::STATUS_PENDING;
+                $model->user_id = Yii::app()->user->getId();
+                $model->service_id = $serviceId;
+
+                $campaign->attributes = $_POST['WhatsappCampaign'];
+
+                if($model->validate() && $model->save())
+                {
+                    $campaign->setPrimaryKey($model->getPrimaryKey());
+                    if($campaign->validate())
+                    {
+                        if($campaign->save())
+                        {
+                            Yii::app()->user->setFlash('SUCCESS', 'Капания сохранена');
+                            $this->redirect(['/client/campaign/index/']);
+                        }
+                        else
+                            $model->delete();
+                    }
+                    else
+                        $model->delete();
+                }
+            }
+
+            $this->render('whatsapp/create', compact('model','campaign','templates','receivers'));
+        }
+        elseif($serviceId === 4) //Instagram
+        {
+            $campaign = new InstagramCampaign();
+
+            if(isset($_POST['Campaign']) && isset($_POST['InstagramCampaign']))
+            {
+                $model->attributes = $_POST['Campaign'];
+                $model->created = new CDbExpression('NOW()');
+                $model->status = Campaign::STATUS_PENDING;
+                $model->user_id = Yii::app()->user->getId();
+                $model->service_id = $serviceId;
+
+                $campaign->attributes = $_POST['InstagramCampaign'];
+
+                if($model->validate() && $model->save())
+                {
+                    $campaign->setPrimaryKey($model->getPrimaryKey());
+                    if($campaign->validate())
+                    {
+                        if($campaign->save())
+                        {
+                            Yii::app()->user->setFlash('SUCCESS', 'Капания сохранена');
+                            $this->redirect(['/client/campaign/index/']);
+                        }
+                        else
+                            $model->delete();
+                    }
+                    else
+                        $model->delete();
+                }
+            }
+
+            $this->render('instagram/create', compact('model','campaign'));
+        }
+        else
+            $this->redirect(['/client/campaign/index']);
     }
 }

@@ -8,13 +8,17 @@
  * @property string $name
  * @property string $icon
  * @property string $color
- * @property int $active
+ * @property integer $active
+ * @property integer $template
+ * @property integer $receiver
+ * @property integer $sender
  *
  * The followings are the available model relations:
+ * @property Campaign[] $campaigns
  * @property Receiver[] $receivers
  * @property Sender[] $senders
- * @property TemplateType[] $templateTypes
  * @property Site[] $sites
+ * @property Tariff[] $tariffs
  * @property Template[] $templates
  */
 class Service extends CActiveRecord
@@ -35,11 +39,12 @@ class Service extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, icon, active', 'required'),
+			array('name, icon', 'required'),
+			array('active, template, receiver, sender', 'numerical', 'integerOnly'=>true),
 			array('name, icon, color', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, icon, color', 'safe', 'on'=>'search'),
+			array('id, name, icon, color, active, template, receiver, sender', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -51,10 +56,11 @@ class Service extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'campaigns' => array(self::HAS_MANY, 'Campaign', 'service_id'),
 			'receivers' => array(self::HAS_MANY, 'Receiver', 'service_id'),
 			'senders' => array(self::HAS_MANY, 'Sender', 'service_id'),
-			'templateTypes' => array(self::MANY_MANY, 'TemplateType', 'service_has_template_type(service_id, template_type_id)'),
 			'sites' => array(self::MANY_MANY, 'Site', 'site_has_service(service_id, site_id)'),
+			'tariffs' => array(self::HAS_MANY, 'Tariff', 'service_id'),
 			'templates' => array(self::HAS_MANY, 'Template', 'service_id'),
 		);
 	}
@@ -69,6 +75,10 @@ class Service extends CActiveRecord
 			'name' => 'Name',
 			'icon' => 'Icon',
 			'color' => 'Color',
+			'active' => 'Active',
+			'template' => 'Template',
+			'receiver' => 'Receiver',
+			'sender' => 'Sender',
 		);
 	}
 
@@ -94,6 +104,10 @@ class Service extends CActiveRecord
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('icon',$this->icon,true);
 		$criteria->compare('color',$this->color,true);
+		$criteria->compare('active',$this->active);
+		$criteria->compare('template',$this->template);
+		$criteria->compare('receiver',$this->receiver);
+		$criteria->compare('sender',$this->sender);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -112,21 +126,42 @@ class Service extends CActiveRecord
 	}
 
     /**
+     * @param int $action
      * @param Site $site
      * @return static[]
      */
-    public static function getActive($site = null)
+    public static function getActive($action = null, $site = null)
     {
         if(!$site)
-            return self::model()->findAllByAttributes(['active' => 1]);
+        {
+            $params = ['active' => 1];
+            if($action === self::ACTION_RECEIVER)
+                $params['receiver'] = 1;
+            elseif($action === self::ACTION_SENDER)
+                $params['sender'] = 1;
+            elseif($action === self::ACTION_TEMPLATE)
+                $params['template'] = 1;
+
+            return self::model()->findAllByAttributes($params);
+        }
 
         $services = [];
         foreach($site->services as $service)
         {
-            if(intval($service->active))
-                $services[] = $service;
+            if(intval($service->active)) {
+                if(
+                    ($action === self::ACTION_RECEIVER && $service->receiver) ||
+                    ($action === self::ACTION_SENDER && $service->sender) ||
+                    ($action === self::ACTION_TEMPLATE && $service->template)
+                )
+                    $services[] = $service;
+            }
         }
 
         return $services;
     }
+
+    const ACTION_RECEIVER = 1;
+    const ACTION_SENDER = 2;
+    const ACTION_TEMPLATE = 3;
 }

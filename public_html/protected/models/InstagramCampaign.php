@@ -1,31 +1,25 @@
 <?php
 
 /**
- * This is the model class for table "campaign".
+ * This is the model class for table "instagram_campaign".
  *
- * The followings are the available columns in table 'campaign':
- * @property integer $id
- * @property string $name
- * @property integer $status
- * @property double $price
- * @property string $created
- * @property integer $user_id
- * @property integer $service_id
+ * The followings are the available columns in table 'instagram_campaign':
+ * @property integer $campaign_id
+ * @property string $login
+ * @property string $password
+ * @property integer $quantity
  *
  * The followings are the available model relations:
- * @property User $user
- * @property Service $service
- * @property InstagramCampaign $instagramCampaign
- * @property WhatsappCampaign $whatsappCampaign
+ * @property Campaign $campaign
  */
-class Campaign extends CActiveRecord
+class InstagramCampaign extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'campaign';
+		return 'instagram_campaign';
 	}
 
 	/**
@@ -36,13 +30,12 @@ class Campaign extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, status, created, user_id, service_id', 'required'),
-			array('status, user_id, service_id', 'numerical', 'integerOnly'=>true),
-			array('price', 'numerical'),
-			array('name', 'length', 'max'=>45),
+			array('campaign_id, login, password, quantity', 'required'),
+			array('campaign_id, quantity', 'numerical', 'integerOnly'=>true),
+			array('login, password', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, status, price, created, user_id, service_id', 'safe', 'on'=>'search'),
+			array('campaign_id, login, password, quantity', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -54,10 +47,7 @@ class Campaign extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
-			'service' => array(self::BELONGS_TO, 'Service', 'service_id'),
-			'instagramCampaign' => array(self::HAS_ONE, 'InstagramCampaign', 'campaign_id'),
-			'whatsappCampaign' => array(self::HAS_ONE, 'WhatsappCampaign', 'campaign_id'),
+			'campaign' => array(self::BELONGS_TO, 'Campaign', 'campaign_id'),
 		);
 	}
 
@@ -67,13 +57,10 @@ class Campaign extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-			'name' => 'Name',
-			'status' => 'Status',
-			'price' => 'Price',
-			'created' => 'Created',
-			'user_id' => 'User',
-			'service_id' => 'Service',
+			'campaign_id' => 'Campaign',
+			'login' => 'Login',
+			'password' => 'Password',
+			'quantity' => 'Quantity',
 		);
 	}
 
@@ -95,13 +82,10 @@ class Campaign extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('name',$this->name,true);
-		$criteria->compare('status',$this->status);
-		$criteria->compare('price',$this->price);
-		$criteria->compare('created',$this->created,true);
-		$criteria->compare('user_id',$this->user_id);
-		$criteria->compare('service_id',$this->service_id);
+		$criteria->compare('campaign_id',$this->campaign_id);
+		$criteria->compare('login',$this->login,true);
+		$criteria->compare('password',$this->password,true);
+		$criteria->compare('quantity',$this->quantity);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -112,15 +96,10 @@ class Campaign extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Campaign the static model class
+	 * @return InstagramCampaign the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
 	}
-    const STATUS_PENDING = 1;
-    const STATUS_SENDING = 2;
-    const STATUS_SENT = 3;
-    const STATUS_DECLINED = 4;
-    const STATUS_CANCELED = 5;
 }

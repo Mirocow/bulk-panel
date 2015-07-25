@@ -1,5 +1,6 @@
 <?php
 /* @var $this CampaignController */
+/* @var $services Service[] */
 /* @var $dataProvider CActiveDataProvider */
 ?>
 <?php $this->showMessages(); ?>
@@ -33,11 +34,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         'name',
         [
             'header' => 'Служба',
-            'name' => 'template.service.name',
-        ],
-        [
-            'header' => 'Тип',
-            'name' => 'template.templateType.name',
+            'name' => 'service.name',
         ],
         [
             'name' => 'created',
@@ -50,7 +47,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         [
             'header' => '',
             'type' => 'raw',
-            'value' => 'Html::GetCampaignDeleteButton($data->id, $data->status)',
+            'value' => 'Html::GetCampaignDeleteButton($data->id, $data->status, true)',
         ],
     ),
     'itemsCssClass' => 'table table-striped',
