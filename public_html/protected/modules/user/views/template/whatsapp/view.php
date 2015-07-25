@@ -53,7 +53,7 @@
         </div>
         <div class="panel-footer">
             <button type="submit" class="btn btn-success"><i class="fa fa-save"></i></button>
-            <a href="<?=$this->createUrl('/client/template/delete', ['id' => $model->id])?>" class="btn btn-danger pull-right delete-submit"><i class="fa fa-close"></i></a>
+            <a href="<?=$this->createUrl('/user/template/delete', ['id' => $model->id])?>" class="btn btn-danger pull-right delete-submit"><i class="fa fa-close"></i></a>
         </div>
     </div>
     <?php $this->endWidget(); ?>

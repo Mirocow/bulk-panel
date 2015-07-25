@@ -143,6 +143,35 @@ class CampaignController extends UserBaseController
 
             $this->render('instagram/create', compact('model','campaign'));
         }
+        elseif($serviceId === 5) //VK
+        {
+            $campaign = new VkCampaign();
+
+            if(isset($_POST['Campaign']) && isset($_POST['VkCampaign']))
+            {
+                $model->attributes = $_POST['Campaign'];
+                $model->created = new CDbExpression('NOW()');
+                $model->status = Campaign::STATUS_PENDING;
+                $model->user_id = Yii::app()->user->getId();
+                $model->service_id = $serviceId;
+
+                $campaign->attributes = $_POST['VkCampaign'];
+
+                if($model->validate() && $model->save())
+                {
+                    $campaign->setPrimaryKey($model->getPrimaryKey());
+                    if($campaign->validate()&& $campaign->save())
+                    {
+                        Yii::app()->user->setFlash('SUCCESS', 'Капания сохранена');
+                        $this->redirect(['/user/campaign/index/']);
+                    }
+                    else
+                        $model->delete();
+                }
+            }
+
+            $this->render('vk/create', compact('model','campaign'));
+        }
         elseif($serviceId === 9) //Voice
         {
             $campaign = new VoiceCampaign();
