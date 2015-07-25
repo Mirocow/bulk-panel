@@ -5,6 +5,7 @@
 /* @var $template WhatsappTemplate */
 /* @var $sendersListData string[] */
 ?>
+<?php $this->showMessages($template); ?>
 <?php $this->showMessages($model); ?>
 <div class="row">
     <?php $form=$this->beginWidget('CActiveForm', array(

@@ -71,7 +71,7 @@ class CampaignController extends ClientBaseController
         $model = new Campaign();
         $serviceId = intval($id);
 
-        if($serviceId === 1)
+        if($serviceId === 1) //WhatsApp
         {
             $campaign = new WhatsappCampaign();
 
@@ -107,6 +107,42 @@ class CampaignController extends ClientBaseController
             }
 
             $this->render('whatsapp/create', compact('model','campaign','templates','receivers'));
+        }
+        elseif($serviceId === 2) //Skype
+        {
+            $campaign = new SkypeCampaign();
+
+            $templates = CHtml::listData(Template::model()->findAllByAttributes(['user_id' => Yii::app()->user->getId(), 'service_id' => $serviceId]), 'id', 'name');
+
+            if(isset($_POST['Campaign']) && isset($_POST['SkypeCampaign']))
+            {
+                $model->attributes = $_POST['Campaign'];
+                $model->created = new CDbExpression('NOW()');
+                $model->status = Campaign::STATUS_PENDING;
+                $model->user_id = Yii::app()->user->getId();
+                $model->service_id = $serviceId;
+
+                $campaign->attributes = $_POST['SkypeCampaign'];
+
+                if($model->validate() && $model->save())
+                {
+                    $campaign->setPrimaryKey($model->getPrimaryKey());
+                    if($campaign->validate())
+                    {
+                        if($campaign->save())
+                        {
+                            Yii::app()->user->setFlash('SUCCESS', 'Капания сохранена');
+                            $this->redirect(['/client/campaign/index/']);
+                        }
+                        else
+                            $model->delete();
+                    }
+                    else
+                        $model->delete();
+                }
+            }
+
+            $this->render('skype/create', compact('model','campaign','templates'));
         }
         elseif($serviceId === 4) //Instagram
         {

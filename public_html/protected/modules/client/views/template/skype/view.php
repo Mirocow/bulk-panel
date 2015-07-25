@@ -2,11 +2,10 @@
 /* @var $this TemplateController */
 /* @var $form CActiveForm */
 /* @var $model Template */
-/* @var $template WhatsappTemplate */
-/* @var $sendersListData string[] */
+/* @var $template SkypeTemplate */
 ?>
-<?php $this->showMessages($template); ?>
 <?php $this->showMessages($model); ?>
+<?php $this->showMessages($template); ?>
 <div class="row">
     <?php $form=$this->beginWidget('CActiveForm', array(
         'id'=>'login-form',
@@ -25,10 +24,6 @@
             <div class="form-group">
                 <?=$form->label($model, 'name')?>
                 <?php echo $form->textField($model, 'name', ['class' => 'form-control', 'placeholder' => 'Название']); ?>
-            </div>
-            <div class="form-group">
-                <?=$form->label($template, 'sender_id')?>
-                <?php echo $form->dropDownList($template, 'sender_id', $sendersListData, ['class' => 'form-control']); ?>
             </div>
             <div class="form-group">
                 <?=$form->label($template, 'text_content')?>

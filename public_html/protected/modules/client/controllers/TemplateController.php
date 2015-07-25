@@ -94,6 +94,40 @@ class TemplateController extends ClientBaseController
 
             $this->render('whatsapp/view', compact('model', 'template','sendersListData'));
         }
+        elseif($serviceId === 2) //Skype
+        {
+            $template = SkypeTemplate::model()->findByPk($model->getPrimaryKey());
+
+            if(isset($_POST['Template']) && isset($_POST['SkypeTemplate']))
+            {
+
+                $model->attributes = $_POST['Template'];
+
+                $template->attributes = $_POST['SkypeTemplate'];
+
+                if($model->validate() && $model->save())
+                {
+                    if($template->validate())
+                    {
+                        if(!empty($_FILES['SkypeTemplate']['name']['file']))
+                        {
+                            $template->file = CUploadedFile::getInstance($template,'file');
+                            $path = Yii::getPathOfAlias('webroot').'/files/template/'.$model->getPrimaryKey().'.'.$template->file->extensionName;
+                            $template->file->saveAs($path);
+
+                            $template->file_name = $model->getPrimaryKey().'.'.$template->file->extensionName;
+                        }
+                        if($template->save())
+                        {
+                            Yii::app()->user->setFlash('SUCCESS', 'Шаблон сохранен');
+                            $this->redirect(['/client/template/index/']);
+                        }
+                    }
+                }
+            }
+
+            $this->render('skype/view', compact('model', 'template'));
+        }
         elseif($serviceId === 9) //Voice
         {
             $template = VoiceTemplate::model()->findByPk($model->getPrimaryKey());
