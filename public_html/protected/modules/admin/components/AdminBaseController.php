@@ -12,6 +12,7 @@ class AdminBaseController extends Controller
 
     public function filters() {
         return [
+            ['application.filters.SiteFilter'],
             ['application.filters.AdminFilter -login,logout'],
         ];
     }

@@ -2,9 +2,9 @@
 /* @var $this TemplateController */
 /* @var $form CActiveForm */
 /* @var $model Template */
-/* @var $template WhatsappTemplate */
-/* @var $sendersListData string[] */
+/* @var $template VoiceTemplate */
 ?>
+<?php $this->showMessages($template); ?>
 <?php $this->showMessages($model); ?>
 <div class="row">
     <?php $form=$this->beginWidget('CActiveForm', array(
@@ -24,14 +24,6 @@
             <div class="form-group">
                 <?=$form->label($model, 'name')?>
                 <?php echo $form->textField($model, 'name', ['class' => 'form-control', 'placeholder' => 'Название']); ?>
-            </div>
-            <div class="form-group">
-                <?=$form->label($template, 'sender_id')?>
-                <?php echo $form->dropDownList($template, 'sender_id', $sendersListData, ['class' => 'form-control']); ?>
-            </div>
-            <div class="form-group">
-                <?=$form->label($template, 'text_content')?>
-                <?php echo $form->textArea($template, 'text_content', ['class' => 'form-control', 'placeholder' => 'Текстовое содержимое']); ?>
             </div>
             <div class="row">
                 <div class="col-md-6">

@@ -12,6 +12,7 @@ class UserBaseController extends Controller
 
     public function filters() {
         return [
+            ['application.filters.SiteFilter'],
             ['application.filters.UserFilter'],
         ];
     }

@@ -36,7 +36,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <?=$form->label($model, 'file')?>
+                        <?=$form->label($template, 'file')?>
                         <?php echo $form->fileField($template, 'file', ['class' => 'form-control', 'placeholder' => 'Файл']); ?>
                     </div>
                 </div>
@@ -53,7 +53,7 @@
         </div>
         <div class="panel-footer">
             <button type="submit" class="btn btn-success"><i class="fa fa-save"></i></button>
-            <a href="<?=$this->createUrl('/user/template/delete', ['id' => $model->id])?>" class="btn btn-danger pull-right delete-submit"><i class="fa fa-close"></i></a>
+            <a href="<?=$this->createUrl('/client/template/delete', ['id' => $model->id])?>" class="btn btn-danger pull-right delete-submit"><i class="fa fa-close"></i></a>
         </div>
     </div>
     <?php $this->endWidget(); ?>

@@ -94,6 +94,38 @@ class TemplateController extends ClientBaseController
 
             $this->render('whatsapp/view', compact('model', 'template','sendersListData'));
         }
+        elseif($serviceId === 9) //Voice
+        {
+            $template = VoiceTemplate::model()->findByPk($model->getPrimaryKey());
+
+            if(isset($_POST['Template']) && isset($_POST['VoiceTemplate']))
+            {
+
+                $model->attributes = $_POST['Template'];
+
+                $template->attributes = $_POST['VoiceTemplate'];
+
+                if($model->validate() && $model->save())
+                {
+                    if(!empty($_FILES['VoiceTemplate']['name']['file']))
+                    {
+                        $template->file = CUploadedFile::getInstance($template,'file');
+                        $path = Yii::getPathOfAlias('webroot').'/files/template/'.$model->getPrimaryKey().'.'.$template->file->extensionName;
+                        $template->file->saveAs($path);
+
+                        $template->file_name = $model->getPrimaryKey().'.'.$template->file->extensionName;
+
+                        if($template->validate() && $template->save())
+                        {
+                            Yii::app()->user->setFlash('SUCCESS', 'Шаблон сохранен');
+                            $this->redirect(['/client/template/index/']);
+                        }
+                    }
+                }
+            }
+
+            $this->render('voice/view', compact('model', 'template','sendersListData'));
+        }
         else
             $this->redirect(['/client/template/index']);
     }
@@ -112,9 +144,9 @@ class TemplateController extends ClientBaseController
             $template = WhatsappTemplate::model()->findByPk($model->getPrimaryKey());
 
 
-            foreach($template->whatsappCampaigns as $whatsAppCampaign)
+            foreach($template->whatsappCampaigns as $campaign)
             {
-                if($whatsAppCampaign->campaign->status == Campaign::STATUS_PENDING)
+                if($campaign->campaign->status == Campaign::STATUS_PENDING)
                 {
                     Yii::app()->user->setFlash('ERROR', 'Данный шаблон используется одной из кампаний');
                     $this->redirect(['/client/template/index/']);
@@ -123,7 +155,24 @@ class TemplateController extends ClientBaseController
             }
 
             Yii::app()->user->setFlash('SUCCESS', 'Шаблон удален!');
-            $template->delete();
+            $model->delete();
+        }
+        elseif($serviceId === 9) //Voice
+        {
+            $template = VoiceTemplate::model()->findByPk($model->getPrimaryKey());
+
+
+            foreach($template->voiceCampaigns as $campaign)
+            {
+                if($campaign->campaign->status == Campaign::STATUS_PENDING)
+                {
+                    Yii::app()->user->setFlash('ERROR', 'Данный шаблон используется одной из кампаний');
+                    $this->redirect(['/client/template/index/']);
+                    die();
+                }
+            }
+
+            Yii::app()->user->setFlash('SUCCESS', 'Шаблон удален!');
             $model->delete();
         }
 
@@ -178,6 +227,46 @@ class TemplateController extends ClientBaseController
                 }
             }
             $this->render('whatsapp/create', compact('model', 'template','sendersListData'));
+        }
+        elseif($serviceId === 9) //Voice
+        {
+            $template = new VoiceTemplate();
+
+            if(isset($_POST['Template']) && isset($_POST['VoiceTemplate']))
+            {
+
+                $model->attributes = $_POST['Template'];
+                $model->created = new CDbExpression('NOW()');
+                $model->status = TemplateStatus::PENDING;
+                $model->user_id = Yii::app()->user->getId();
+                $model->service_id = $serviceId;
+
+                $template->attributes = $_POST['VoiceTemplate'];
+
+                if($model->validate() && $model->save())
+                {
+                    $template->template_id = $model->getPrimaryKey();
+                    if(!empty($_FILES['VoiceTemplate']['name']['file']))
+                    {
+                        $template->file = CUploadedFile::getInstance($template,'file');
+                        $path = Yii::getPathOfAlias('webroot').'/files/template/'.$model->getPrimaryKey().'.'.$template->file->extensionName;
+                        $template->file->saveAs($path);
+
+                        $template->file_name = $model->getPrimaryKey().'.'.$template->file->extensionName;
+
+                        if($template->validate() && $template->save())
+                        {
+                            Yii::app()->user->setFlash('SUCCESS', 'Шаблон сохранен');
+                            $this->redirect(['/client/template/index/']);
+                        }
+                        else
+                            $model->delete();
+                    }
+                    else
+                        $model->delete();
+                }
+            }
+            $this->render('voice/create', compact('model', 'template'));
         }
         else
             $this->redirect(['/client/template/index']);

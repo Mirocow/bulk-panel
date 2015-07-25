@@ -55,29 +55,13 @@ class CampaignController extends UserBaseController
         if(!$model)
             throw new CHttpException(404);
 
-        $serviceId = intval($model->service_id);
-
-        if($serviceId === 1) //WHATSAPP
+        if($model->status != Campaign::STATUS_SENDING)
         {
-            if($model->status != Campaign::STATUS_SENDING)
-            {
-                $model->delete();
-                Yii::app()->user->setFlash('SUCCESS', 'Кампания удалена!');
-            }
-            else {
-                Yii::app()->user->setFlash('ERROR', 'В данный момент кампанию удалить нельзя');
-            }
+            $model->delete();
+            Yii::app()->user->setFlash('SUCCESS', 'Кампания удалена!');
         }
-        elseif($serviceId === 4) //Instagram
-        {
-            if($model->status != Campaign::STATUS_SENDING)
-            {
-                $model->delete();
-                Yii::app()->user->setFlash('SUCCESS', 'Кампания удалена!');
-            }
-            else {
-                Yii::app()->user->setFlash('ERROR', 'В данный момент кампанию удалить нельзя');
-            }
+        else {
+            Yii::app()->user->setFlash('ERROR', 'В данный момент кампанию удалить нельзя');
         }
 
         $this->redirect(['/user/campaign/index/']);
@@ -158,6 +142,43 @@ class CampaignController extends UserBaseController
             }
 
             $this->render('instagram/create', compact('model','campaign'));
+        }
+        elseif($serviceId === 9) //Voice
+        {
+            $campaign = new VoiceCampaign();
+
+            $templates = CHtml::listData(Template::model()->findAllByAttributes(['user_id' => Yii::app()->user->getId(), 'service_id' => $serviceId]), 'id', 'name');
+            $receivers = CHtml::listData(Receiver::model()->findAllByAttributes(['user_id' => Yii::app()->user->getId(), 'service_id' => $serviceId]), 'id', 'name');
+
+            if(isset($_POST['Campaign']) && isset($_POST['VoiceCampaign']))
+            {
+                $model->attributes = $_POST['Campaign'];
+                $model->created = new CDbExpression('NOW()');
+                $model->status = Campaign::STATUS_PENDING;
+                $model->user_id = Yii::app()->user->getId();
+                $model->service_id = $serviceId;
+
+                $campaign->attributes = $_POST['VoiceCampaign'];
+
+                if($model->validate() && $model->save())
+                {
+                    $campaign->setPrimaryKey($model->getPrimaryKey());
+                    if($campaign->validate())
+                    {
+                        if($campaign->save())
+                        {
+                            Yii::app()->user->setFlash('SUCCESS', 'Капания сохранена');
+                            $this->redirect(['/user/campaign/index/']);
+                        }
+                        else
+                            $model->delete();
+                    }
+                    else
+                        $model->delete();
+                }
+            }
+
+            $this->render('voice/create', compact('model','campaign', 'templates', 'receivers'));
         }
         else
             $this->redirect(['/user/campaign/index']);

@@ -17,7 +17,7 @@
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                     <?php foreach($services as $service): ?>
                         <li>
-                            <a href="<?=$this->createUrl('/user/template/create',['id' => $service->id])?>" class="btn btn-sm btn-white" style="text-align: left;">
+                            <a href="<?=$this->createUrl('/client/template/create',['id' => $service->id])?>" class="btn btn-sm btn-white" style="text-align: left;">
                                 <i class="<?=$service->icon?>" style="color: <?=$service->color?>"></i> <?=$service->name?>
                             </a>
                         </li>

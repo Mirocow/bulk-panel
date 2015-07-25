@@ -21,6 +21,12 @@ class Controller extends CController
 	 */
 	public $breadcrumbs=array();
 
+    public function filters() {
+        return [
+            ['application.filters.SiteFilter'],
+        ];
+    }
+
     public function showMessages($model = null)
     {
         if($model === null)

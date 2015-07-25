@@ -8,6 +8,7 @@ class ResellerBaseController extends Controller
 
     public function filters() {
         return [
+            ['application.filters.SiteFilter'],
             ['application.filters.ResellerFilter'],
         ];
     }
