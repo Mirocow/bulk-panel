@@ -211,7 +211,7 @@ class TemplateController extends ClientBaseController
             Yii::app()->user->setFlash('SUCCESS', 'Шаблон удален!');
             $model->delete();
         }
-        if($serviceId === 6) //Sms
+        elseif($serviceId === 6) //Sms
         {
             $template = SmsTemplate::model()->findByPk($model->getPrimaryKey());
 
