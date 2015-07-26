@@ -123,7 +123,7 @@ class ResellerController extends AdminBaseController
 
     public function actionDeclineClaim($id)
     {
-        ResellerClaim::model()->updateByPk($id, ['status', ResellerClaim::STATUS_DECLINED]);
+        ResellerClaim::model()->updateByPk($id, ['status' => ResellerClaim::STATUS_DECLINED]);
         Yii::app()->user->setFlash('SUCCESS', 'Заявка удалена');
         $this->redirect(['/admin/reseller/index']);
     }
