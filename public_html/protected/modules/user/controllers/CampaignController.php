@@ -208,6 +208,43 @@ class CampaignController extends UserBaseController
 
             $this->render('vk/create', compact('model','campaign'));
         }
+        if($serviceId === 6) //SMS
+        {
+            $campaign = new SmsCampaign();
+
+            $templates = CHtml::listData(Template::model()->findAllByAttributes(['user_id' => Yii::app()->user->getId(), 'service_id' => $serviceId]), 'id', 'name');
+            $receivers = CHtml::listData(Receiver::model()->findAllByAttributes(['user_id' => Yii::app()->user->getId(), 'service_id' => $serviceId]), 'id', 'name');
+
+            if(isset($_POST['Campaign']) && isset($_POST['SmsCampaign']))
+            {
+                $model->attributes = $_POST['Campaign'];
+                $model->created = new CDbExpression('NOW()');
+                $model->status = Campaign::STATUS_PENDING;
+                $model->user_id = Yii::app()->user->getId();
+                $model->service_id = $serviceId;
+
+                $campaign->attributes = $_POST['SmsCampaign'];
+
+                if($model->validate() && $model->save())
+                {
+                    $campaign->setPrimaryKey($model->getPrimaryKey());
+                    if($campaign->validate())
+                    {
+                        if($campaign->save())
+                        {
+                            Yii::app()->user->setFlash('SUCCESS', 'Капания сохранена');
+                            $this->redirect(['/user/campaign/index/']);
+                        }
+                        else
+                            $model->delete();
+                    }
+                    else
+                        $model->delete();
+                }
+            }
+
+            $this->render('sms/create', compact('model','campaign','templates','receivers'));
+        }
         elseif($serviceId === 9) //Voice
         {
             $campaign = new VoiceCampaign();

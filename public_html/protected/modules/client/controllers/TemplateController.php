@@ -128,6 +128,26 @@ class TemplateController extends ClientBaseController
 
             $this->render('skype/view', compact('model', 'template'));
         }
+        elseif($serviceId === 6) //SMS
+        {
+            $template = SmsTemplate::model()->findByPk($model->getPrimaryKey());
+
+            if(isset($_POST['Template']) && isset($_POST['SmsTemplate']))
+            {
+
+                $model->attributes = $_POST['Template'];
+
+                $template->attributes = $_POST['SmsTemplate'];
+
+                if($model->validate() && $template->validate() && $model->save() && $template->save())
+                {
+                Yii::app()->user->setFlash('SUCCESS', 'Шаблон сохранен');
+                $this->redirect(['/client/template/index/']);
+                }
+            }
+
+            $this->render('sms/view', compact('model', 'template'));
+        }
         elseif($serviceId === 9) //Voice
         {
             $template = VoiceTemplate::model()->findByPk($model->getPrimaryKey());
@@ -179,6 +199,24 @@ class TemplateController extends ClientBaseController
 
 
             foreach($template->whatsappCampaigns as $campaign)
+            {
+                if($campaign->campaign->status == Campaign::STATUS_PENDING)
+                {
+                    Yii::app()->user->setFlash('ERROR', 'Данный шаблон используется одной из кампаний');
+                    $this->redirect(['/client/template/index/']);
+                    die();
+                }
+            }
+
+            Yii::app()->user->setFlash('SUCCESS', 'Шаблон удален!');
+            $model->delete();
+        }
+        if($serviceId === 6) //Sms
+        {
+            $template = SmsTemplate::model()->findByPk($model->getPrimaryKey());
+
+
+            foreach($template->smsCampaigns as $campaign)
             {
                 if($campaign->campaign->status == Campaign::STATUS_PENDING)
                 {
@@ -261,6 +299,35 @@ class TemplateController extends ClientBaseController
                 }
             }
             $this->render('whatsapp/create', compact('model', 'template','sendersListData'));
+        }
+        elseif($serviceId === 6) //SMS
+        {
+            $template = new SmsTemplate();
+
+            if(isset($_POST['Template']) && isset($_POST['SmsTemplate']))
+            {
+
+                $model->attributes = $_POST['Template'];
+                $model->created = new CDbExpression('NOW()');
+                $model->status = TemplateStatus::PENDING;
+                $model->user_id = Yii::app()->user->getId();
+                $model->service_id = $serviceId;
+
+                $template->attributes = $_POST['SmsTemplate'];
+
+                if($model->validate() && $model->save())
+                {
+                    $template->template_id = $model->getPrimaryKey();
+                    if($template->validate() && $template->save())
+                    {
+                        Yii::app()->user->setFlash('SUCCESS', 'Шаблон сохранен');
+                        $this->redirect(['/client/template/index/']);
+                    }
+                    else
+                        $model->delete();
+                }
+            }
+            $this->render('sms/create', compact('model', 'template'));
         }
         elseif($serviceId === 9) //Voice
         {
