@@ -22,11 +22,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         ],
         [
             'header' => 'Служба',
-            'name' => 'template.service.name',
-        ],
-        [
-            'header' => 'Тип',
-            'name' => 'template.templateType.name',
+            'name' => 'service.name',
         ],
         [
             'name' => 'created',

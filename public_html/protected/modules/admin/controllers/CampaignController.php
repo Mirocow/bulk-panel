@@ -5,24 +5,9 @@ class CampaignController extends AdminBaseController
     public function actionIndex()
     {
         $dataProvider = new CActiveDataProvider('Campaign',[
-            'criteria'=>array(
-                'with' => [
-                    'user' => [
-                        'with' => [
-                            'site' => [
-                                'with' => ['reseller'],
-                            ]
-                        ]
-                    ],
-                    'receiver',
-                    'template' => [
-                        'with' => [
-                            'service',
-                            'templateType'
-                        ]
-                    ],
-                ],
-            ),
+            'criteria' => [
+                'with' => ['service'],
+            ],
             'sort' => [
                 'defaultOrder' => 't.created DESC',
                 'attributes' => [
@@ -46,21 +31,9 @@ class CampaignController extends AdminBaseController
                         'asc' => 'created ASC',
                         'desc' => 'created DESC',
                     ],
-                    'receiver.name' => [
-                        'asc' => 'receiver.name ASC',
-                        'desc' => 'receiver.name DESC',
-                    ],
-                    'template.name' => [
-                        'asc' => 'template.name ASC',
-                        'desc' => 'template.name DESC',
-                    ],
-                    'template.service.name' => [
-                        'asc' => 'template.service.name ASC',
-                        'desc' => 'template.service.name DESC',
-                    ],
-                    'template.templateType.name' => [
-                        'asc' => 'template.templateType.name ASC',
-                        'desc' => 'template.templateType.name DESC',
+                    'service.name' => [
+                        'asc' => 'service.name ASC',
+                        'desc' => 'service.name DESC',
                     ],
                     'name' => [
                         'asc' => 't.name ASC',
