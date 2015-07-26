@@ -203,7 +203,7 @@ class CampaignController extends ClientBaseController
 
             $this->render('vk/create', compact('model','campaign'));
         }
-        if($serviceId === 6) //SMS
+        elseif($serviceId === 6) //SMS
         {
             $campaign = new SmsCampaign();
 

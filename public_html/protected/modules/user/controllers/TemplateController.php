@@ -246,8 +246,8 @@ class TemplateController extends UserBaseController
             Yii::app()->user->setFlash('SUCCESS', 'Шаблон удален!');
             $model->delete();
         }
-
-        $this->redirect(['/user/template/index/']);
+        else
+            $this->redirect(['/user/template/index/']);
     }
 
     public function actionCreate($id)
