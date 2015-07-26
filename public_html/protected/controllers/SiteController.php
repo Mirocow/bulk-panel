@@ -109,6 +109,7 @@ class SiteController extends Controller
         {
             $model->attributes = $_POST['ResellerClaim'];
             $model->created = new CDbExpression('NOW()');
+            $model->status = ResellerClaim::STATUS_PROCESSING;
 
             if($model->validate() && $model->save())
             {

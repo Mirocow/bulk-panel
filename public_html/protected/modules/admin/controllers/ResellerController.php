@@ -36,6 +36,10 @@ class ResellerController extends AdminBaseController
         ]);
 
         $claimsDataProvider = new CActiveDataProvider('ResellerClaim',[
+            'criteria' => [
+                'condition' => 't.status = :status',
+                'params' => [':status' => ResellerClaim::STATUS_PROCESSING],
+            ],
             'sort' => [
                 'defaultOrder' => 't.created DESC',
                 'attributes' => [
@@ -98,21 +102,28 @@ class ResellerController extends AdminBaseController
         if (!$claim)
             throw new CHttpException(404);
 
-        $reseller = new Reseller();
-        $reseller->attributes = $claim->attributes;
-        $reseller->status = 3;
-        if ($reseller->validate() && $reseller->save()) {
-            $claim->delete();
-            Yii::app()->user->setFlash('SUCCESS', 'Заявка успешно принята');
-            $this->redirect(['/admin/reseller/view', 'id' => $reseller->getPrimaryKey()]);
-        } else {
-            var_dump($reseller->getErrors());
+        $model = new Reseller();
+        $model->attributes = $claim->attributes;
+        $model->status = 3;
+        if(isset($_POST['Reseller']))
+        {
+            $model->attributes = $_POST['Reseller'];
+
+            if ($model->validate() && $model->save()) {
+                $claim->status = ResellerClaim::STATUS_ACCEPTED;
+                $claim->save();
+
+                Yii::app()->user->setFlash('SUCCESS', 'Заявка успешно принята');
+                $this->redirect(['/admin/reseller/view', 'id' => $model->getPrimaryKey()]);
+            }
         }
+
+        $this->render('approveClaim', compact('model','claim'));
     }
 
     public function actionDeclineClaim($id)
     {
-        ResellerClaim::model()->deleteByPk($id);
+        ResellerClaim::model()->updateByPk($id, ['status', ResellerClaim::STATUS_DECLINED]);
         Yii::app()->user->setFlash('SUCCESS', 'Заявка удалена');
         $this->redirect(['/admin/reseller/index']);
     }

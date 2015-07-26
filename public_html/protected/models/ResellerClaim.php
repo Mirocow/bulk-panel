@@ -12,6 +12,7 @@
  * @property string $phone
  * @property string $email
  * @property string $created
+ * @property integer $status
  */
 class ResellerClaim extends CActiveRecord
 {
@@ -32,10 +33,11 @@ class ResellerClaim extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('login, password, organization_name, name, phone, email, created', 'required'),
+			array('status', 'numerical', 'integerOnly'=>true),
 			array('login, password, organization_name, name, phone, email, created', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, login, password, organization_name, name, phone, email, created', 'safe', 'on'=>'search'),
+			array('id, login, password, organization_name, name, phone, email, created, status', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -64,6 +66,7 @@ class ResellerClaim extends CActiveRecord
 			'phone' => 'Phone',
 			'email' => 'Email',
 			'created' => 'Created',
+			'status' => 'Status',
 		);
 	}
 
@@ -93,6 +96,7 @@ class ResellerClaim extends CActiveRecord
 		$criteria->compare('phone',$this->phone,true);
 		$criteria->compare('email',$this->email,true);
 		$criteria->compare('created',$this->created,true);
+		$criteria->compare('status',$this->status);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -109,4 +113,8 @@ class ResellerClaim extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+    const STATUS_PROCESSING = 0;
+    const STATUS_ACCEPTED = 1;
+    const STATUS_DECLINED = 2;
 }
