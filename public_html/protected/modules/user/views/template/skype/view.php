@@ -3,6 +3,8 @@
 /* @var $form CActiveForm */
 /* @var $model Template */
 /* @var $template SkypeTemplate */
+/* @var $service Service */
+/* @var $service Service */
 ?>
 <?php $this->showMessages($model); ?>
 <?php $this->showMessages($template); ?>
@@ -17,7 +19,7 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="panel-title">
-                <i class="fa fa-pencil"></i> <?=$model->name?>
+                <i class="<?=$service->icon?>" style="color: <?=$service->color?>;"></i> <?=$model->name?>
             </div>
         </div>
         <div class="panel-body">
