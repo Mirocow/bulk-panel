@@ -54,8 +54,6 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 
-
-
 ### Yii template
 assets/*
 !assets/.gitignore
@@ -63,5 +61,11 @@ protected/runtime/*
 !protected/runtime/.gitignore
 protected/data/*.db
 themes/classic/views/
+
+
+### FILES
+public_html/files/receivers/*
+public_html/files/sender_avatars/*
+public_html/files/template/*
 
 
