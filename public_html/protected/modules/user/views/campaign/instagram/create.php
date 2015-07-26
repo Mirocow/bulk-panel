@@ -3,6 +3,7 @@
 /* @var $form CActiveForm */
 /* @var $model Campaign */
 /* @var $campaign Campaign */
+/* @var $service Service */
 ?>
 
 <?php $this->showMessages($model); ?>
@@ -18,7 +19,7 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="panel-title">
-                <i class="fa fa-envelope"></i> Создание новой кампании
+                <i class="<?=$service->icon?>" style="color: <?=$service->color?>"></i> Создание новой кампании
             </div>
         </div>
         <div class="panel-body">

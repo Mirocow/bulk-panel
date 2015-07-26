@@ -11,7 +11,7 @@
         <div class="col-md-12 form-group">
             <div class="dropdown">
                 <button class="btn btn-sm btn-success dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    <i class="fa fa-plus"></i> Новый шаблон
+                    <i class="<?=$service->icon?>" style="color: <?=$service->color?>;"></i> Новый шаблон
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">

@@ -59,6 +59,8 @@ class TemplateController extends UserBaseController
 
         $serviceId = intval($model->service_id);
 
+        $service = $model->service;
+
         if($serviceId === 1) //WHATSAPP
         {
             $template = WhatsappTemplate::model()->findByPk($model->getPrimaryKey());
@@ -92,7 +94,7 @@ class TemplateController extends UserBaseController
                 }
             }
 
-            $this->render('whatsapp/view', compact('model', 'template','sendersListData'));
+            $this->render('whatsapp/view', compact('model', 'template','sendersListData','service'));
         }
         elseif($serviceId === 2) //Skype
         {
@@ -126,7 +128,7 @@ class TemplateController extends UserBaseController
                 }
             }
 
-            $this->render('skype/view', compact('model', 'template'));
+            $this->render('skype/view', compact('model', 'template','service'));
         }
         elseif($serviceId === 6) //SMS
         {
@@ -146,7 +148,7 @@ class TemplateController extends UserBaseController
                 }
             }
 
-            $this->render('sms/view', compact('model', 'template'));
+            $this->render('sms/view', compact('model', 'template','service'));
         }
         elseif($serviceId === 9) //Voice
         {
@@ -178,7 +180,7 @@ class TemplateController extends UserBaseController
                 }
             }
 
-            $this->render('voice/view', compact('model', 'template','sendersListData'));
+            $this->render('voice/view', compact('model', 'template','sendersListData','service'));
         }
         else
             $this->redirect(['/user/template/index']);
@@ -255,6 +257,9 @@ class TemplateController extends UserBaseController
         $serviceId = intval($id);
         $model = new Template();
 
+        if(!$service = Service::model()->findByPk($serviceId))
+            throw new CHttpException(404);
+
         if($serviceId === 1) //WHATSAPP
         {
             $template = new WhatsappTemplate();
@@ -274,30 +279,63 @@ class TemplateController extends UserBaseController
 
                 if($model->validate() && $model->save())
                 {
-                    $template->template_id = $model->getPrimaryKey();
-                    if($template->validate())
+                    if(!empty($_FILES['WhatsappTemplate']['name']['file']))
                     {
-                        if(!empty($_FILES['WhatsappTemplate']['name']['file']))
-                        {
-                            $template->file = CUploadedFile::getInstance($template,'file');
-                            $path = Yii::getPathOfAlias('webroot').'/files/template/'.$model->getPrimaryKey().'.'.$template->file->extensionName;
-                            $template->file->saveAs($path);
+                        $template->file = CUploadedFile::getInstance($template,'file');
+                        $path = Yii::getPathOfAlias('webroot').'/files/template/'.$model->getPrimaryKey().'.'.$template->file->extensionName;
+                        $template->file->saveAs($path);
 
-                            $template->file_name = $model->getPrimaryKey().'.'.$template->file->extensionName;
-                        }
-                        if($template->save())
-                        {
+                        $template->file_name = $model->getPrimaryKey().'.'.$template->file->extensionName;
+                    }
+
+                    $template->setPrimaryKey($model->getPrimaryKey());
+
+                    if($template->validate() && $template->save())
+                    {
                             Yii::app()->user->setFlash('SUCCESS', 'Шаблон сохранен');
                             $this->redirect(['/user/template/index/']);
-                        }
-                        else
-                            $model->delete();
                     }
                     else
                         $model->delete();
                 }
             }
-            $this->render('whatsapp/create', compact('model', 'template','sendersListData'));
+            $this->render('whatsapp/create', compact('model', 'template','sendersListData','service'));
+        }
+        elseif($serviceId === 2) //Skype
+        {
+            $template = SkypeTemplate::model()->findByPk($model->getPrimaryKey());
+
+            if(isset($_POST['Template']) && isset($_POST['SkypeTemplate']))
+            {
+
+                $model->attributes = $_POST['Template'];
+
+                $template->attributes = $_POST['SkypeTemplate'];
+
+                if($model->validate() && $model->save())
+                {
+                    if(!empty($_FILES['SkypeTemplate']['name']['file']))
+                    {
+                        $template->file = CUploadedFile::getInstance($template,'file');
+                        $path = Yii::getPathOfAlias('webroot').'/files/template/'.$model->getPrimaryKey().'.'.$template->file->extensionName;
+                        $template->file->saveAs($path);
+
+                        $template->file_name = $model->getPrimaryKey().'.'.$template->file->extensionName;
+                    }
+
+                    $template->setPrimaryKey($model->getPrimaryKey());
+
+                    if($template->validate() && $template->save())
+                    {
+                        Yii::app()->user->setFlash('SUCCESS', 'Шаблон сохранен');
+                        $this->redirect(['/user/template/index/']);
+                    }
+                    else
+                        $model->delete();
+                }
+            }
+
+            $this->render('skype/view', compact('model', 'template','service'));
         }
         elseif($serviceId === 6) //SMS
         {
@@ -326,7 +364,7 @@ class TemplateController extends UserBaseController
                         $model->delete();
                 }
             }
-            $this->render('sms/create', compact('model', 'template'));
+            $this->render('sms/create', compact('model', 'template','service'));
         }
         elseif($serviceId === 9) //Voice
         {
@@ -348,25 +386,22 @@ class TemplateController extends UserBaseController
                     $template->template_id = $model->getPrimaryKey();
                     if(!empty($_FILES['VoiceTemplate']['name']['file']))
                     {
-                        $template->file = CUploadedFile::getInstance($template,'file');
-                        $path = Yii::getPathOfAlias('webroot').'/files/template/'.$model->getPrimaryKey().'.'.$template->file->extensionName;
+                        $template->file = CUploadedFile::getInstance($template, 'file');
+                        $path = Yii::getPathOfAlias('webroot') . '/files/template/' . $model->getPrimaryKey() . '.' . $template->file->extensionName;
                         $template->file->saveAs($path);
 
-                        $template->file_name = $model->getPrimaryKey().'.'.$template->file->extensionName;
-
-                        if($template->validate() && $template->save())
-                        {
-                            Yii::app()->user->setFlash('SUCCESS', 'Шаблон сохранен');
-                            $this->redirect(['/user/template/index/']);
-                        }
-                        else
-                            $model->delete();
+                        $template->file_name = $model->getPrimaryKey() . '.' . $template->file->extensionName;
+                    }
+                    if($template->validate() && $template->save())
+                    {
+                        Yii::app()->user->setFlash('SUCCESS', 'Шаблон сохранен');
+                        $this->redirect(['/user/template/index/']);
                     }
                     else
                         $model->delete();
                 }
             }
-            $this->render('voice/create', compact('model', 'template'));
+            $this->render('voice/create', compact('model', 'template','service'));
         }
         else
             $this->redirect(['/user/template/index']);

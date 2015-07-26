@@ -72,6 +72,9 @@ class CampaignController extends UserBaseController
         $model = new Campaign();
         $serviceId = intval($id);
 
+        if(!$service = Service::model()->findByPk($serviceId))
+            throw new CHttpException(404);
+
         if($serviceId === 1)
         {
             $campaign = new WhatsappCampaign();
@@ -107,7 +110,7 @@ class CampaignController extends UserBaseController
                 }
             }
 
-            $this->render('whatsapp/create', compact('model','campaign','templates','receivers'));
+            $this->render('whatsapp/create', compact('model','campaign','templates','receivers','service'));
         }
         elseif($serviceId === 2) //Skype
         {
@@ -143,7 +146,7 @@ class CampaignController extends UserBaseController
                 }
             }
 
-            $this->render('skype/create', compact('model','campaign','templates'));
+            $this->render('skype/create', compact('model','campaign','templates','service'));
         }
         elseif($serviceId === 4) //Instagram
         {
@@ -177,7 +180,7 @@ class CampaignController extends UserBaseController
                 }
             }
 
-            $this->render('instagram/create', compact('model','campaign'));
+            $this->render('instagram/create', compact('model','campaign','service'));
         }
         elseif($serviceId === 5) //VK
         {
@@ -206,7 +209,7 @@ class CampaignController extends UserBaseController
                 }
             }
 
-            $this->render('vk/create', compact('model','campaign'));
+            $this->render('vk/create', compact('model','campaign','service'));
         }
         elseif($serviceId === 6) //SMS
         {
@@ -243,7 +246,7 @@ class CampaignController extends UserBaseController
                 }
             }
 
-            $this->render('sms/create', compact('model','campaign','templates','receivers'));
+            $this->render('sms/create', compact('model','campaign','templates','receivers','service'));
         }
         elseif($serviceId === 9) //Voice
         {
@@ -280,7 +283,7 @@ class CampaignController extends UserBaseController
                 }
             }
 
-            $this->render('voice/create', compact('model','campaign', 'templates', 'receivers'));
+            $this->render('voice/create', compact('model','campaign', 'templates', 'receivers','service'));
         }
         else
             $this->redirect(['/user/campaign/index']);

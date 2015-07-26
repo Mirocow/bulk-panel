@@ -3,6 +3,7 @@
 /* @var $form CActiveForm */
 /* @var $model Template */
 /* @var $template VoiceTemplate */
+/* @var $service Service */
 
 ?>
 <?php $this->showMessages($model); ?>
@@ -18,7 +19,7 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="panel-title">
-                <i class="fa fa-plus"></i> Создание нового шаблона
+                <i class="<?=$service->icon?>" style="color: <?=$service->color?>;"></i> Создание нового шаблона
             </div>
         </div>
         <div class="panel-body">
