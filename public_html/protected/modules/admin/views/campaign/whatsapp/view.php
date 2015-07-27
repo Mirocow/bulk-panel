@@ -62,6 +62,10 @@
                 </div>
             </div>
             <div class="form-group">
+                <?=$form->label($model, 'price')?>
+                <?php echo $form->numberField($model, 'price', $statuses, ['class' => 'form-control', 'placeholder' => 'Стоимость кампании']); ?>
+            </div>
+            <div class="form-group">
                 <?=$form->label($model, 'status')?>
                 <?php echo $form->dropDownList($model, 'status', $statuses, ['class' => 'form-control']); ?>
             </div>
