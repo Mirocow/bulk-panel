@@ -9,16 +9,57 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="panel-title">
-                Баланс пользователя <?=$model->name?> (ID <?=$model->id?>)
+                Пользователь <?=$model->name?> (ID <?=$model->id?>)
             </div>
         </div>
         <div class="panel-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <table class="table has-buttons">
+                        <tbody>
+                            <tr>
+                                <th class="text-td">Логин:</th>
+                                <td><?=$model->login?></td>
+                            </tr>
+                            <tr>
+                                <th class="text-td">Пароль:</th>
+                                <td><?=$model->password?></td>
+                            </tr>
+                            <tr>
+                                <th class="text-td">Email:</th>
+                                <td><a href="mailto:<?=$model->email?>"><?=$model->email?></a></td>
+                            </tr>
+                            <tr>
+                                <th class="text-td">Имя:</th>
+                                <td><?=$model->name?></td>
+                            </tr>
+                            <tr>
+                                <th class="text-td">Дата регистрации:</th>
+                                <td><?=Html::SQLDateFormat($model->created)?></td>
+                            </tr>
+                            <?php if($model->site_id): ?>
+                                <tr>
+                                    <th class="text-td">Сайт:</th>
+                                    <td><?=$model->site->name?></td>
+                                </tr>
+                                <?php if($model->site->reseller_id): ?>
+                                    <tr>
+                                        <th class="text-td">Реселлер:</th>
+                                        <td><a href="<?=$this->createUrl('/admin/reseller/view',['id' => $model->site->reseller_id])?>"><?=$model->site->reseller->name?></a></td>
+                                    </tr>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <legend>Баланс: <?=$model->getBalance()?> <i class="fa fa-rub"></i></legend>
             <div class="form-group">
-                <?=$form->label($transaction, 'amount')?>
+                <label>Сумма:</label>
                 <?php echo $form->textField($transaction, 'amount', ['class' => 'form-control', 'placeholder' => 'Баланс']); ?>
             </div>
             <div class="form-group">
-                <?=$form->label($transaction, 'in')?>
+                <label>Тип:</label>
                 <?php echo $form->dropDownList($transaction, 'in', [
                     0 => 'Списать',
                     1 => 'Начислить',
