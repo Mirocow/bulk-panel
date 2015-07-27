@@ -131,6 +131,23 @@ class Campaign extends CActiveRecord
     {
         parent::afterSave();
 
+        $userTransaction = new Transaction();
+        $userTransaction->status = Transaction::STATUS_COMPLETE;
+        $userTransaction->amount = $this->price;
+        $userTransaction->user_id = $this->user_id;
+        $userTransaction->in = 0;
+        $userTransaction->occurred = new CDbExpression('NOW()');
+        $userTransaction->method = '';
+        $userTransaction->save();
+
+        if($this->user->site)
+        {
+            if($reseller = $this->user->site->reseller)
+            {
+                $reseller->balance -= $this->price;
+                $reseller->save();
+            }
+        }
     }
 
     const STATUS_PENDING = 1;
