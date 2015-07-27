@@ -60,106 +60,49 @@ class CampaignController extends AdminBaseController
 
         $statuses = CampaignStatus::getStatuses();
 
-        if($serviceId === Service::SERVICE_WHATSAPP) //WhatsApp
+        if(isset($_POST['Campaign']))
         {
-            $campaign = $model->whatsappCampaign;
+            $model->attributes = $_POST['Campaign'];
 
-            if(isset($_POST['Campaign']))
-            {
-                $model->attributes = $_POST['Campaign'];
-
-                if($model->validate() && $model->save())
-                {
+            if($model->status == CampaignStatus::STATUS_SENT && intval($model->price) <= 0) {
+                $model->addError('price', 'Укажите цену, прежде чем завершить кампанию');
+            }
+            else {
+                if($model->validate() && $model->save()) {
                     Yii::app()->user->setFlash('SUCCESS', 'Капания сохранена');
                     $this->redirect(['/admin/campaign/index/']);
                 }
             }
+        }
 
+        if($serviceId === Service::SERVICE_WHATSAPP) //WhatsApp
+        {
+            $campaign = $model->whatsappCampaign;
             $this->render('whatsapp/view', compact('model','campaign','statuses'));
         }
         elseif($serviceId === Service::SERVICE_SKYPE) //Skype
         {
             $campaign = $model->skypeCampaign;
-
-            if(isset($_POST['Campaign']))
-            {
-                $model->attributes = $_POST['Campaign'];
-
-                if($model->validate() && $model->save())
-                {
-                    Yii::app()->user->setFlash('SUCCESS', 'Капания сохранена');
-                    $this->redirect(['/admin/campaign/index/']);
-                }
-            }
-
             $this->render('skype/view', compact('model','campaign','statuses'));
         }
         elseif($serviceId === Service::SERVICE_INSTAGRAM) //Instagram
         {
             $campaign = $model->instagramCampaign;
-
-            if(isset($_POST['Campaign']))
-            {
-                $model->attributes = $_POST['Campaign'];
-
-                if($model->validate() && $model->save())
-                {
-                    Yii::app()->user->setFlash('SUCCESS', 'Капания сохранена');
-                    $this->redirect(['/admin/campaign/index/']);
-                }
-            }
-
             $this->render('instagram/view', compact('model','campaign','statuses'));
         }
         elseif($serviceId === Service::SERVICE_VK) //VK
         {
             $campaign = $model->vkCampaign;
-
-            if(isset($_POST['Campaign']))
-            {
-                $model->attributes = $_POST['Campaign'];
-
-                if($model->validate() && $model->save())
-                {
-                    Yii::app()->user->setFlash('SUCCESS', 'Капания сохранена');
-                    $this->redirect(['/admin/campaign/index/']);
-                }
-            }
-
             $this->render('vk/view', compact('model','campaign','statuses'));
         }
         elseif($serviceId === Service::SERVICE_SMS) //SMS
         {
             $campaign = $model->smsCampaign;
-
-            if(isset($_POST['Campaign']))
-            {
-                $model->attributes = $_POST['Campaign'];
-
-                if($model->validate() && $model->save())
-                {
-                    Yii::app()->user->setFlash('SUCCESS', 'Капания сохранена');
-                    $this->redirect(['/admin/campaign/index/']);
-                }
-            }
-
             $this->render('sms/view', compact('model','campaign','statuses'));
         }
         elseif($serviceId === Service::SERVICE_VOICE) //Voice
         {
             $campaign = $model->voiceCampaign;
-
-            if(isset($_POST['Campaign']))
-            {
-                $model->attributes = $_POST['Campaign'];
-
-                if($model->validate() && $model->save())
-                {
-                    Yii::app()->user->setFlash('SUCCESS', 'Капания сохранена');
-                    $this->redirect(['/admin/campaign/index/']);
-                }
-            }
-
             $this->render('voice/view', compact('model','campaign','statuses'));
         }
         else
