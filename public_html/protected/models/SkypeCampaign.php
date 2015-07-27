@@ -8,10 +8,11 @@
  * @property string $country
  * @property string $city
  * @property integer $quantity
+ * @property integer $skype_template_id
  *
  * The followings are the available model relations:
  * @property Campaign $campaign
- * @property SkypeTemplate[] $skypeTemplates
+ * @property SkypeTemplate $skypeTemplate
  */
 class SkypeCampaign extends CActiveRecord
 {
@@ -31,11 +32,11 @@ class SkypeCampaign extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('campaign_id, country, city, quantity', 'required'),
-			array('campaign_id, quantity', 'numerical', 'integerOnly'=>true),
+			array('campaign_id, country, city, quantity, skype_template_id', 'required'),
+			array('campaign_id, quantity, skype_template_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('campaign_id, country, city, quantity', 'safe', 'on'=>'search'),
+			array('campaign_id, country, city, quantity, skype_template_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -48,7 +49,7 @@ class SkypeCampaign extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'campaign' => array(self::BELONGS_TO, 'Campaign', 'campaign_id'),
-			'skypeTemplates' => array(self::HAS_MANY, 'SkypeTemplate', 'skype_campaign_id'),
+			'skypeTemplate' => array(self::BELONGS_TO, 'SkypeTemplate', 'skype_template_id'),
 		);
 	}
 
@@ -62,6 +63,7 @@ class SkypeCampaign extends CActiveRecord
 			'country' => 'Country',
 			'city' => 'City',
 			'quantity' => 'Quantity',
+			'skype_template_id' => 'Skype Template',
 		);
 	}
 
@@ -87,6 +89,7 @@ class SkypeCampaign extends CActiveRecord
 		$criteria->compare('country',$this->country,true);
 		$criteria->compare('city',$this->city,true);
 		$criteria->compare('quantity',$this->quantity);
+		$criteria->compare('skype_template_id',$this->skype_template_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

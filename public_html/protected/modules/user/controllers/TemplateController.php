@@ -24,8 +24,8 @@ class TemplateController extends UserBaseController
                 'defaultOrder' => 't.name ASC',
                 'attributes' => [
                     'id' => [
-                        'asc' => 'id ASC',
-                        'desc' => 'id DESC',
+                        'asc' => 't.id ASC',
+                        'desc' => 't.id DESC',
                     ],
                     'type' => [
                         'asc' => 'type ASC',
@@ -61,7 +61,7 @@ class TemplateController extends UserBaseController
 
         $service = $model->service;
 
-        if($serviceId === 1) //WHATSAPP
+        if($serviceId === Service::SERVICE_WHATSAPP) //WHATSAPP
         {
             $template = WhatsappTemplate::model()->findByPk($model->getPrimaryKey());
             $sendersListData = CHtml::listData(Sender::model()->findAllByAttributes(['service_id' => $serviceId, 'user_id' => Yii::app()->user->getId()]), 'id', 'name');
@@ -96,7 +96,7 @@ class TemplateController extends UserBaseController
 
             $this->render('whatsapp/view', compact('model', 'template','sendersListData','service'));
         }
-        elseif($serviceId === 2) //Skype
+        elseif($serviceId === Service::SERVICE_SKYPE) //Skype
         {
             $template = SkypeTemplate::model()->findByPk($model->getPrimaryKey());
 
@@ -130,7 +130,7 @@ class TemplateController extends UserBaseController
 
             $this->render('skype/view', compact('model', 'template','service'));
         }
-        elseif($serviceId === 6) //SMS
+        elseif($serviceId === Service::SERVICE_SMS) //SMS
         {
             $template = SmsTemplate::model()->findByPk($model->getPrimaryKey());
 
@@ -150,7 +150,7 @@ class TemplateController extends UserBaseController
 
             $this->render('sms/view', compact('model', 'template','service'));
         }
-        elseif($serviceId === 9) //Voice
+        elseif($serviceId === Service::SERVICE_VOICE) //Voice
         {
             $template = VoiceTemplate::model()->findByPk($model->getPrimaryKey());
 
@@ -195,7 +195,7 @@ class TemplateController extends UserBaseController
 
         $serviceId = intval($model->service_id);
 
-        if($serviceId === 1) //WHATSAPP
+        if($serviceId === Service::SERVICE_WHATSAPP) //WHATSAPP
         {
             $template = WhatsappTemplate::model()->findByPk($model->getPrimaryKey());
             
@@ -212,7 +212,7 @@ class TemplateController extends UserBaseController
             Yii::app()->user->setFlash('SUCCESS', 'Шаблон удален!');
             $model->delete();
         }
-        elseif($serviceId === 6) //Sms
+        elseif($serviceId === Service::SERVICE_SMS) //Sms
         {
             $template = SmsTemplate::model()->findByPk($model->getPrimaryKey());
 
@@ -230,7 +230,7 @@ class TemplateController extends UserBaseController
             Yii::app()->user->setFlash('SUCCESS', 'Шаблон удален!');
             $model->delete();
         }
-        elseif($serviceId === 9) //Voice
+        elseif($serviceId === Service::SERVICE_VOICE) //Voice
         {
             $template = VoiceTemplate::model()->findByPk($model->getPrimaryKey());
 
@@ -260,7 +260,7 @@ class TemplateController extends UserBaseController
         if(!$service = Service::model()->findByPk($serviceId))
             throw new CHttpException(404);
 
-        if($serviceId === 1) //WHATSAPP
+        if($serviceId === Service::SERVICE_WHATSAPP) //WHATSAPP
         {
             $template = new WhatsappTemplate();
             $sendersListData = CHtml::listData(Sender::model()->findAllByAttributes(['service_id' => $serviceId, 'user_id' => Yii::app()->user->getId()]), 'id', 'name');
@@ -301,14 +301,18 @@ class TemplateController extends UserBaseController
             }
             $this->render('whatsapp/create', compact('model', 'template','sendersListData','service'));
         }
-        elseif($serviceId === 2) //Skype
+        elseif($serviceId === Service::SERVICE_SKYPE) //Skype
         {
-            $template = SkypeTemplate::model()->findByPk($model->getPrimaryKey());
+            $template = new SkypeTemplate();
 
             if(isset($_POST['Template']) && isset($_POST['SkypeTemplate']))
             {
 
                 $model->attributes = $_POST['Template'];
+                $model->created = new CDbExpression('NOW()');
+                $model->status = TemplateStatus::PENDING;
+                $model->user_id = Yii::app()->user->getId();
+                $model->service_id = $serviceId;
 
                 $template->attributes = $_POST['SkypeTemplate'];
 
@@ -337,7 +341,7 @@ class TemplateController extends UserBaseController
 
             $this->render('skype/view', compact('model', 'template','service'));
         }
-        elseif($serviceId === 6) //SMS
+        elseif($serviceId === Service::SERVICE_SMS) //SMS
         {
             $template = new SmsTemplate();
 
@@ -366,7 +370,7 @@ class TemplateController extends UserBaseController
             }
             $this->render('sms/create', compact('model', 'template','service'));
         }
-        elseif($serviceId === 9) //Voice
+        elseif($serviceId === Service::SERVICE_VOICE) //Voice
         {
             $template = new VoiceTemplate();
 

@@ -19,7 +19,7 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="panel-title">
-                <i class="<?=$service->icon?>" style="color: <?=$service->color?>;"></i> <?=$model->name?>
+                <i class="<?=$service->icon?>" style="color: #<?=$service->color?>;"></i> <?=$model->name?>
             </div>
         </div>
         <div class="panel-body">

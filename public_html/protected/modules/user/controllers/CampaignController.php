@@ -17,8 +17,8 @@ class CampaignController extends UserBaseController
                 'defaultOrder' => 't.name ASC',
                 'attributes' => [
                     'id' => [
-                        'asc' => 'id ASC',
-                        'desc' => 'id DESC',
+                        'asc' => 't.id ASC',
+                        'desc' => 't.id DESC',
                     ],
                     'status' => [
                         'asc' => 'status ASC',
@@ -75,7 +75,7 @@ class CampaignController extends UserBaseController
         if(!$service = Service::model()->findByPk($serviceId))
             throw new CHttpException(404);
 
-        if($serviceId === 1)
+        if($serviceId === Service::SERVICE_WHATSAPP)
         {
             $campaign = new WhatsappCampaign();
 
@@ -112,7 +112,7 @@ class CampaignController extends UserBaseController
 
             $this->render('whatsapp/create', compact('model','campaign','templates','receivers','service'));
         }
-        elseif($serviceId === 2) //Skype
+        elseif($serviceId === Service::SERVICE_SKYPE) //Skype
         {
             $campaign = new SkypeCampaign();
 
@@ -148,7 +148,7 @@ class CampaignController extends UserBaseController
 
             $this->render('skype/create', compact('model','campaign','templates','service'));
         }
-        elseif($serviceId === 4) //Instagram
+        elseif($serviceId === Service::SERVICE_INSTAGRAM) //Instagram
         {
             $campaign = new InstagramCampaign();
 
@@ -182,7 +182,7 @@ class CampaignController extends UserBaseController
 
             $this->render('instagram/create', compact('model','campaign','service'));
         }
-        elseif($serviceId === 5) //VK
+        elseif($serviceId === Service::SERVICE_VK) //VK
         {
             $campaign = new VkCampaign();
 
@@ -211,7 +211,7 @@ class CampaignController extends UserBaseController
 
             $this->render('vk/create', compact('model','campaign','service'));
         }
-        elseif($serviceId === 6) //SMS
+        elseif($serviceId === Service::SERVICE_SMS) //SMS
         {
             $campaign = new SmsCampaign();
 
@@ -248,7 +248,7 @@ class CampaignController extends UserBaseController
 
             $this->render('sms/create', compact('model','campaign','templates','receivers','service'));
         }
-        elseif($serviceId === 9) //Voice
+        elseif($serviceId === Service::SERVICE_VOICE) //Voice
         {
             $campaign = new VoiceCampaign();
 

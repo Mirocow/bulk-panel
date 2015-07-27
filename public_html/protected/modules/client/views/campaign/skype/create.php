@@ -20,7 +20,7 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="panel-title">
-                <i class="<?=$service->icon?>" style="color: <?=$service->color?>"></i> Создание новой кампании
+                <i class="<?=$service->icon?>" style="color: #<?=$service->color?>"></i> Создание новой кампании
             </div>
         </div>
         <div class="panel-body">
@@ -42,7 +42,7 @@
             </div>
             <div class="form-group">
                 <?=$form->label($campaign, 'quantity')?>
-                <?php echo $form->numberField($campaign, 'quantity', $templates, ['class' => 'form-control']); ?>
+                <?php echo $form->numberField($campaign, 'quantity', ['class' => 'form-control']); ?>
             </div>
         </div>
         <div class="panel-footer">

@@ -13,9 +13,13 @@
  * @property integer $service_id
  *
  * The followings are the available model relations:
- * @property User $user
  * @property Service $service
+ * @property User $user
  * @property InstagramCampaign $instagramCampaign
+ * @property SkypeCampaign $skypeCampaign
+ * @property SmsCampaign $smsCampaign
+ * @property VkCampaign $vkCampaign
+ * @property VoiceCampaign $voiceCampaign
  * @property WhatsappCampaign $whatsappCampaign
  */
 class Campaign extends CActiveRecord
@@ -54,9 +58,13 @@ class Campaign extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
 			'service' => array(self::BELONGS_TO, 'Service', 'service_id'),
+			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
 			'instagramCampaign' => array(self::HAS_ONE, 'InstagramCampaign', 'campaign_id'),
+			'skypeCampaign' => array(self::HAS_ONE, 'SkypeCampaign', 'campaign_id'),
+			'smsCampaign' => array(self::HAS_ONE, 'SmsCampaign', 'campaign_id'),
+			'vkCampaign' => array(self::HAS_ONE, 'VkCampaign', 'campaign_id'),
+			'voiceCampaign' => array(self::HAS_ONE, 'VoiceCampaign', 'campaign_id'),
 			'whatsappCampaign' => array(self::HAS_ONE, 'WhatsappCampaign', 'campaign_id'),
 		);
 	}
@@ -118,6 +126,7 @@ class Campaign extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
     const STATUS_PENDING = 1;
     const STATUS_SENDING = 2;
     const STATUS_SENT = 3;

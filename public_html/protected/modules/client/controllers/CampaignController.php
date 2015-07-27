@@ -17,8 +17,8 @@ class CampaignController extends ClientBaseController
                 'defaultOrder' => 't.name ASC',
                 'attributes' => [
                     'id' => [
-                        'asc' => 'id ASC',
-                        'desc' => 'id DESC',
+                        'asc' => 't.id ASC',
+                        'desc' => 't.id DESC',
                     ],
                     'status' => [
                         'asc' => 'status ASC',
@@ -74,7 +74,7 @@ class CampaignController extends ClientBaseController
         if(!$service = Service::model()->findByPk($serviceId))
             throw new CHttpException(404);
 
-        if($serviceId === 1) //WhatsApp
+        if($serviceId === Service::SERVICE_WHATSAPP) //WhatsApp
         {
             $campaign = new WhatsappCampaign();
 
@@ -109,9 +109,14 @@ class CampaignController extends ClientBaseController
                 }
             }
 
+            if(isset($_POST['Campaign']))
+                $model->validate();
+            if(isset($_POST['WhatsappCampaign']))
+                $campaign->validate();
+
             $this->render('whatsapp/create', compact('model','campaign','templates','receivers', 'service'));
         }
-        elseif($serviceId === 2) //Skype
+        elseif($serviceId === Service::SERVICE_SKYPE) //Skype
         {
             $campaign = new SkypeCampaign();
 
@@ -145,9 +150,14 @@ class CampaignController extends ClientBaseController
                 }
             }
 
+            if(isset($_POST['Campaign']))
+                $model->validate();
+            if(isset($_POST['SkypeCampaign']))
+                $campaign->validate();
+
             $this->render('skype/create', compact('model','campaign','templates', 'service'));
         }
-        elseif($serviceId === 4) //Instagram
+        elseif($serviceId === Service::SERVICE_INSTAGRAM) //Instagram
         {
             $campaign = new InstagramCampaign();
 
@@ -175,9 +185,14 @@ class CampaignController extends ClientBaseController
                 }
             }
 
+            if(isset($_POST['Campaign']))
+                $model->validate();
+            if(isset($_POST['InstagramCampaign']))
+                $campaign->validate();
+
             $this->render('instagram/create', compact('model','campaign', 'service'));
         }
-        elseif($serviceId === 5) //VK
+        elseif($serviceId === Service::SERVICE_VK) //VK
         {
             $campaign = new VkCampaign();
 
@@ -204,9 +219,14 @@ class CampaignController extends ClientBaseController
                 }
             }
 
+            if(isset($_POST['Campaign']))
+                $model->validate();
+            if(isset($_POST['VkCampaign']))
+                $campaign->validate();
+
             $this->render('vk/create', compact('model','campaign', 'service'));
         }
-        elseif($serviceId === 6) //SMS
+        elseif($serviceId === Service::SERVICE_SMS) //SMS
         {
             $campaign = new SmsCampaign();
 
@@ -241,9 +261,14 @@ class CampaignController extends ClientBaseController
                 }
             }
 
+            if(isset($_POST['Campaign']))
+                $model->validate();
+            if(isset($_POST['SmsCampaign']))
+                $campaign->validate();
+
             $this->render('sms/create', compact('model','campaign','templates','receivers', 'service'));
         }
-        elseif($serviceId === 9) //Voice
+        elseif($serviceId === Service::SERVICE_VOICE) //Voice
         {
             $campaign = new VoiceCampaign();
 
@@ -277,6 +302,11 @@ class CampaignController extends ClientBaseController
                         $model->delete();
                 }
             }
+
+            if(isset($_POST['Campaign']))
+                $model->validate();
+            if(isset($_POST['VoiceCampaign']))
+                $campaign->validate();
 
             $this->render('voice/create', compact('model','campaign', 'templates', 'receivers', 'service'));
         }

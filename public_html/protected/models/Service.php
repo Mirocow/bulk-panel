@@ -164,4 +164,14 @@ class Service extends CActiveRecord
     const ACTION_RECEIVER = 1;
     const ACTION_SENDER = 2;
     const ACTION_TEMPLATE = 3;
+
+    const SERVICE_WHATSAPP = 1;
+    const SERVICE_SKYPE = 2;
+    const SERVICE_VIBER = 3;
+    const SERVICE_INSTAGRAM = 4;
+    const SERVICE_VK = 5;
+    const SERVICE_SMS = 6;
+    const SERVICE_EMAIL = 7;
+    const SERVICE_AVITO = 8;
+    const SERVICE_VOICE = 9;
 }

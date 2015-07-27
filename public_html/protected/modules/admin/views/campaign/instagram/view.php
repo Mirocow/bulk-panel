@@ -3,6 +3,7 @@
 /* @var $this CampaignController */
 /* @var $form CActiveForm */
 /* @var $statuses string[] */
+/* @var $campaign InstagramCampaign*/
 ?>
 <?php $this->showMessages($model);?>
 <?php $form=$this->beginWidget('CActiveForm'); ?>
@@ -27,40 +28,27 @@
                             </tr>
                             <tr>
                                 <th class="text-td">Служба:</th>
-                                <td><?=$model->template->service->name?></td>
+                                <td><i class="<?=$model->service->icon?>" style="color: #<?=$model->service->color?>;"></i> <?=$model->service->name?></td>
                             </tr>
                             <tr>
-                                <th class="text-td">Имя отправителя:</th>
-                                <td><?=$model->template->sender->name?></td>
+                                <th class="text-td">Логин:</th>
+                                <td><?=$campaign->login?></td>
                             </tr>
-                            <?php if($model->template->sender->has_avatar): ?>
-                                <tr>
-                                    <th class="button-td">Аватар отправителя:</th>
-                                    <td><a href="/files/sender_avatars/<?=$model->template->sender->file_name?>" target="_blank" class="btn btn-xs btn-default"><i class="fa fa-download"></i></a></td>
-                                </tr>
-                            <?php endif; ?>
                             <tr>
-                                <th class="button-td">Файл с получателями:</th>
-                                <td><a href="/files/receivers/<?=$model->receiver->file_name?>" target="_blank" class="btn btn-xs btn-default"><i class="fa fa-download"></i></a></td>
+                                <th class="text-td">Пароль:</th>
+                                <td><?=$campaign->password?></td>
                             </tr>
-                            <?php if(intval($model->template->templateType->id) === 1): ?>
-                                <tr>
-                                    <th class="text-td">Текст сообщения:</th>
-                                    <td><?=$model->template->text_content?></td>
-                                </tr>
-                            <?php else: ?>
-                                <tr>
-                                    <th class="button-td">Файл сообщения:</th>
-                                    <td><a href="/files/template/<?=$model->template->file_name?>" target="_blank" class="btn btn-xs btn-default"><i class="fa fa-download"></i></a></td>
-                                </tr>
-                            <?php endif; ?>
+                            <tr>
+                                <th class="text-td">Количество:</th>
+                                <td><?=$campaign->quantity?></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
             <div class="form-group">
                 <?=$form->label($model, 'status')?>
-                <?php echo $form->dropDownList($model, 'status', $statuses, ['class' => 'form-control', 'placeholder' => 'Баланс']); ?>
+                <?php echo $form->dropDownList($model, 'status', $statuses, ['class' => 'form-control']); ?>
             </div>
         </div>
         <div class="panel-footer">

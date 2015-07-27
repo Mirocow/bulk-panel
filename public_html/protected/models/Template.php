@@ -12,8 +12,11 @@
  * @property integer $user_id
  *
  * The followings are the available model relations:
+ * @property SkypeTemplate $skypeTemplate
+ * @property SmsTemplate $smsTemplate
  * @property Service $service
  * @property User $user
+ * @property VoiceTemplate $voiceTemplate
  * @property WhatsappTemplate $whatsappTemplate
  */
 class Template extends CActiveRecord
@@ -50,8 +53,11 @@ class Template extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'skypeTemplate' => array(self::HAS_ONE, 'SkypeTemplate', 'template_id'),
+			'smsTemplate' => array(self::HAS_ONE, 'SmsTemplate', 'template_id'),
 			'service' => array(self::BELONGS_TO, 'Service', 'service_id'),
 			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
+			'voiceTemplate' => array(self::HAS_ONE, 'VoiceTemplate', 'template_id'),
 			'whatsappTemplate' => array(self::HAS_ONE, 'WhatsappTemplate', 'template_id'),
 		);
 	}

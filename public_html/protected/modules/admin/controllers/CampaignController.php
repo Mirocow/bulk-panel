@@ -51,23 +51,118 @@ class CampaignController extends AdminBaseController
 
     public function actionView($id)
     {
+        /* @var $model Campaign */
         $model = Campaign::model()->findByPk($id);
         if(!$model)
             throw new CHttpException(404);
 
+        $serviceId = intval($model->service_id);
+
         $statuses = CampaignStatus::getStatuses();
 
-        if(isset($_POST['Campaign']))
+        if($serviceId === Service::SERVICE_WHATSAPP) //WhatsApp
         {
-            $model->attributes = $_POST['Campaign'];
+            $campaign = $model->whatsappCampaign;
 
-            if($model->validate() && $model->save())
+            if(isset($_POST['Campaign']))
             {
-                Yii::app()->user->setFlash('SUCCESS', 'Кампания сохранена');
-                $this->redirect(['/admin/campaign/index']);
-            }
-        }
+                $model->attributes = $_POST['Campaign'];
 
-        $this->render('view', compact('model', 'statuses'));
+                if($model->validate() && $model->save())
+                {
+                    Yii::app()->user->setFlash('SUCCESS', 'Капания сохранена');
+                    $this->redirect(['/admin/campaign/index/']);
+                }
+            }
+
+            $this->render('whatsapp/view', compact('model','campaign','statuses'));
+        }
+        elseif($serviceId === Service::SERVICE_SKYPE) //Skype
+        {
+            $campaign = $model->skypeCampaign;
+
+            if(isset($_POST['Campaign']))
+            {
+                $model->attributes = $_POST['Campaign'];
+
+                if($model->validate() && $model->save())
+                {
+                    Yii::app()->user->setFlash('SUCCESS', 'Капания сохранена');
+                    $this->redirect(['/admin/campaign/index/']);
+                }
+            }
+
+            $this->render('skype/view', compact('model','campaign','statuses'));
+        }
+        elseif($serviceId === Service::SERVICE_INSTAGRAM) //Instagram
+        {
+            $campaign = $model->instagramCampaign;
+
+            if(isset($_POST['Campaign']))
+            {
+                $model->attributes = $_POST['Campaign'];
+
+                if($model->validate() && $model->save())
+                {
+                    Yii::app()->user->setFlash('SUCCESS', 'Капания сохранена');
+                    $this->redirect(['/admin/campaign/index/']);
+                }
+            }
+
+            $this->render('instagram/view', compact('model','campaign','statuses'));
+        }
+        elseif($serviceId === Service::SERVICE_VK) //VK
+        {
+            $campaign = $model->vkCampaign;
+
+            if(isset($_POST['Campaign']))
+            {
+                $model->attributes = $_POST['Campaign'];
+
+                if($model->validate() && $model->save())
+                {
+                    Yii::app()->user->setFlash('SUCCESS', 'Капания сохранена');
+                    $this->redirect(['/admin/campaign/index/']);
+                }
+            }
+
+            $this->render('vk/view', compact('model','campaign','statuses'));
+        }
+        elseif($serviceId === Service::SERVICE_SMS) //SMS
+        {
+            $campaign = $model->smsCampaign;
+
+            if(isset($_POST['Campaign']))
+            {
+                $model->attributes = $_POST['Campaign'];
+
+                if($model->validate() && $model->save())
+                {
+                    Yii::app()->user->setFlash('SUCCESS', 'Капания сохранена');
+                    $this->redirect(['/admin/campaign/index/']);
+                }
+            }
+
+            $this->render('sms/view', compact('model','campaign','statuses'));
+        }
+        elseif($serviceId === Service::SERVICE_VOICE) //Voice
+        {
+            $campaign = $model->voiceCampaign;
+
+            if(isset($_POST['Campaign']))
+            {
+                $model->attributes = $_POST['Campaign'];
+
+                if($model->validate() && $model->save())
+                {
+                    Yii::app()->user->setFlash('SUCCESS', 'Капания сохранена');
+                    $this->redirect(['/admin/campaign/index/']);
+                }
+            }
+
+            $this->render('voice/view', compact('model','campaign','statuses'));
+        }
+        else
+            $this->redirect(['/admin/campaign/index']);
     }
 }

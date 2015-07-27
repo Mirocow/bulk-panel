@@ -8,11 +8,10 @@
  * @property string $text_content
  * @property string $file_name
  * @property integer $type
- * @property integer $skype_campaign_id
  *
  * The followings are the available model relations:
+ * @property SkypeCampaign[] $skypeCampaigns
  * @property Template $template
- * @property SkypeCampaign $skypeCampaign
  */
 class SkypeTemplate extends CActiveRecord
 {
@@ -32,13 +31,13 @@ class SkypeTemplate extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('template_id, skype_campaign_id', 'required'),
-			array('template_id, type, skype_campaign_id', 'numerical', 'integerOnly'=>true),
+			array('template_id', 'required'),
+			array('template_id, type', 'numerical', 'integerOnly'=>true),
 			array('text_content, file_name', 'safe'),
             array('file','file','allowEmpty' => true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('template_id, text_content, file_name, type, skype_campaign_id', 'safe', 'on'=>'search'),
+			array('template_id, text_content, file_name, type', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -50,8 +49,8 @@ class SkypeTemplate extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'skypeCampaigns' => array(self::HAS_MANY, 'SkypeCampaign', 'skype_template_id'),
 			'template' => array(self::BELONGS_TO, 'Template', 'template_id'),
-			'skypeCampaign' => array(self::BELONGS_TO, 'SkypeCampaign', 'skype_campaign_id'),
 		);
 	}
 
@@ -65,7 +64,6 @@ class SkypeTemplate extends CActiveRecord
 			'text_content' => 'Text Content',
 			'file_name' => 'File Name',
 			'type' => 'Type',
-			'skype_campaign_id' => 'Skype Campaign',
 		);
 	}
 
@@ -91,7 +89,6 @@ class SkypeTemplate extends CActiveRecord
 		$criteria->compare('text_content',$this->text_content,true);
 		$criteria->compare('file_name',$this->file_name,true);
 		$criteria->compare('type',$this->type);
-		$criteria->compare('skype_campaign_id',$this->skype_campaign_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
