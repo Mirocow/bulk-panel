@@ -45,7 +45,7 @@
             </div>
             <div class="form-group">
                 <?=$form->label($model, 'price')?>
-                <?php echo $form->numberField($model, 'price', $statuses, ['class' => 'form-control', 'placeholder' => 'Стоимость кампании']); ?>
+                <?php echo $form->numberField($model, 'price', ['class' => 'form-control', 'placeholder' => 'Стоимость кампании']); ?>
             </div>
             <div class="form-group">
                 <?=$form->label($model, 'status')?>
