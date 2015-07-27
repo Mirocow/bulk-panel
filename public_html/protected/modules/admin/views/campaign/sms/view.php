@@ -43,14 +43,24 @@
                     </table>
                 </div>
             </div>
-            <div class="form-group">
-                <?=$form->label($model, 'price')?>
-                <?php echo $form->numberField($model, 'price', ['class' => 'form-control', 'placeholder' => 'Стоимость кампании']); ?>
-            </div>
-            <div class="form-group">
-                <?=$form->label($model, 'status')?>
-                <?php echo $form->dropDownList($model, 'status', $statuses, ['class' => 'form-control']); ?>
-            </div>
+            <?php if(intval($model->status) === Campaign::STATUS_SENT): ?>
+                <div class="form-group">
+                    <?=$form->label($model, 'price')?>
+                    <?php echo $form->numberField($model, 'price', ['class' => 'form-control', 'disabled' => 'disabled']); ?>
+                </div>
+                <div class="form-group">
+                    <?=CampaignStatus::getStatus($model->status, true); ?>
+                </div>
+            <?php else: ?>
+                <div class="form-group">
+                    <?=$form->label($model, 'price')?>
+                    <?php echo $form->numberField($model, 'price', ['class' => 'form-control', 'placeholder' => 'Стоимость кампании']); ?>
+                </div>
+                <div class="form-group">
+                    <?=$form->label($model, 'status')?>
+                    <?php echo $form->dropDownList($model, 'status', $statuses, ['class' => 'form-control']); ?>
+                </div>
+            <?php endif; ?>
         </div>
         <div class="panel-footer">
             <button type="submit" class="btn btn-success"><i class="fa fa-save"></i></button>

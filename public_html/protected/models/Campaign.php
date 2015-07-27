@@ -127,6 +127,12 @@ class Campaign extends CActiveRecord
 		return parent::model($className);
 	}
 
+    protected function afterSave()
+    {
+        parent::afterSave();
+
+    }
+
     const STATUS_PENDING = 1;
     const STATUS_SENDING = 2;
     const STATUS_SENT = 3;
