@@ -19,8 +19,8 @@ class CampaignStatus
         switch($status)
         {
             case self::STATUS_PENDING: return 'В обработке';
-            case self::STATUS_SENDING: return 'Отправляется';
-            case self::STATUS_SENT: return 'Отправлена';
+            case self::STATUS_SENDING: return 'Выполняется';
+            case self::STATUS_SENT: return 'Выполнена';
             case self::STATUS_DECLINED: return 'Отклонена';
             case self::STATUS_CANCELED: return 'Отменена';
             default: return 'Свяжитесь с нами';
@@ -30,8 +30,8 @@ class CampaignStatus
     {
         return [
             self::STATUS_PENDING => 'В обработке',
-            self::STATUS_SENDING => 'Отправляется',
-            self::STATUS_SENT => 'Отправлена',
+            self::STATUS_SENDING => 'Выполняется',
+            self::STATUS_SENT => 'Выполнена',
             self::STATUS_DECLINED => 'Отклонена',
             self::STATUS_CANCELED => 'Отменена',
         ];
