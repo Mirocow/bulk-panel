@@ -70,7 +70,7 @@ class ResellerController extends AdminBaseController
             ],
         ]);
 
-        $claimsCount = ResellerClaim::model()->count();
+        $claimsCount = ResellerClaim::model()->countByAttributes(['status' => ResellerClaim::STATUS_PROCESSING]);
 
         $this->render('index', compact('resellersDataProvider', 'claimsDataProvider', 'claimsCount'));
     }
