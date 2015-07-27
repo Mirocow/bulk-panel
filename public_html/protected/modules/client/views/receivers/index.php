@@ -11,8 +11,16 @@
 $this->widget('zii.widgets.grid.CGridView', array(
     'dataProvider' => $dataProvider,
     'columns'=>array(
-        'service.name',
-        'name',/*
+        [
+            'header' => 'Название службы',
+            'name' => 'service.name',
+            'value' => 'Service::getName($data->service, true)',
+            'type' => 'raw',
+        ],
+        [
+            'header' => 'Название',
+            'name' => 'name',
+        ],/*
         [
             'name' => 'total_entries',
             'value' => 'Html::NVL($data->total_entries)',
@@ -22,6 +30,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'value' => 'Html::NVL($data->total_valid)',
         ],*/
         [
+            'header' => 'Дата создания',
             'name' => 'created',
             'value' => 'Html::SQLDateFormat($data->created)',
         ],

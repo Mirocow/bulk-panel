@@ -30,7 +30,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
         ],
         [
             'name' => 'status',
-            'value' => 'CampaignStatus::getStatus($data->status)',
+            'value' => 'CampaignStatus::getStatus($data->status, true)',
+            'type' => 'raw',
         ],
         [
             'header' => '',

@@ -31,8 +31,16 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'dataProvider' => $dataProvider,
     'columns'=>array(
         'id',
-        'service.name',
-        'name',
+        [
+            'header' => 'Название службы',
+            'name' => 'service.name',
+            'value' => 'Service::getName($data->service, true)',
+            'type' => 'raw',
+        ],
+        [
+            'header' => 'Название',
+            'name' => 'name',
+        ],
         [
             'header' => '',
             'type' => 'raw',

@@ -161,6 +161,14 @@ class Service extends CActiveRecord
         return $services;
     }
 
+    public static function getName($service, $withIcon = false)
+    {
+        if(!$withIcon)
+            return $service->name;
+        else
+            return '<i class="'.$service->icon.'" style="color: #'.$service->color.';"></i> '.$service->name;
+    }
+
     const ACTION_RECEIVER = 1;
     const ACTION_SENDER = 2;
     const ACTION_TEMPLATE = 3;

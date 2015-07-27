@@ -31,18 +31,24 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'dataProvider' => $dataProvider,
     'columns'=>array(
         'id',
-        'name',
+        [
+            'header' => 'Название',
+            'name' => 'name',
+        ],
         [
             'header' => 'Служба',
             'name' => 'service.name',
         ],
         [
+            'header' => 'Дата создания',
             'name' => 'created',
             'value' => 'Html::SQLDateFormat($data->created)',
         ],
         [
+            'header' => 'Статус',
             'name' => 'status',
-            'value' => 'CampaignStatus::getStatus($data->status)',
+            'value' => 'CampaignStatus::getStatus($data->status,true)',
+            'type' => 'raw',
         ],
         [
             'header' => '',
