@@ -24,22 +24,22 @@
         </div>
         <div class="panel-body">
             <div class="form-group">
-                <?=$form->label($model, 'name')?>
-                <?php echo $form->textField($model, 'name', ['class' => 'form-control', 'placeholder' => 'Название']); ?>
+                <label><?=Yii::t('Modules/User', 'Название')?></label>
+                <?php echo $form->textField($model, 'name', ['class' => 'form-control', 'placeholder' => Yii::t('Modules/User', 'Название')]); ?>
             </div>
             <div class="form-group">
-                <?=$form->label($template, 'sender_id')?>
+                <label><?=Yii::t('Modules/User', 'Отправитель')?></label>
                 <?php echo $form->dropDownList($template, 'sender_id', $sendersListData, ['class' => 'form-control']); ?>
             </div>
             <div class="form-group">
-                <?=$form->label($template, 'text_content')?>
-                <?php echo $form->textArea($template, 'text_content', ['class' => 'form-control', 'placeholder' => 'Текстовое содержимое']); ?>
+                <label><?=Yii::t('Modules/User', 'Текстовое содержимое')?></label>
+                <?php echo $form->textArea($template, 'text_content', ['class' => 'form-control', 'placeholder' => Yii::t('Modules/User', 'Текстовое содержимое')]); ?>
             </div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <?=$form->label($template, 'file')?>
-                        <?php echo $form->fileField($template, 'file', ['class' => 'form-control', 'placeholder' => 'Файл']); ?>
+                        <label><?=Yii::t('Modules/User', 'Файл')?></label>
+                        <?php echo $form->fileField($template, 'file', ['class' => 'form-control']); ?>
                     </div>
                 </div>
                 <div class="col-md-6 template-file-view">

@@ -9,7 +9,7 @@
         <?php $this->showMessages($model) ?>
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">Вход</h3>
+                <h3 class="panel-title"><?=Yii::t('Common/Main', 'Вход')?></h3>
             </div>
             <div class="panel-body">
                 <?php $form=$this->beginWidget('CActiveForm', array(
@@ -25,11 +25,11 @@
                         </div>
                         <div class="checkbox">
                             <label>
-                                <?php echo $form->checkBox($model,'rememberMe'); ?> Запомнить меня
+                                <?php echo $form->checkBox($model,'rememberMe'); ?> <?=Yii::t('Common/Main','Запомнить меня')?>
                             </label>
                         </div>
-                        <button class="btn btn-sm btn-success" type="submit">Войти</button>
-                        <a href="<?=$this->createUrl('/site/resellerClaim');?>" class="btn btn-xs btn-secondary btn-link pull-right">Подать заявку</a>
+                        <button class="btn btn-sm btn-success" type="submit"><?=Yii::t('Common/Main','Войти')?></button>
+                        <a href="<?=$this->createUrl('/site/resellerClaim');?>" class="btn btn-xs btn-secondary btn-link pull-right"><?=Yii::t('Common/Main','Подать заявку')?></a>
                     </fieldset>
                 <?php $this->endWidget(); ?>
             </div>

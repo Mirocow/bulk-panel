@@ -19,10 +19,10 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <?php $this->widget('zii.widgets.CMenu',array(
                     'items'=>array(
-                        array('label'=>'Кампании', 'url'=>array('/client/campaign/index')),
-                        array('label'=>'Шаблоны', 'url'=>array('/client/template/index')),
-                        array('label'=>'База получателей', 'url'=>array('/client/receivers/index')),
-                        array('label'=>'Отправители', 'url'=>array('/client/senders/index')),
+                        array('label' => Yii::t('Common/Navbar','Кампании'), 'url'=>array('/client/campaign/index')),
+                        array('label' => Yii::t('Common/Navbar','Шаблоны'), 'url'=>array('/client/template/index')),
+                        array('label' => Yii::t('Common/Navbar','Базы получателей'), 'url'=>array('/client/receivers/index')),
+                        array('label' => Yii::t('Common/Navbar','Отправители'), 'url'=>array('/client/senders/index')),
                     ),
                     'htmlOptions' => ['class' => 'nav navbar-nav'],
                 )); ?>
@@ -30,7 +30,7 @@
                     'encodeLabel' => false,
                     'items' => [
                         [
-                            'label' => 'Информация',
+                            'label' => Yii::t('Common/Navbar','Информация'),
                             'itemOptions' => ['class' => 'dropdown'],
                             'linkOptions'=> [
                                 'class' => 'dropdown-toggle',
@@ -39,26 +39,36 @@
                             'url' => ['#'],
                             'items' => [
                                 [
-                                    'label' => 'Тарифы',
+                                    'label' => Yii::t('Common/Navbar','Тарифы'),
                                     'url' => ['/client/page/tariffs']
                                 ],
                                 [
-                                    'label' => 'Контакты',
+                                    'label' => Yii::t('Common/Navbar','Контакты'),
                                     'url' => ['/client/page/contact']
                                 ],
                                 [
-                                    'label' => 'Реквизиты',
+                                    'label' => Yii::t('Common/Navbar','Реквизиты'),
                                     'url' => ['/client/page/invoiceDetails']
                                 ],
                             ]
                         ],
                         [
-                            'label' => 'Баланс: '.$this->user->getBalance().' <i class="fa fa-rub"></i>',
+                            'label' => Yii::t('Common/Navbar','Баланс') . ': '.$this->user->getBalance().' <i class="fa fa-rub"></i>',
                             'url' => ['/client/payment/index'],
                             'itemOptions' => ['class' => 'total-balance']
                         ],
                         [
-                            'label' => 'Выход ('.Yii::app()->user->name.')',
+                            'label' => Yii::t('Common/Navbar','Язык'),
+                            'url' => ['#'],
+                            'itemOptions' => ['class' => 'dropdown'],
+                            'linkOptions'=> [
+                                'class' => 'dropdown-toggle',
+                                'data-toggle' => 'dropdown',
+                            ],
+                            'items' => Yii::app()->urlManager->getLanguageMenuItems(),
+                        ],
+                        [
+                            'label' => Yii::t('Common/Navbar','Выход') . ' ('.Yii::app()->user->name.')',
                             'url' => ['/client/defaultClient/logout'],
                             'htmlOptions' => ['class' => 'pull-right'],
                             'visible' => !Yii::app()->user->isGuest,

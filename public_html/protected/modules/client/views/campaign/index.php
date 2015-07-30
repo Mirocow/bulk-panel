@@ -5,13 +5,13 @@
 ?>
 <?php $this->showMessages(); ?>
 <h2 class="page-title">
-    Кампании
+    <?=Yii::t('Modules/User','Кампании')?>
 </h2>
 <div class="row">
     <div class="col-md-12 form-group">
         <div class="dropdown">
             <button class="btn btn-sm btn-success dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                <i class="fa fa-plus"></i> Новая кампания
+                <i class="fa fa-plus"></i> <?=Yii::t('Modules/User','Новая кампания')?>
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
@@ -32,20 +32,20 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'columns'=>array(
         'id',
         [
-            'header' => 'Название',
+            'header' => Yii::t('Modules/User','Название'),
             'name' => 'name',
         ],
         [
-            'header' => 'Служба',
+            'header' => Yii::t('Modules/User','Название службы'),
             'name' => 'service.name',
         ],
         [
-            'header' => 'Дата создания',
+            'header' => Yii::t('Modules/User','Дата создания'),
             'name' => 'created',
             'value' => 'Html::SQLDateFormat($data->created)',
         ],
         [
-            'header' => 'Статус',
+            'header' => Yii::t('Modules/User','Статус'),
             'name' => 'status',
             'value' => 'CampaignStatus::getStatus($data->status,true)',
             'type' => 'raw',

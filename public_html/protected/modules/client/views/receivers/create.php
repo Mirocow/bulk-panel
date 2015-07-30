@@ -15,20 +15,20 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="panel-title">
-                <i class="fa fa-plus"></i>
+                <i class="fa fa-plus"></i> <?=Yii::t('Modules/User','Добавить базу получателей')?>
             </div>
         </div>
         <div class="panel-body">
             <div class="form-group">
-                <?=$form->label($model, 'name')?>
+                <label><?=Yii::t('Modules/User','Название')?></label>
                 <?php echo $form->textField($model, 'name', ['class' => 'form-control', 'placeholder' => 'Название']); ?>
             </div>
             <div class="form-group">
-                <?=$form->label($model, 'service_id')?>
+                <label><?=Yii::t('Modules/User','Служба')?></label>
                 <?php echo $form->dropDownList($model, 'service_id', $services, ['class' => 'form-control']); ?>
             </div>
             <div class="form-group">
-                <?=$form->label($model, 'file')?>
+                <label><?=Yii::t('Modules/User','Файл')?></label>
                 <?php echo $form->fileField($model, 'file', $services, ['class' => 'form-control']); ?>
             </div>
         </div>

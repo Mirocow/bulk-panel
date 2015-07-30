@@ -32,3 +32,5 @@
         </table>
     </div>
 </div>
+<?php
+    echo Yii::t('Models/l','Привет');

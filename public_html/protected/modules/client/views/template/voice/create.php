@@ -19,17 +19,17 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="panel-title">
-                <i class="<?=$service->icon?>" style="color: #<?=$service->color?>;"></i> Создание нового шаблона
+                <i class="<?=$service->icon?>" style="color: #<?=$service->color?>;"></i> <?=Yii::t('Modules/User', 'Новый шаблон')?>
             </div>
         </div>
         <div class="panel-body">
             <div class="form-group">
-                <?=$form->label($model, 'name')?>
-                <?php echo $form->textField($model, 'name', ['class' => 'form-control', 'placeholder' => 'Название']); ?>
+                <label><?=Yii::t('Modules/User', 'Название')?></label>
+                <?php echo $form->textField($model, 'name', ['class' => 'form-control', 'placeholder' => Yii::t('Modules/User', 'Название')]); ?>
             </div>
             <div class="form-group">
-                <?=$form->label($template, 'file')?>
-                <?php echo $form->fileField($template, 'file', ['class' => 'form-control', 'placeholder' => 'Файл']); ?>
+                <label><?=Yii::t('Modules/User', 'Файл')?></label>
+                <?php echo $form->fileField($template, 'file', ['class' => 'form-control', 'placeholder' => Yii::t('Modules/User', 'Файл')]); ?>
             </div>
         </div>
         <div class="panel-footer">

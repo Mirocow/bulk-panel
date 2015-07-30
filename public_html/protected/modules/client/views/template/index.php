@@ -5,13 +5,13 @@
 ?>
 <?php $this->showMessages(); ?>
     <h2 class="page-title">
-        Шаблоны
+        <?=Yii::t('Modules/User','Шаблоны')?>
     </h2>
     <div class="row">
         <div class="col-md-12 form-group">
             <div class="dropdown">
                 <button class="btn btn-sm btn-success dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    <i class="fa fa-plus"></i> Новый шаблон
+                    <i class="fa fa-plus"></i> <?=Yii::t('Modules/User','Новый шаблон')?>
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
@@ -32,13 +32,13 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'columns'=>array(
         'id',
         [
-            'header' => 'Название службы',
+            'header' => Yii::t('Modules/User','Название службы'),
             'name' => 'service.name',
             'value' => 'Service::getName($data->service, true)',
             'type' => 'raw',
         ],
         [
-            'header' => 'Название',
+            'header' => Yii::t('Modules/User','Название'),
             'name' => 'name',
         ],
         [

@@ -268,7 +268,6 @@ class TemplateController extends ClientBaseController
 
             if(isset($_POST['Template']) && isset($_POST['WhatsappTemplate']))
             {
-
                 $model->attributes = $_POST['Template'];
                 $model->created = new CDbExpression('NOW()');
                 $model->status = TemplateStatus::PENDING;
@@ -340,7 +339,7 @@ class TemplateController extends ClientBaseController
                 }
             }
 
-            $this->render('skype/view', compact('model', 'template','service'));
+            $this->render('skype/create', compact('model', 'template','service'));
         }
         elseif($serviceId === Service::SERVICE_SMS) //SMS
         {

@@ -18,11 +18,11 @@
                     <?php $this->widget('zii.widgets.CMenu', [
                         'items' => [
                             [
-                                'label' => 'Главная',
+                                'label' => Yii::t('Common/Navbar','Главная'),
                                 'url' => ['/site/index']
                             ],
                             [
-                                'label' => 'Регистрация',
+                                'label' => Yii::t('Common/Navbar','Регистрация'),
                                 'itemOptions' => ['class' => 'dropdown'],
                                 'linkOptions'=> [
                                     'class' => 'dropdown-toggle',
@@ -32,11 +32,11 @@
                                 'visible' => Yii::app()->user->isGuest,
                                 'items' => [
                                     [
-                                        'label' => 'Как клиент',
+                                        'label' => Yii::t('Common/Navbar','Как клиент'),
                                         'url' => ['/client/defaultClient/register/'],
                                     ],
                                     [
-                                        'label' => 'Как реселлер',
+                                        'label' => Yii::t('Common/Navbar','Как реселлер'),
                                         'url' => ['/site/resellerClaim'],
                                     ],
                                 ],
@@ -60,7 +60,17 @@
                         'htmlOptions' => ['class' => 'nav navbar-nav navbar-right'],
                         'items' => [
                             [
-                                'label'=>'Войти',
+                                'label' => Yii::t('Common/Navbar','Язык'),
+                                'url' => ['#'],
+                                'itemOptions' => ['class' => 'dropdown'],
+                                'linkOptions'=> [
+                                    'class' => 'dropdown-toggle',
+                                    'data-toggle' => 'dropdown',
+                                ],
+                                'items' => Yii::app()->urlManager->getLanguageMenuItems(),
+                            ],
+                            [
+                                'label' => Yii::t('Common/Main','Войти'),
                                 'itemOptions' => ['class' => 'dropdown'],
                                 'linkOptions'=> [
                                     'class' => 'dropdown-toggle',
@@ -70,17 +80,17 @@
                                 'visible' => Yii::app()->user->isGuest,
                                 'items' => [
                                     [
-                                        'label' => 'Как клиент',
+                                        'label' => Yii::t('Common/Navbar','Как клиент'),
                                         'url' => ['/client/defaultClient/index'],
                                     ],
                                     [
-                                        'label' => 'Как реселлер',
+                                        'label' => Yii::t('Common/Navbar','Как реселлер'),
                                         'url'=> ['/site/login'],
                                     ],
                                 ],
                             ],
                             [
-                                'label' => 'Выход ('.Yii::app()->user->name.')',
+                                'label' => Yii::t('Common/Navbar','Выход') .' ('.Yii::app()->user->name.')',
                                 'url' => ['site/logout'],
                                 'htmlOptions' => ['class' => 'pull-right'],
                                 'visible' => !Yii::app()->user->isGuest
