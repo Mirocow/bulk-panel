@@ -73,7 +73,7 @@ return array(
             'class'=>'ELangUrlManager',
             'languages'=>array('ru'=>'Русский','en'=>'English'), //assoziative array language => label
             'cookieDays'=>10, //keep language 10 days
-            'languageParam'=>'ru', //=default
+            'languageParam' => 'ru', //=default
 
             //common configuration for the yii urlManager
             //don't add 'language' rules here, these rules will be added by the ELangUrlManager

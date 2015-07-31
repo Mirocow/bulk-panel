@@ -12,7 +12,7 @@
                 'id'=>'login-form',
                 'enableAjaxValidation'=>true,
             )); ?>
-                <legend>Регистрация клиента</legend>
+                <legend><?=Yii::t('Common/Main', 'Регистрация клиента')?></legend>
                 <div class="form-group">
                     <?=$form->label($model, 'login')?>
                     <?php echo $form->textField($model,'login', ['class' => 'form-control', 'placeholder' => '']); ?>
@@ -23,14 +23,14 @@
                 </div>
                 <div class="form-group">
                     <?=$form->label($model, 'name')?>
-                    <?php echo $form->textField($model,'name', ['class' => 'form-control', 'placeholder' => 'Иванов Иван']); ?>
+                    <?php echo $form->textField($model,'name', ['class' => 'form-control', 'placeholder' => Yii::t('Common/Main', 'Иванов Иван')]); ?>
                 </div>
                 <div class="form-group">
                     <?=$form->label($model, 'email')?>
                     <?php echo $form->textField($model,'email', ['class' => 'form-control', 'placeholder' => 'user@example.ru']); ?>
                 </div>
                 <div class="text-center">
-                    <button class="btn btn-sm btn-success" type="submit"><i class="fa fa-check"></i> Зарегистрироваться</button>
+                    <button class="btn btn-sm btn-success" type="submit"><i class="fa fa-check"></i> <?=Yii::t('Common/Main', 'Зарегистрироваться')?></button>
                 </div>
             <?php $this->endWidget(); ?>
         </div>

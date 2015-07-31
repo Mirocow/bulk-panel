@@ -12,24 +12,24 @@
                 'id'=>'login-form',
                 'enableAjaxValidation'=>true,
             )); ?>
-                <legend>Регистрация клиента</legend>
+                <legend><?=Yii::t('Common/Main', 'Регистрация клиента')?></legend>
                 <div class="form-group">
-                    <?=$form->label($model, 'login')?>
+                    <label><?=Yii::t('Common/Main', 'Логин')?></label>
                     <?php echo $form->textField($model,'login', ['class' => 'form-control', 'placeholder' => '']); ?>
                 </div>
                 <div class="form-group">
-                    <?=$form->label($model, 'password')?>
+                    <label><?=Yii::t('Common/Main', 'Пароль')?></label>
                     <?php echo $form->textField($model,'password', ['class' => 'form-control', 'placeholder' => '']); ?>
                 </div>
                 <div class="form-group">
-                    <?=$form->label($model, 'name')?>
-                    <?php echo $form->textField($model,'name', ['class' => 'form-control', 'placeholder' => 'Иванов Иван']); ?>
+                    <label><?=Yii::t('Common/Main', 'Имя')?></label>
+                    <?php echo $form->textField($model,'name', ['class' => 'form-control', 'placeholder' => Yii::t('Common/Main', 'Иванов Иван')]); ?>
                 </div>
                 <div class="form-group">
-                    <?=$form->label($model, 'email')?>
+                    <label>Email</label>
                     <?php echo $form->textField($model,'email', ['class' => 'form-control', 'placeholder' => 'admin@ultrasms.ru']); ?>
                 </div>
-                <button class="btn btn-lg btn-success btn-block" type="submit" disabled="disabled"><i class="fa fa-check"></i> Зарегистрироваться</button>
+                <button class="btn btn-lg btn-success btn-block" type="submit" disabled="disabled"><i class="fa fa-check"></i> <?=Yii::t('Common/Main', 'Зарегистрироваться')?></button>
             <?php $this->endWidget(); ?>
         </div>
     </div>
