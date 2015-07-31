@@ -98,7 +98,7 @@ class CampaignController extends ClientBaseController
                     {
                         if($campaign->save())
                         {
-                            Yii::app()->user->setFlash('SUCCESS', 'Капания сохранена');
+                            Yii::app()->user->setFlash('SUCCESS', Yii::t('Common/Flash', 'Капания сохранена'));
                             $this->redirect(['/client/campaign/index/']);
                         }
                         else
@@ -139,7 +139,7 @@ class CampaignController extends ClientBaseController
                     {
                         if($campaign->save())
                         {
-                            Yii::app()->user->setFlash('SUCCESS', 'Капания сохранена');
+                            Yii::app()->user->setFlash('SUCCESS', Yii::t('Common/Flash', 'Капания сохранена'));
                             $this->redirect(['/client/campaign/index/']);
                         }
                         else
@@ -176,7 +176,7 @@ class CampaignController extends ClientBaseController
                     $campaign->setPrimaryKey($model->getPrimaryKey());
                     if($campaign->validate() && $campaign->save())
                     {
-                        Yii::app()->user->setFlash('SUCCESS', 'Капания сохранена');
+                        Yii::app()->user->setFlash('SUCCESS', Yii::t('Common/Flash', 'Капания сохранена'));
                         $this->redirect(['/client/campaign/index/']);
 
                     }
@@ -211,7 +211,7 @@ class CampaignController extends ClientBaseController
                     $campaign->setPrimaryKey($model->getPrimaryKey());
                     if($campaign->validate()&& $campaign->save())
                     {
-                        Yii::app()->user->setFlash('SUCCESS', 'Капания сохранена');
+                        Yii::app()->user->setFlash('SUCCESS', Yii::t('Common/Flash', 'Капания сохранена'));
                         $this->redirect(['/client/campaign/index/']);
                     }
                     else
@@ -250,7 +250,7 @@ class CampaignController extends ClientBaseController
                     {
                         if($campaign->save())
                         {
-                            Yii::app()->user->setFlash('SUCCESS', 'Капания сохранена');
+                            Yii::app()->user->setFlash('SUCCESS', Yii::t('Common/Flash', 'Капания сохранена'));
                             $this->redirect(['/client/campaign/index/']);
                         }
                         else
@@ -292,7 +292,7 @@ class CampaignController extends ClientBaseController
                     {
                         if($campaign->save())
                         {
-                            Yii::app()->user->setFlash('SUCCESS', 'Капания сохранена');
+                            Yii::app()->user->setFlash('SUCCESS', Yii::t('Common/Flash', 'Капания сохранена'));
                             $this->redirect(['/client/campaign/index/']);
                         }
                         else

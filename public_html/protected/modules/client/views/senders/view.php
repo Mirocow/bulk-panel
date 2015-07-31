@@ -19,11 +19,11 @@
         </div>
         <div class="panel-body">
             <div class="form-group">
-                <label><?=Yii::t('Modules/User','Имя отправителя')?></label>
-                <?php echo $form->textField($model, 'name', ['class' => 'form-control', 'placeholder' => Yii::t('Modules/User','Имя отправителя')]); ?>
+                <label><?=Yii::t('Module/User','Имя отправителя')?></label>
+                <?php echo $form->textField($model, 'name', ['class' => 'form-control', 'placeholder' => Yii::t('Module/User','Имя отправителя')]); ?>
             </div>
             <div class="form-group">
-                <label><?=Yii::t('Modules/User','Аватар')?></label>
+                <label><?=Yii::t('Module/User','Аватар')?></label>
                 <?php echo $form->fileField($model, 'file', ['class' => 'form-control']); ?>
             </div>
             <?php if($model->has_avatar): ?>

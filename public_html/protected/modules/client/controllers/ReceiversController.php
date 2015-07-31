@@ -49,7 +49,7 @@ class ReceiversController extends ClientBaseController
     public function actionDelete($id)
     {
         Receiver::model()->deleteAllByAttributes(['id' => $id]); //@todo Проверить на права
-        Yii::app()->user->setFlash('SUCCESS', 'База получателей удалена!');
+        Yii::app()->user->setFlash('SUCCESS', Yii::t('Common/Flash', 'База получателей удалена'));
         $this->redirect(['/client/receivers/index/']);
     }
 
@@ -74,7 +74,7 @@ class ReceiversController extends ClientBaseController
                 $model->save(); //@todo avoid several queries
 
 
-                Yii::app()->user->setFlash('SUCCESS', 'База получателей создана!');
+                Yii::app()->user->setFlash('SUCCESS', Yii::t('Common/Flash', 'База получателей создана'));
                 $this->redirect(['/client/receivers/index']);
             }
         }

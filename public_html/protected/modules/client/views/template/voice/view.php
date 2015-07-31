@@ -23,14 +23,14 @@
         </div>
         <div class="panel-body">
             <div class="form-group">
-                <label><?=Yii::t('Modules/User', 'Название')?></label>
-                <?php echo $form->textField($model, 'name', ['class' => 'form-control', 'placeholder' => Yii::t('Modules/User', 'Название')]); ?>
+                <label><?=Yii::t('Module/User', 'Название')?></label>
+                <?php echo $form->textField($model, 'name', ['class' => 'form-control', 'placeholder' => Yii::t('Module/User', 'Название')]); ?>
             </div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label><?=Yii::t('Modules/User', 'Файл')?></label>
-                        <?php echo $form->fileField($template, 'file', ['class' => 'form-control', 'placeholder' => Yii::t('Modules/User', 'Файл')]); ?>
+                        <label><?=Yii::t('Module/User', 'Файл')?></label>
+                        <?php echo $form->fileField($template, 'file', ['class' => 'form-control', 'placeholder' => Yii::t('Module/User', 'Файл')]); ?>
                     </div>
                 </div>
                 <div class="col-md-6 template-file-view">

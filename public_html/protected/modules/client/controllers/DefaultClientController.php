@@ -42,12 +42,11 @@ class DefaultClientController extends ClientBaseController
 
             if($model->validate() && $model->save())
             {
-                Yii::app()->user->setFlash('SUCCESS', 'Вы успешно зарегистрированы');
+                Yii::app()->user->setFlash('SUCCESS', Yii::t('Common/Flash', 'Вы успешно зарегистрированы'));
                 $this->redirect(['/client/defaultClient/index']);
             }
-            else
-            {
-                Yii::app()->user->setFlash('ERROR', 'Ошибка регистрации');
+            else {
+                Yii::app()->user->setFlash('ERROR', Yii::t('Common/Flash', 'Ошибка регистрации'));
             }
         }
 

@@ -87,7 +87,7 @@ class TemplateController extends ClientBaseController
                         }
                         if($template->save())
                         {
-                            Yii::app()->user->setFlash('SUCCESS', 'Шаблон сохранен');
+                            Yii::app()->user->setFlash('SUCCESS', Yii::t('Common/Flash', 'Шаблон сохранен'));
                             $this->redirect(['/client/template/index/']);
                         }
                     }
@@ -121,7 +121,7 @@ class TemplateController extends ClientBaseController
                         }
                         if($template->save())
                         {
-                            Yii::app()->user->setFlash('SUCCESS', 'Шаблон сохранен');
+                            Yii::app()->user->setFlash('SUCCESS', Yii::t('Common/Flash', 'Шаблон сохранен'));
                             $this->redirect(['/client/template/index/']);
                         }
                     }
@@ -143,7 +143,7 @@ class TemplateController extends ClientBaseController
 
                 if($model->validate() && $template->validate() && $model->save() && $template->save())
                 {
-                Yii::app()->user->setFlash('SUCCESS', 'Шаблон сохранен');
+                Yii::app()->user->setFlash('SUCCESS', Yii::t('Common/Flash', 'Шаблон сохранен'));
                 $this->redirect(['/client/template/index/']);
                 }
             }
@@ -173,7 +173,7 @@ class TemplateController extends ClientBaseController
 
                         if($template->validate() && $template->save())
                         {
-                            Yii::app()->user->setFlash('SUCCESS', 'Шаблон сохранен');
+                            Yii::app()->user->setFlash('SUCCESS', Yii::t('Common/Flash', 'Шаблон сохранен'));
                             $this->redirect(['/client/template/index/']);
                         }
                     }
@@ -292,7 +292,7 @@ class TemplateController extends ClientBaseController
 
                     if($template->validate() && $template->save())
                     {
-                        Yii::app()->user->setFlash('SUCCESS', 'Шаблон сохранен');
+                        Yii::app()->user->setFlash('SUCCESS', Yii::t('Common/Flash', 'Шаблон сохранен'));
                         $this->redirect(['/client/template/index/']);
                     }
                     else
@@ -331,7 +331,7 @@ class TemplateController extends ClientBaseController
 
                     if($template->validate() && $template->save())
                     {
-                        Yii::app()->user->setFlash('SUCCESS', 'Шаблон сохранен');
+                        Yii::app()->user->setFlash('SUCCESS', Yii::t('Common/Flash', 'Шаблон сохранен'));
                         $this->redirect(['/client/template/index/']);
                     }
                     else
@@ -361,7 +361,7 @@ class TemplateController extends ClientBaseController
                     $template->template_id = $model->getPrimaryKey();
                     if($template->validate() && $template->save())
                     {
-                        Yii::app()->user->setFlash('SUCCESS', 'Шаблон сохранен');
+                        Yii::app()->user->setFlash('SUCCESS', Yii::t('Common/Flash', 'Шаблон сохранен'));
                         $this->redirect(['/client/template/index/']);
                     }
                     else
@@ -398,7 +398,7 @@ class TemplateController extends ClientBaseController
                     }
                     if($template->validate() && $template->save())
                     {
-                        Yii::app()->user->setFlash('SUCCESS', 'Шаблон сохранен');
+                        Yii::app()->user->setFlash('SUCCESS', Yii::t('Common/Flash', 'Шаблон сохранен'));
                         $this->redirect(['/client/template/index/']);
                     }
                     else

@@ -52,7 +52,7 @@ return array(
             'class' => 'ext.JSUrlManager.src.EJSUrlManager'
         ),
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=bp',
+			'connectionString' => 'mysql:host=127.0.0.1;dbname=bp',
 			'emulatePrepare' => true,
 			'username' => 'root',
 			'password' => '884088',

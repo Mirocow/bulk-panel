@@ -60,7 +60,7 @@ class PaymentController extends ClientBaseController
 
             if(!is_numeric($amount))
             {
-                Yii::app()->user->setFlash('ERROR', 'Введите сумму');
+                Yii::app()->user->setFlash('ERROR', Yii::t('Common/Flash', 'Введите сумму'));
             }
             else
             {

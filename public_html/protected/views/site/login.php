@@ -18,10 +18,10 @@
                 )); ?>
                     <fieldset>
                         <div class="form-group">
-                            <?php echo $form->textField($model,'username', ['class' => 'form-control', 'placeholder' => 'Логин']); ?>
+                            <?php echo $form->textField($model,'username', ['class' => 'form-control', 'placeholder' => Yii::t('Common/Main', 'Логин')]); ?>
                         </div>
                         <div class="form-group">
-                            <?php echo $form->passwordField($model,'password', ['class' => 'form-control', 'placeholder' => 'Пароль']); ?>
+                            <?php echo $form->passwordField($model,'password', ['class' => 'form-control', 'placeholder' => Yii::t('Common/Main', 'Пароль')]); ?>
                         </div>
                         <div class="checkbox">
                             <label>

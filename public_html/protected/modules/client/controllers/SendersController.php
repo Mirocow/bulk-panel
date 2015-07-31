@@ -59,7 +59,7 @@ class SendersController extends ClientBaseController
                     $model->save();
                 }
 
-                Yii::app()->user->setFlash('SUCCESS', 'Отправитель сохранен');
+                Yii::app()->user->setFlash('SUCCESS', Yii::t('Common/Flash', 'Отправитель сохранен'));
                 $this->redirect(['/client/senders/index/', 'id' => $id]);
             }
         }
@@ -86,7 +86,7 @@ class SendersController extends ClientBaseController
             }
         }
         $sender->delete();
-        Yii::app()->user->setFlash('SUCCESS', 'Отправитель удален!');
+        Yii::app()->user->setFlash('SUCCESS',  Yii::t('Common/Flash', 'Отправитель удален'));
         $this->redirect(['/client/senders/index/']);
     }
 
@@ -114,7 +114,7 @@ class SendersController extends ClientBaseController
                     $model->save();
                 }
 
-                Yii::app()->user->setFlash('SUCCESS', 'Отправитель создан!');
+                Yii::app()->user->setFlash('SUCCESS',  Yii::t('Common/Flash', 'Отправитель создан'));
                 $this->redirect(['/client/senders/index']);
             }
         }

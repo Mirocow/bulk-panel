@@ -161,12 +161,20 @@ class Service extends CActiveRecord
         return $services;
     }
 
-    public static function getName($service, $withIcon = false)
+    public static function getServiceName($service, $withIcon = false)
     {
         if(!$withIcon)
-            return $service->name;
+            return Yii::t('Model/Service', $service->name);
         else
-            return '<i class="'.$service->icon.'" style="color: #'.$service->color.';"></i> '.$service->name;
+            return '<i class="'.$service->icon.'" style="color: #'.$service->color.';"></i> ' . Yii::t('Model/Service', $service->name);
+    }
+
+    public function getName($withIcon = false)
+    {
+        if(!$withIcon)
+            return Yii::t('Model/Service', $this->name);
+        else
+            return '<i class="'.$this->icon.'" style="color: #'.$this->color.';"></i> ' . Yii::t('Model/Service', $this->name);
     }
 
     const ACTION_RECEIVER = 1;
