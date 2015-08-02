@@ -16,4 +16,6 @@ return [
     'Тарифы' => 'Tariffs',
     'Контакты' => 'Contacts',
     'Реквизиты' => 'Legal info',
+    'Кабинет реселлера' => 'Reseller panel',
+    'Кабинет клиента' => 'Client panel',
 ];

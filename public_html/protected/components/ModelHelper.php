@@ -17,7 +17,7 @@ class ModelHelper
         $listData = [];
         foreach($services as $service) {
             if(intval($service->active))
-                $listData[] = ['id' => $service->id, 'text' => $service->name, 'icon' => 'service-icon ' . $service->icon, 'color' => $service->color];
+                $listData[] = ['id' => $service->id, 'text' => $service->getName(), 'icon' => 'service-icon ' . $service->icon, 'color' => $service->color];
         }
 
         return $listData;

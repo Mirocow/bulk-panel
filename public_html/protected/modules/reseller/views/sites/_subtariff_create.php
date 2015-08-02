@@ -6,7 +6,7 @@
     <thead>
         <tr>
             <?php foreach($tariffs as $tariff): ?>
-                <th>от <?=$tariff['threshold']['name']?> шт.</th>
+                <th><?=Yii::t('Module/Reseller' ,'от')?> <?=$tariff['threshold']['name']?> <?=Yii::t('Module/Reseller' ,'шт')?>.</th>
             <?php endforeach; ?>
         </tr>
     </thead>

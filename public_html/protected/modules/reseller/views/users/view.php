@@ -16,9 +16,9 @@
             <span class="">
                 <!-- Tabs -->
                 <ul class="nav panel-tabs">
-                    <li class="active"><a href="#tab1" data-toggle="tab">Общие данные</a></li>
-                    <li><a href="#tab2" data-toggle="tab">Статистика</a></li>
-                    <li><a href="#tab3" data-toggle="tab">Баланс</a></li>
+                    <li class="active"><a href="#tab1" data-toggle="tab"><?=Yii::t('Module/Reseller', 'Общие данные')?></a></li>
+                    <li><a href="#tab2" data-toggle="tab"><?=Yii::t('Module/Reseller', 'Статистика')?></a></li>
+                    <li><a href="#tab3" data-toggle="tab"><?=Yii::t('Module/Reseller', 'Баланс')?></a></li>
                 </ul>
             </span>
         </div>
@@ -27,15 +27,15 @@
                 <div class="tab-pane active" id="tab1">
                     <?php $form=$this->beginWidget('CActiveForm'); ?>
                         <div class="form-group">
-                            <?=$form->label($model, 'login')?>
-                            <?php echo $form->textField($model, 'login', ['class' => 'form-control', 'placeholder' => 'Логин пользователя']); ?>
+                            <label><?=Yii::t('Module/Reseller', 'Логин')?></label>
+                            <?php echo $form->textField($model, 'login', ['class' => 'form-control', 'placeholder' => Yii::t('Module/Reseller', 'Логин пользователя')]); ?>
                         </div>
                         <div class="form-group">
-                            <?=$form->label($model, 'name')?>
-                            <?php echo $form->textField($model, 'name', ['class' => 'form-control', 'placeholder' => 'Имя']); ?>
+                            <label><?=Yii::t('Module/Reseller', 'Имя')?></label>
+                            <?php echo $form->textField($model, 'name', ['class' => 'form-control', 'placeholder' => Yii::t('Module/Reseller', 'Имя')]); ?>
                         </div>
                         <div class="form-group">
-                            <?=$form->label($model, 'email')?>
+                            <label>E-mail</label>
                             <?php echo $form->textField($model, 'email', ['class' => 'form-control', 'placeholder' => 'E-mail']); ?>
                         </div>
                         <button type="submit" class="btn btn-success"><i class="fa fa-save"></i></button>
@@ -47,15 +47,15 @@
                             <table class="table">
                                 <tbody>
                                     <tr>
-                                        <th>Баланс:</th>
+                                        <th><?=Yii::t('Module/Reseller', 'Баланс')?>:</th>
                                         <td><?=$model->getBalance()?> <i class="fa fa-rub"></i></td>
                                     </tr>
                                     <tr>
-                                        <th>Сайт:</th>
+                                        <th><?=Yii::t('Module/Reseller', 'Сайт')?>:</th>
                                         <td><?=$model->site->name?></i></td>
                                     </tr>
                                     <tr>
-                                        <th>Отправленных сообщений:</th>
+                                        <th><?=Yii::t('Module/Reseller', 'Отправленных сообщений')?>:</th>
                                         <td><?=$model->getSentCount()?></i></td>
                                     </tr>
                                 </tbody>
@@ -67,7 +67,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <h2 class="page-title">
-                                Баланс
+                                <?=Yii::t('Module/Reseller', 'Баланс')?>
                                 <span class="label label-success">
                                     <?=$model->getBalance()?>
                                     <i class="fa fa-rub"></i>
@@ -78,14 +78,14 @@
                             <?php $form=$this->beginWidget('CActiveForm'); ?>
 
                             <div class="form-group">
-                                <?=$form->label($transaction, 'amount')?>
+                                <label><?=Yii::t('Module/Reseller', 'Сумма')?></label>
                                 <?php echo $form->textField($transaction, 'amount', ['class' => 'form-control input-sm', 'placeholder' => 'Баланс']); ?>
                             </div>
                             <div class="form-group">
-                                <?=$form->label($transaction, 'in')?>
+                                <label><?=Yii::t('Module/Reseller', 'Списать/Начислить')?></label>
                                 <?php echo $form->dropDownList($transaction, 'in', [
-                                    0 => 'Списать',
-                                    1 => 'Начислить',
+                                    0 => Yii::t('Module/Reseller', 'Списать'),
+                                    1 => Yii::t('Module/Reseller', 'Начислить'),
                                 ], ['class' => 'form-control input-sm', 'placeholder' => 'Баланс']); ?>
                             </div>
                             <button type="submit" class="btn btn-success"><i class="fa fa-save"></i></button>
@@ -94,7 +94,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <h3>История платежей:</h3>
+                            <h3><?=Yii::t('Module/Reseller', 'История платежей')?>:</h3>
                         </div>
                     </div>
 
@@ -107,14 +107,21 @@
                                 'name' => 'in',
                                 'value' => '$data->getType()',
                             ],
-                            'amount',
                             [
-                                'header' => 'Время совершения',
+                                'header' => Yii::t('Module/Reseller', 'Сумма'),
+                                'name' => 'amount',
+                            ],
+                            [
+                                'header' => Yii::t('Module/Reseller', 'Время совершения'),
                                 'name' => 'occurred',
                                 'value' => 'Html::SQLDateFormat($data->occurred)',
                             ],
-                            'method',
                             [
+                                'header' => Yii::t('Module/Reseller', 'Метод'),
+                                'name' => 'method',
+                            ],
+                            [
+                                'header' => Yii::t('Module/Reseller', 'Статус'),
                                 'name' => 'status',
                                 'value' => '$data->getStatus()',
                             ],

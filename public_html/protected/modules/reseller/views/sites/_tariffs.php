@@ -17,7 +17,7 @@ else
         <?php foreach($service['countries'] as $country): ?>
             <div class="row">
                 <div class="col-md-12">
-                    <b><?=$country['name']?></b>
+                    <b><?=Yii::t('Module/Reseller', $country['name'])?></b>
                 </div>
             </div>
             <?php if(isset($country['tariff'])): ?>
@@ -27,7 +27,7 @@ else
                 <?php foreach($country['operators'] as $operator): ?>
                     <div class="row">
                         <div class="col-md-12">
-                            <i><?=$operator['name']?></i>
+                            <i><?=Yii::t('Module/Reseller', $operator['name'])?></i>
                         </div>
                     </div>
                     <?php if(isset($operator['tariff'])): ?>

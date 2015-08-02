@@ -53,7 +53,7 @@ class TariffHelper
                         $data[] = $service;
                     }
 
-                    $service = ['name' => $tariffModel->service->name, 'class' => $tariffModel->service->icon, 'color' => $tariffModel->service->color];
+                    $service = ['name' => $tariffModel->service->getName(), 'class' => $tariffModel->service->icon, 'color' => $tariffModel->service->color];
                     $country = self::getCountry($tariffModel);
                     $operator = self::getOperator($tariffModel);
                 }
@@ -172,7 +172,7 @@ class TariffHelper
                         $data[] = $service;
                     }
 
-                    $service = ['name' => $tariffModel->service->name, 'class' => $tariffModel->service->icon, 'color' => $tariffModel->service->color];
+                    $service = ['name' => $tariffModel->service->getName(), 'class' => $tariffModel->service->icon, 'color' => $tariffModel->service->color];
                     $country = self::getCountry($tariffModel);
                     $operator = self::getOperator($tariffModel);
                 }
@@ -289,7 +289,7 @@ class TariffHelper
                         $data[] = $service;
                     }
 
-                    $service = ['name' => $tariffModel->service->name, 'class' => $tariffModel->service->icon, 'color' => $tariffModel->service->color];
+                    $service = ['name' => $tariffModel->service->getName(), 'class' => $tariffModel->service->icon, 'color' => $tariffModel->service->color];
                     $country = self::getCountry($tariffModel);
                     $operator = self::getOperator($tariffModel);
                 }

@@ -3,19 +3,22 @@
 /* @var $dataProvider CActiveDataProvider */
 ?>
 <h2 class="page-title">
-    Ваши стили
+    <?=Yii::t('Module/Reseller', 'Ваши CSS стили')?>
 </h2>
 <?php $this->showMessages(); ?>
 <div class="row">
     <div class="col-md-12 form-group">
-        <a href="<?=$this->createUrl('/reseller/style/create')?>" class="btn btn-xs btn-success"><i class="fa fa-plus"></i> Создать новый стиль</a>
+        <a href="<?=$this->createUrl('/reseller/style/create')?>" class="btn btn-xs btn-success"><i class="fa fa-plus"></i> <?=Yii::t('Module/Reseller', 'Создать новый стиль')?></a>
     </div>
 </div>
 <?php
 $this->widget('zii.widgets.grid.CGridView', array(
     'dataProvider' => $dataProvider,
     'columns'=>array(
-        'title',
+        [
+            'header' => Yii::t('Module/Reseller', 'Название'),
+            'name' => 'title',
+        ],
         [
             'header' => '',
             'type' => 'raw',

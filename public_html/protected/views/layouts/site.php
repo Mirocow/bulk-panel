@@ -42,12 +42,12 @@
                                 ],
                             ],
                             [
-                                'label'=>'Кабинет реселлера',
+                                'label'=> Yii::t('Common/Navbar', 'Кабинет реселлера'),
                                 'url' => ['/reseller/sites/index'],
                                 'visible' => AuthHelper::isReseller(),
                             ],
                             [
-                                'label'=>'Кабинет клиента',
+                                'label'=> Yii::t('Common/Navbar', 'Кабинет клиента'),
                                 'url' => ['/client/campaign/index'],
                                 'visible' => AuthHelper::isClient(),
                             ],

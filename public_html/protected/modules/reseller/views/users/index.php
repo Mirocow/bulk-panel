@@ -1,5 +1,5 @@
 <h2 class="page-title">
-    Ваши клиенты
+    <?=Yii::t('Module/Reseller', 'Ваши клиенты')?>
 </h2>
 
 <?php $this->showMessages(); ?>
@@ -11,12 +11,12 @@ $this->widget('zii.widgets.grid.CGridView', array(
         'name',
         'balance',
         [
-            'header' => 'Последний вход',
+            'header' => Yii::t('Module/Reseller', 'Последний вход'),
             'name' => 'last_login',
             'value' => 'Html::SQLDateFormat($data->last_login)',
         ],
         [
-            'header' => 'Зарегистрирован',
+            'header' => Yii::t('Module/Reseller', 'Зарегистрирован'),
             'name' => 'created',
             'value' => 'Html::SQLDateFormat($data->created)',
         ],

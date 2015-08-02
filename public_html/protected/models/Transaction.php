@@ -121,17 +121,17 @@ class Transaction extends CActiveRecord
 
     public function getType()
     {
-        return $this->in ? 'Поступление' : 'Списание';
+        return $this->in ? Yii::t('Model/Transaction', 'Поступление') : Yii::t('Model/Transaction', 'Списание');
     }
 
     public function getStatus()
     {
         switch($this->status)
         {
-            case self::STATUS_PENDING: return 'В обработке';
-            case self::STATUS_DECLINED: return 'Отклонена';
-            case self::STATUS_COMPLETE: return 'Завершена';
-            case self::STATUS_ERROR: return 'Ошибка';
+            case self::STATUS_PENDING: return Yii::t('Model/Transaction', 'В обработке');
+            case self::STATUS_DECLINED: return Yii::t('Model/Transaction', 'Отклонена');
+            case self::STATUS_COMPLETE: return Yii::t('Model/Transaction', 'Завершена');
+            case self::STATUS_ERROR: return Yii::t('Model/Transaction', 'Ошибка');
             default: return 'Свяжитесь с нами';
         }
     }

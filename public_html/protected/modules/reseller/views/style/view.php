@@ -18,12 +18,12 @@
         </div>
         <div class="panel-body">
             <div class="form-group">
-                <?=$form->label($model, 'title')?>
-                <?php echo $form->textField($model, 'title', ['class' => 'form-control', 'placeholder' => 'Название стиля']); ?>
+                <label><?=Yii::t('Module/Reseller', 'Название')?></label>
+                <?php echo $form->textField($model, 'title', ['class' => 'form-control', 'placeholder' => Yii::t('Module/Reseller', 'Название')]); ?>
             </div>
             <div class="form-group">
-                <?=$form->label($model, 'content')?>
-                <?php echo $form->textArea($model, 'content', ['class' => 'form-control', 'placeholder' => 'CSS-Код']); ?>
+                <label><?=Yii::t('Module/Reseller', 'CSS-Код')?></label>
+                <?php echo $form->textArea($model, 'content', ['class' => 'form-control', 'placeholder' => Yii::t('Module/Reseller', 'CSS-Код')]); ?>
             </div>
         </div>
         <div class="panel-footer">

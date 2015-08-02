@@ -24,11 +24,11 @@
                 <span class="">
                     <!-- Tabs -->
                     <ul class="nav panel-tabs">
-                        <li class="active"><a href="#tab1" data-toggle="tab">Сайт</a></li>
-                        <li><a href="#tab2" data-toggle="tab">Контакты</a></li>
-                        <li><a href="#tab3" data-toggle="tab">Реквизиты</a></li>
-                        <li><a href="#tab4" data-toggle="tab">Платежные системы</a></li>
-                        <li><a href="#tab5" data-toggle="tab">Тарифы</a></li>
+                        <li class="active"><a href="#tab1" data-toggle="tab"><?=Yii::t('Module/Reseller', 'Сайт')?></a></li>
+                        <li><a href="#tab2" data-toggle="tab"><?=Yii::t('Module/Reseller', 'Контакты')?></a></li>
+                        <li><a href="#tab3" data-toggle="tab"><?=Yii::t('Module/Reseller', 'Реквизиты')?></a></li>
+                        <li><a href="#tab4" data-toggle="tab"><?=Yii::t('Module/Reseller', 'Платежные системы')?></a></li>
+                        <li><a href="#tab5" data-toggle="tab"><?=Yii::t('Module/Reseller', 'Тарифы')?></a></li>
                     </ul>
                 </span>
             </div>
@@ -36,52 +36,52 @@
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab1">
                         <div class="form-group">
-                            <?=$form->label($model, 'name')?>
-                            <?php echo $form->textField($model, 'name', ['class' => 'form-control', 'placeholder' => 'Название сайта']); ?>
+                            <label><?=Yii::t('Module/Reseller', 'Название сайта')?></label>
+                            <?php echo $form->textField($model, 'name', ['class' => 'form-control', 'id' => 'new-name', 'placeholder' => Yii::t('Module/Reseller', 'Новый сайт')]); ?>
                         </div>
                         <div class="form-group">
-                            <?=$form->label($model, 'url')?>
-                            <?php echo $form->textField($model, 'url', ['class' => 'form-control', 'placeholder' => 'Адрес сайта']); ?>
+                            <label>URL</label>
+                            <?php echo $form->textField($model, 'url', ['class' => 'form-control', 'placeholder' => 'http://example.ru']); ?>
                         </div>
                         <div class="form-group">
-                            <?=$form->label($model, 'domain')?>
-                            <?php echo $form->textField($model, 'domain', ['class' => 'form-control', 'placeholder' => 'Ваш поддомен: sub.mysite.ru']); ?>
+                            <label><?=Yii::t('Module/Reseller', 'Домен')?></label>
+                            <?php echo $form->textField($model, 'domain', ['class' => 'form-control', 'placeholder' =>  'http://subdomain.example.ru']); ?>
                         </div>
                         <div class="form-group">
-                            <?=$form->label($model, 'email')?>
-                            <?php echo $form->textField($model, 'email', ['class' => 'form-control', 'placeholder' => 'E-mail службы поддержки']); ?>
+                            <label><?=Yii::t('Module/Reseller', 'Email')?></label>
+                            <?php echo $form->textField($model, 'email', ['class' => 'form-control', 'placeholder' => 'E-mail']); ?>
                         </div>
                         <div class="form-group">
-                            <?=$form->label($model, 'title')?>
-                            <?php echo $form->textField($model, 'title', ['class' => 'form-control', 'placeholder' => 'Заголовок']); ?>
+                            <label><?=Yii::t('Module/Reseller', 'Заголовок сайта')?></label>
+                            <?php echo $form->textField($model, 'title', ['class' => 'form-control', 'placeholder' => Yii::t('Module/Reseller', 'Заголовок сайта')]); ?>
                         </div>
                         <div class="form-group">
-                            <label for="services-dropdown">Сервисы</label>
+                            <label for="services-dropdown"><?=Yii::t('Module/Reseller', 'Сервисы')?></label>
                             <select multiple="multiple" id="services-dropdown" name="Services[]" style="width: 100%;"></select>
                         </div>
                         <div class="form-group">
-                            <?=$form->label($model, 'style_id')?>
+                            <label><?=Yii::t('Module/Reseller', 'Стиль')?></label>
                             <?php echo $form->dropDownList($model, 'style_id', $styles, ['class' => 'form-control']); ?>
                         </div>
                     </div>
                     <div class="tab-pane" id="tab2">
                         <div class="form-group">
-                            <?=$form->label($model, 'contacts')?>
+                            <label><?=Yii::t('Module/Reseller', 'Контакты')?></label>
                             <?php echo $form->textArea($model, 'contacts', ['class' => 'form-control', 'placeholder' => '']); ?>
                         </div>
                     </div>
                     <div class="tab-pane" id="tab3">
                         <div class="form-group">
-                            <?=$form->label($model, 'invoice_details')?>
+                            <label><?=Yii::t('Module/Reseller', 'Реквизиты')?></label>
                             <?php echo $form->textArea($model, 'invoice_details', ['class' => 'form-control', 'placeholder' => '']); ?>
                         </div>
                         <div class="form-group">
-                            <?=$form->label($model, 'e_wallets')?>
+                            <label><?=Yii::t('Module/Reseller', 'Электронные кошельки')?></label>
                             <?php echo $form->textArea($model, 'e_wallets', ['class' => 'form-control', 'placeholder' => '']); ?>
                         </div>
                     </div>
                     <div class="tab-pane" id="tab4">
-                        <p>Здесь вы можете задать данные для платежных систем. Параметры вводятся через перевод строки в заданном порядке.</p>
+                        <p><?=Yii::t('Module/Reseller', 'Здесь вы можете задать данные для платежных систем. Параметры вводятся через перевод строки в заданном порядке')?>.</p>
                         <div class="form-group">
                             <?=$form->label($model, 'robokassa')?>
                             <div class="row">
@@ -91,25 +91,25 @@
                                 <div class="col-xs-6 hint">
                                     <button type="button" class="btn btn-xs btn-info hint-btn pull-right"><i class="fa fa-question-circle"></i></button>
                                     <div class="tooltiptext">
-                                        <p>Для возможности принятия платежей в системе РобоКасса необходимо:</p>
+                                        <p><?=Yii::t('Module/Reseller', 'Для возможности принятия платежей в системе РобоКасса необходимо')?>:</p>
                                         <ol>
-                                            <li>Ознакомиться с условиями подключения и зарегистрироваться на сайте РобоКасса (<a href="http://www.robokassa.ru/ru/Index.aspx">http://www.robokassa.ru/ru/Index.aspx</a>).</li>
-                                            <li>После регистрации в личном кабинете магазина в разделе “<b>Администрирование</b>” необходимо указать следующие данные:<br>
-                                                Пароль #1 – представляет собой поле “<b>Пароль 1</b>” для данной платежной системы в настройках экспортного сайта в нашем сервисе;<br>
-                                                Пароль #2 – представляет собой поле “<b>Пароль 2</b>” для данной платежной системы в настройках экспортного сайта в нашем сервисе;<br>
+                                            <li><?=Yii::t('Module/Reseller', 'Ознакомиться с условиями подключения и зарегистрироваться на сайте РобоКасса (<a href="http://www.robokassa.ru/ru/Index.aspx">http://www.robokassa.ru/ru/Index.aspx</a>)')?>.</li>
+                                            <li><?=Yii::t('Module/Reseller', 'После регистрации в личном кабинете магазина в разделе')?> “<b><?=Yii::t('Module/Reseller', 'Администрирование')?></b>” <?=Yii::t('Module/Reseller', 'необходимо указать следующие данные')?>:<br>
+                                                <?=Yii::t('Module/Reseller', 'Пароль #1 – представляет собой поле')?> “<b><?=Yii::t('Module/Reseller', 'Пароль 1')?></b>” <?=Yii::t('Module/Reseller', 'для данной платежной системы в настройках экспортного сайта в нашем сервисе')?>;<br>
+                                                <?=Yii::t('Module/Reseller', 'Пароль #2 – представляет собой поле')?> “<b><?=Yii::t('Module/Reseller', 'Пароль 2')?></b>” <?=Yii::t('Module/Reseller', 'для данной платежной системы в настройках экспортного сайта в нашем сервисе')?>;<br>
                                                 Result URL – <a>http://your_domain/transaction/robokassa/result</a>;<br>
-                                                Метод отсылки данных по Result URL – POST;<br>
+                                                <?=Yii::t('Module/Reseller', 'Метод отсылки данных по Result URL – POST')?>;<br>
                                                 Success URL – <a>http://your_domain/transaction/robokassa/success</a>;<br>
-                                                Метод отсылки данных по Success URL – POST;<br>
+                                                <?=Yii::t('Module/Reseller', 'Метод отсылки данных по Success URL – POST')?>;<br>
                                                 Fail URL – <a>http://your_domain/transaction/robokassa/fail</a>;<br>
-                                                Метод отсылки данных по Fail URL – POST.</li><br>
-                                            <li>В качестве поля “<b>Логин</b>” необходимо указать логин от личного кабинета магазина в платежной системе РобоКасса.</li>
+                                                <?=Yii::t('Module/Reseller', 'Метод отсылки данных по Fail URL – POST')?>.</li><br>
+                                            <li><?=Yii::t('Module/Reseller', 'В качестве поля')?> “<b><?=Yii::t('Module/Reseller', 'Логин')?></b>” <?=Yii::t('Module/Reseller', 'необходимо указать логин от личного кабинета магазина в платежной системе РобоКасса')?>.</li>
                                         </ol>
                                     </div>
                                     <br/>
-                                    Логин<br/>
-                                    Пароль 1<br/>
-                                    Пароль 2<br/>
+                                    <?=Yii::t('Module/Reseller', 'Логин')?><br/>
+                                    <?=Yii::t('Module/Reseller', 'Пароль 1')?><br/>
+                                    <?=Yii::t('Module/Reseller', 'Пароль 2')?><br/>
                                 </div>
                             </div>
                         </div>
@@ -133,7 +133,7 @@
     $(document).ready(function(){
         var dropdown = $('#services-dropdown');
         $(dropdown).select2({
-                placeholder: "Выберите минимум один сервис",
+                placeholder: "<?=Yii::t('Module/Reseller', 'Выберите минимум один сервис')?>",
                 escapeMarkup: function (markup) { return markup; },
                 templateResult: formatState,
                 allowClear: false,

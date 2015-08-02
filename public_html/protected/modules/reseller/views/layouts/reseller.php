@@ -17,19 +17,19 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <?php $this->widget('zii.widgets.CMenu',array(
                     'items'=>array(
-                        array('label'=>'Статус', 'url'=>array('/reseller/status/index')),
-                        array('label'=>'Клиенты', 'url'=>array('/reseller/users/index')),
-                        array('label'=>'Сайты', 'url'=>array('/reseller/sites/index'), 'visible' => AuthHelper::isReseller()),
-                        array('label'=>'Стили', 'url'=>array('/reseller/style/index'), 'visible' => AuthHelper::isReseller()),
+                        array('label'=> Yii::t('Module/Reseller', 'Статус'), 'url'=>array('/reseller/status/index')),
+                        array('label'=> Yii::t('Module/Reseller', 'Клиенты'), 'url'=>array('/reseller/users/index')),
+                        array('label'=> Yii::t('Module/Reseller', 'Сайты'), 'url'=>array('/reseller/sites/index'), 'visible' => AuthHelper::isReseller()),
+                        array('label'=> Yii::t('Module/Reseller', 'Стили'), 'url'=>array('/reseller/style/index'), 'visible' => AuthHelper::isReseller()),
                     ),
                     'htmlOptions' => ['class' => 'nav navbar-nav'],
                 )); ?>
                 <?php $this->widget('zii.widgets.CMenu', [
                     'encodeLabel' => false,
                     'items' => [
-                        array('label' => 'Баланс: '.$this->user->getBalance().' <i class="fa fa-rub"></i>', 'url' => ['#'], 'itemOptions' => ['class' => 'total-balance']),
-                        array('label'=>'Вход', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
-                        array('label'=>'Выход ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'htmlOptions' => ['class' => 'pull-right'], 'visible'=>!Yii::app()->user->isGuest)
+                        array('label' => Yii::t('Module/Reseller', 'Баланс') . ': '.$this->user->getBalance().' <i class="fa fa-rub"></i>', 'url' => ['#'], 'itemOptions' => ['class' => 'total-balance']),
+                        array('label' => Yii::t('Common/Main', 'Вход'), 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
+                        array('label' => Yii::t('Common/Navbar', 'Выход') . ' ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'htmlOptions' => ['class' => 'pull-right'], 'visible'=>!Yii::app()->user->isGuest)
                     ],
                     'htmlOptions' => ['class' => 'nav navbar-nav navbar-right'],
                 ]); ?>
