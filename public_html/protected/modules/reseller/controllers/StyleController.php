@@ -43,7 +43,7 @@ class StyleController extends ResellerBaseController
             if($model->validate() && $model->save())
             {
                 Yii::app()->user->setFlash('SUCCESS', 'Стиль сохранен');
-                $this->redirect(['/reseller/styles/view/', 'id' => $id]);
+                $this->redirect(['/reseller/style/view/', 'id' => $id]);
             }
         }
 

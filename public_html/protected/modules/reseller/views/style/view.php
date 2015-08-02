@@ -2,6 +2,14 @@
 /* @var $this StyleController */
 /* @var $form CActiveForm */
 /* @var $model Style */
+
+Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/plugins/bower_components/codemirror/lib/codemirror.css');
+Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/plugins/bower_components/codemirror/addon/hint/show-hint.css');
+Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/plugins/bower_components/codemirror/theme/paraiso-light.css');
+Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/plugins/bower_components/codemirror/lib/codemirror.js');
+Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/plugins/bower_components/codemirror/mode/css/css.js');
+Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/plugins/bower_components/codemirror/addon/hint/show-hint.js');
+Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/plugins/bower_components/codemirror/addon/hint/css-hint.js');
 ?>
 
 <?php $this->showMessages($model); ?>
@@ -23,7 +31,7 @@
             </div>
             <div class="form-group">
                 <label><?=Yii::t('Module/Reseller', 'CSS-Код')?></label>
-                <?php echo $form->textArea($model, 'content', ['class' => 'form-control', 'placeholder' => Yii::t('Module/Reseller', 'CSS-Код')]); ?>
+                <?php echo $form->textArea($model, 'content', ['class' => 'form-control', 'id' => 'code', 'placeholder' => Yii::t('Module/Reseller', 'CSS-Код')]); ?>
             </div>
         </div>
         <div class="panel-footer">
@@ -33,3 +41,14 @@
     </div>
     <?php $this->endWidget(); ?>
 </div>
+
+<script>
+    $(document).ready(function(){
+        var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+            mode: "css",
+            lineNumbers: true,
+            theme: 'paraiso-light',
+            extraKeys: {"Ctrl-Space": "autocomplete"}
+        });
+    });
+</script>
